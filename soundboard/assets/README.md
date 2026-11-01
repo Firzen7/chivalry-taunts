@@ -1,0 +1,7 @@
+# Shared visual assets
+
+`castle.png` was generated with the built-in image generation tool using `designs/01-faction-selection.png` as the reference. The final prompt was:
+
+> Create a clean BACKGROUND BITMAP ASSET for the Chivalry Medieval Warfare soundboard website, matching the attached approved design's atmospheric scenery and colors exactly. Remove ALL interface panels, typography, logos, characters, heraldic overlays, cards, borders, buttons and triquetras. Only a moonlit medieval castle courtyard and ramparts: stone wall on left, distant towers right, cool dark blue cloudy sky with moon upper right, restrained warm torches on both far sides, cobblestone ground. Center is very dim unobtrusive navy/charcoal negative space where real HTML controls will be overlaid. Texture is realistic Chivalry 1 game-engine environment art, not extravagant fantasy. Landscape 1920x1080, seamless-feeling vignette around edges, NO text, NO UI, NO foreground people. The source is a style reference, output only environmental background.
+
+`ringbearer.ttf` is copied from the installed game's `Development/Src/AOC/Flash/FLA/RINGM__1.ttf`. The other SVG assets are small shared interface ornaments. The character and heraldry bitmap sheets are reused directly from `designs/`, through the viewports in `app.js`.
