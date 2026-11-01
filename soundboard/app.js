@@ -34,12 +34,20 @@
   let pickerTrigger = null;
   let playbackRequest = 0;
   let initialized = false;
+  let artworkSerial = 0;
 
   function artwork(faction, cls = null) {
     const label = cls ? `${factions[faction].name} ${classes[cls]}` : `${factions[faction].name} emblem`;
     if (cls) return `<img class="artwork portrait" src="soundboard/assets/${faction}-${cls}.png" alt="${label}" width="1024" height="1536">`;
     const cell = emblemSheet.width / 2;
-    return `<svg class="artwork crest" viewBox="${factions[faction].emblem * cell} 0 ${cell} ${emblemSheet.height}" role="img" aria-label="${label}"><image href="${emblemSheet.file}" width="${emblemSheet.width}" height="${emblemSheet.height}"/></svg>`;
+    const x = factions[faction].emblem * cell;
+    const clipId = `emblem-clip-${++artworkSerial}`;
+    // A viewBox alone leaves the letterboxed area visible in wide mobile cards.
+    // Clip the sheet in image coordinates, before the SVG scales it to fit.
+    return `<svg class="artwork crest" viewBox="${x} 0 ${cell} ${emblemSheet.height}" role="img" aria-label="${label}">
+      <defs><clipPath id="${clipId}" clipPathUnits="userSpaceOnUse"><rect x="${x}" y="0" width="${cell}" height="${emblemSheet.height}"/></clipPath></defs>
+      <image href="${emblemSheet.file}" width="${emblemSheet.width}" height="${emblemSheet.height}" clip-path="url(#${clipId})"/>
+    </svg>`;
   }
   const knot = '<img class="focus-knot" src="soundboard/assets/knot.svg" alt="" width="48" height="48">';
   const clock = seconds => {
