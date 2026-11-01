@@ -1,6 +1,6 @@
 # Chivalry: Medieval Warfare voice collection
 
-Open **[soundboard.html](soundboard.html)** for the Chivalry-style faction → class → voice-command interface, or **[index.html](index.html)** for the full collection table.
+Open **[index.html](index.html)** for the Chivalry-style faction → class → voice-command interface, or **[full-list.html](full-list.html)** for the full collection table.
 
 Open either page directly in a browser. The collection works offline, directly from disk, without a server. Keep the HTML alongside the faction folders.
 
@@ -79,7 +79,7 @@ Inspect source coverage without writing files:
 python3 scripts/extract_taunts.py /path/to/chivalrymedievalwarfare --audit-only
 ```
 
-The build maintains the message-group and command folders and updates MP3s, `taunts.json`, and `index.html`. Unchanged, hash-verified MP3s are reused. Edit `scripts/index.template.html` to change the page before rebuilding. The package reader targets this installation's uncompressed UE3 version 860 format and rejects unsupported layouts.
+The build maintains the message-group and command folders and updates MP3s, `taunts.json`, and `full-list.html`. Unchanged, hash-verified MP3s are reused. Edit `scripts/index.template.html` to change the page before rebuilding. The package reader targets this installation's uncompressed UE3 version 860 format and rejects unsupported layouts.
 
 ## Soundboard implementation
 

@@ -325,7 +325,7 @@
     }
   });
   if (!catalog || !Object.keys(catalog).length) {
-    main.innerHTML = '<p class="notice">The voice collection could not be loaded. Please open the <a href="index.html">full collection</a>.</p>';
+    main.innerHTML = '<p class="notice">The voice collection could not be loaded. Please open the <a href="full-list.html">full collection</a>.</p>';
     return;
   }
   renderRoute();

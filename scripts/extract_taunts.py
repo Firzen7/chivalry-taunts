@@ -245,7 +245,7 @@ def build_html(root, files):
     template = Path(__file__).with_name('index.template.html').read_text()
     options = ''.join(f'<option value="{escape(command, quote=True)}" data-group="{group}">{escape(COMMAND_LABELS.get(command, command))}</option>'
                       for group, (_, commands) in MESSAGE_GROUPS.items() for command in commands)
-    (root / 'index.html').write_text(template.replace('<!-- ROWS -->', '\n'.join(rows)).replace('{{COUNT}}', str(len(files))).replace('<!-- TYPE OPTIONS -->', options))
+    (root / 'full-list.html').write_text(template.replace('<!-- ROWS -->', '\n'.join(rows)).replace('{{COUNT}}', str(len(files))).replace('<!-- TYPE OPTIONS -->', options))
 
 
 VOICE_TYPES = {

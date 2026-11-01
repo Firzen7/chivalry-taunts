@@ -1,6 +1,6 @@
 # Chivalry voice soundboard
 
-Open **../soundboard.html** directly in a browser, or serve the project root with any static server. Desktop and mobile use the same page and assets. The original `index.html` remains the full collection browser.
+Open **../index.html** directly in a browser, or serve the project root with any static server. Desktop and mobile use the same page and assets. The full collection browser is available at `../full-list.html`.
 
 ## Interaction
 

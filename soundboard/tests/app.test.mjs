@@ -9,9 +9,9 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const read = path => readFileSync(resolve(root, path), 'utf8');
 
 function app(hash = '', storage = new Map()) {
-  const { window } = parseHTML(read('soundboard.html'));
+  const { window } = parseHTML(read('index.html'));
   const { document, Event } = window;
-  const location = { hash, pathname: '/soundboard.html', search: '' };
+  const location = { hash, pathname: '/index.html', search: '' };
   window.scrollTo = () => {};
   let focused = null;
   window.HTMLElement.prototype.focus = function () { focused = this; };
