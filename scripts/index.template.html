@@ -62,6 +62,7 @@ footer a { color: #365d76; }
 <label class="search">Search voice lines<input id="search" type="search" placeholder="Search by name, command, faction or class…"></label>
 <label>Faction<select id="faction"><option value="">All factions</option><option value="agatha">Agatha</option><option value="masons">Masons</option></select></label>
 <label>Class<select id="class"><option value="">All classes</option><option value="archer">Archer</option><option value="knight">Knight</option><option value="man_at_arms">Man-at-Arms</option><option value="vanguard">Vanguard</option></select></label>
+<label>Message group<select id="group"><option value="">All groups</option><option value="personal_messages">Personal Messages</option><option value="tactical_messages">Tactical Messages</option><option value="other">Other</option></select></label>
 <label>Voice command<select id="type"><option value="">All commands</option><!-- TYPE OPTIONS --></select></label>
 <button id="reset" type="button">Reset filters</button>
 </div>
@@ -92,7 +93,9 @@ const rows = [...document.querySelectorAll('tbody tr')];
 const search = document.querySelector('#search');
 const faction = document.querySelector('#faction');
 const classFilter = document.querySelector('#class');
+const groupFilter = document.querySelector('#group');
 const typeFilter = document.querySelector('#type');
+const commandOptions = [...typeFilter.options].map(option => option.cloneNode(true));
 const player = document.querySelector('#player');
 const error = document.querySelector('#play-error');
 let matches = rows;
@@ -114,6 +117,7 @@ function filter() {
   const query = search.value.trim().toLowerCase();
   matches = rows.filter(row => (!faction.value || row.dataset.faction === faction.value)
     && (!classFilter.value || row.dataset.class === classFilter.value)
+    && (!groupFilter.value || row.dataset.groups.split('|').includes(groupFilter.value))
     && (!typeFilter.value || row.dataset.types.split('|').includes(typeFilter.value))
     && row.searchText.includes(query));
   page = 0;
@@ -123,8 +127,16 @@ search.addEventListener('input', filter);
 faction.addEventListener('change', filter);
 classFilter.addEventListener('change', filter);
 typeFilter.addEventListener('change', filter);
+function syncCommands() {
+  const selected = typeFilter.value;
+  const options = commandOptions.filter(option => !option.value || !groupFilter.value || option.dataset.group === groupFilter.value);
+  typeFilter.replaceChildren(...options.map(option => option.cloneNode(true)));
+  typeFilter.value = options.some(option => option.value === selected) ? selected : '';
+}
+groupFilter.addEventListener('change', () => { syncCommands(); filter(); });
 document.querySelector('#reset').addEventListener('click', () => {
-  search.value = faction.value = classFilter.value = typeFilter.value = '';
+  search.value = faction.value = classFilter.value = groupFilter.value = typeFilter.value = '';
+  syncCommands();
   filter();
 });
 document.querySelector('#previous').addEventListener('click', () => {

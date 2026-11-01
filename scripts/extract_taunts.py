@@ -21,6 +21,25 @@ CLASSES = {'archer': 'Archer', 'knight': 'Knight', 'man_at_arms': 'Man-at-Arms',
 # Confirmed in Development/Src/AOCAudioContent/classes/AOCPawnSoundgroup_*.uc:
 # XMenuVOSounds{Agatha,Mason}[7] maps Archer -> MAA and ManAtArms -> Archer.
 GROUPS = {'archer': 'man_at_arms', 'maa': 'archer', 'knight': 'knight', 'vanguard': 'vanguard'}
+MESSAGE_GROUPS = {
+    'personal_messages': ('Personal Messages', [
+        'Yes', 'No', 'Help', 'Got your back', 'Thanks', "You're welcome", 'Sorry', 'Taunt', 'Laugh', 'Respect']),
+    'tactical_messages': ('Tactical Messages', [
+        'Follow me', 'Forward', 'Retreat', 'Kill archers', 'Objective', 'Hold your ground',
+        'Defend me', 'Incoming', 'Behind us', 'All clear']),
+    'other': ('Other', ['Other']),
+}
+COMMAND_GROUP = {command: group for group, (_, commands) in MESSAGE_GROUPS.items() for command in commands}
+COMMAND_LABELS = {'Objective': 'Go for the Objective'}
+
+
+def menu_commands(record):
+    return [command for command in COMMAND_GROUP if command != 'Other' and command in record['voice_types']] or ['Other']
+
+
+def command_directory(command):
+    group = COMMAND_GROUP[command]
+    return Path(group) if group == 'other' else Path(group) / category_slug(COMMAND_LABELS.get(command, command))
 
 class Package:
     def __init__(self, path):
@@ -154,17 +173,20 @@ def category_slug(label):
 
 
 def organize_files(root, records):
-    """Move verified MP3s into category folders; copy shared clips to each category."""
+    """Mirror the two game menus, with uncategorized clips directly under other."""
     categories = sorted({label for r in records for label in r['voice_types']})
     plans, destinations = [], {}
     for r in records:
         source = root / r['file']
         digest = r['mp3_sha256']
-        if hashlib.sha256(source.read_bytes()).hexdigest() != digest:
-            raise ValueError(f'Audio hash mismatch: {source}')
+        old_paths = {source} | {root / p for p in r.get('category_files', {}).values()}
+        for path in old_paths:
+            if hashlib.sha256(path.read_bytes()).hexdigest() != digest:
+                raise ValueError(f'Audio hash mismatch: {path}')
+        commands = menu_commands(r)
         category_files = {
-            label: (Path(r['faction']) / r['class'] / category_slug(label) / source.name).as_posix()
-            for label in sorted(r['voice_types'])
+            command: (Path(r['faction']) / r['class'] / command_directory(command) / source.name).as_posix()
+            for command in commands
         }
         for rel in category_files.values():
             if rel.lower() in destinations and destinations[rel.lower()] != digest:
@@ -173,13 +195,14 @@ def organize_files(root, records):
             target = root / rel
             if target.exists() and hashlib.sha256(target.read_bytes()).hexdigest() != digest:
                 raise ValueError(f'Refusing to overwrite different audio: {rel}')
-        plans.append((r, source, category_files))
+        plans.append((r, source, category_files, old_paths))
     # All source hashes and destination conflicts are checked before moving anything.
     for faction in ('agatha', 'masons'):
         for cls in CLASSES:
-            for label in categories:
-                (root / faction / cls / category_slug(label)).mkdir(parents=True, exist_ok=True)
-    for r, source, category_files in plans:
+            for command in COMMAND_GROUP:
+                (root / faction / cls / command_directory(command)).mkdir(parents=True, exist_ok=True)
+    desired_paths = {root / rel for _, _, files, _ in plans for rel in files.values()}
+    for r, source, category_files, old_paths in plans:
         primary = next(iter(category_files.values()))
         target = root / primary
         if source != target and not target.exists():
@@ -188,10 +211,20 @@ def organize_files(root, records):
             copy = root / rel
             if not copy.exists():
                 shutil.copy2(target, copy)
-        if source != target and source.exists() and source not in {root / p for p in category_files.values()}:
-            source.unlink()
+        for old_path in old_paths - desired_paths:
+            if old_path.exists():
+                old_path.unlink()
         r['file'] = primary
         r['category_files'] = category_files
+        r['menu_commands'] = list(category_files)
+        r['message_groups'] = list(dict.fromkeys(COMMAND_GROUP[c] for c in category_files))
+    # Remove only the obsolete, now-empty category folders from the previous layout.
+    for faction in ('agatha', 'masons'):
+        for cls in CLASSES:
+            for label in categories:
+                directory = root / faction / cls / category_slug(label)
+                if directory.is_dir() and directory.name not in MESSAGE_GROUPS and not any(directory.iterdir()):
+                    directory.rmdir()
 
 
 def build_html(root, files):
@@ -199,15 +232,19 @@ def build_html(root, files):
     for r in files:
         faction = 'Agatha' if r['faction'] == 'agatha' else 'Masons'
         label = f"{faction} {CLASSES[r['class']]}: {r['taunt_name']}"
-        types = escape('|'.join(r['voice_types']), quote=True)
-        rows.append(f'''<tr data-faction="{r['faction']}" data-class="{r['class']}" data-types="{types}">
+        types = escape('|'.join(r['menu_commands']), quote=True)
+        groups = escape('|'.join(r['message_groups']), quote=True)
+        descriptions = [f"{MESSAGE_GROUPS[COMMAND_GROUP[c]][0]} · {COMMAND_LABELS.get(c, c)}" for c in r['menu_commands']]
+        if r['menu_commands'] == ['Other']:
+            descriptions = ['Other · ' + ', '.join(r['voice_types'])]
+        rows.append(f'''<tr data-faction="{r['faction']}" data-class="{r['class']}" data-groups="{groups}" data-types="{types}">
 <td><span class="faction {r['faction']}">{faction}</span></td>
-<td>{CLASSES[r['class']]}</td><td class="taunt-name">{escape(r['taunt_name'])}<small>{escape(', '.join(r['voice_types']))}</small></td>
+<td>{CLASSES[r['class']]}</td><td class="taunt-name">{escape(r['taunt_name'])}<small>{escape('; '.join(descriptions))}</small></td>
 <td><button class="play" type="button" data-src="{escape(r['file'], quote=True)}" data-label="{escape(label, quote=True)}" aria-label="Play {escape(label, quote=True)}">▶ Play</button>
 <a class="download" href="{escape(r['file'], quote=True)}" download aria-label="Download {escape(label, quote=True)}">MP3 ↓</a></td></tr>''')
     template = Path(__file__).with_name('index.template.html').read_text()
-    types = sorted({t for r in files for t in r['voice_types']})
-    options = ''.join(f'<option value="{escape(t, quote=True)}">{escape(t)}</option>' for t in types)
+    options = ''.join(f'<option value="{escape(command, quote=True)}" data-group="{group}">{escape(COMMAND_LABELS.get(command, command))}</option>'
+                      for group, (_, commands) in MESSAGE_GROUPS.items() for command in commands)
     (root / 'index.html').write_text(template.replace('<!-- ROWS -->', '\n'.join(rows)).replace('{{COUNT}}', str(len(files))).replace('<!-- TYPE OPTIONS -->', options))
 
 
@@ -347,7 +384,8 @@ def main():
                 raise ValueError(f'Filename collision: {rel}')
         paths.add((Path(c['faction']) / c['class_'] / rel.name).as_posix().lower())
         r = dict(faction=c['faction'], **{'class': c['class_']}, taunt_name=c['taunt_name'], file=rel.as_posix(),
-                 voice_types=c['voice_types'], source_ogg_sha256=c['digest'], sources=[c['source']])
+                 voice_types=c['voice_types'], source_ogg_sha256=c['digest'], sources=[c['source']],
+                 category_files=prior.get('category_files', {}) if prior else {})
         records.append(r); seen[key] = r
         jobs.append((r, c['data'], prior))
     # A known command category is more useful than the fallback label after deduplication.
@@ -390,7 +428,8 @@ def main():
     organize_files(root, records)
     manifest = dict(source_game_folder=str(args.game_folder), sources=sources,
         selection='All non-grunt voice waves in the Manual, Manual_Barb and OBJ packages, all personal/tactical/battle-cry cue references (including cross-package references), and the original Troll taunt duplicates. Exact Ogg duplicates within a faction/class share one collection entry.',
-        file_layout='faction/class/category/asset_name.mp3; shared clips have a copy in every applicable category. category_files lists all paths; file is the primary playback path.',
+        file_layout='faction/class/personal_messages|tactical_messages/command/asset_name.mp3; clips with no menu command go directly in faction/class/other/. Shared clips have a copy in every applicable menu command; category_files lists all paths and file is the primary playback path.',
+        message_groups={group: {'label': label, 'commands': [COMMAND_LABELS.get(c, c) for c in commands]} for group, (label, commands) in MESSAGE_GROUPS.items()},
         class_mapping='Playable classes from AOCPawnSoundgroup_*.uc menu assignments; group Archer -> Man-at-Arms, MAA -> Archer. Shared cue audio is included in every faction/class that references it. Generic legacy Agatha/Mason voices are assigned to Knight.',
         encoding='ffmpeg libmp3lame -q:a 2; every MP3 fully decoded with ffmpeg -xerror. Rebuilds reuse unchanged, hash-verified MP3s.',
         menu_coverage=coverage, files=records)
