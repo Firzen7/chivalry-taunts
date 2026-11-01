@@ -25,3 +25,7 @@ These images are visual mockups. They do not add a second functioning website. G
 - [Voice commands](04-voice-commands.png)
 
 The complete generation prompts and reference paths are recorded in [prompts.md](prompts.md).
+
+## Mobile designs
+
+The [four mobile adaptations](mobile/README.md) preserve the same visual identity, with stacked faction choices, two-by-two class grids, and a scrolling voice-command page with touch controls.
