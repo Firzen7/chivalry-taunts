@@ -25,14 +25,16 @@ body {
   margin: 0;
   min-height: 100svh;
   isolation: isolate;
-  background: linear-gradient(#070e1890,#060b1690),url('assets/castle.png') center/cover fixed;
 }
 body::before {
   content: '';
   position: fixed;
   inset: 0;
+  height: 100lvh;
   z-index: -1;
-  box-shadow: inset 0 0 140px 30px #02060b;
+  background: radial-gradient(ellipse at center, transparent 30%, #02060be0 100%), linear-gradient(#070e1890,#060b1690), url('assets/optimized/castle-1672.webp') center/cover;
+  /* One reusable scenery layer, rather than repainting a fixed body background. */
+  transform: translateZ(0);
   pointer-events: none;
 }
 a {
@@ -548,9 +550,8 @@ body[data-stage="voice"] {
   margin: 0;
   padding: 6px 14px;
   border: 1px solid #315981;
-  background: #09182af2;
+  background: #09182a;
   box-shadow: 0 4px 18px #0005;
-  backdrop-filter: blur(12px);
 }
 .sound-controls-row {
   display: flex;
@@ -1065,5 +1066,28 @@ body.picker-open .sound-controls {
     animation: none!important;
     transition: none!important;
     scroll-behavior: auto!important;
+  }
+}
+
+/* Keep scrolling cheap on phones, including landscape and larger touch screens. */
+@media(max-width:760px), (pointer:coarse) {
+  body::before {
+    background-image: radial-gradient(ellipse at center, transparent 30%, #02060be0 100%), linear-gradient(#070e1890,#060b1690), url('assets/optimized/castle-960.webp');
+  }
+  .steel {
+    background: linear-gradient(120deg, #10253b, #081421);
+    box-shadow: inset 0 0 0 3px #030c18, inset 0 0 0 5px #254768;
+  }
+  .selection-card {
+    transition: none;
+  }
+  .selection-card:hover, .selection-card:focus-visible {
+    box-shadow: inset 0 0 0 2px #040b17, 0 0 0 1px #ac874a88;
+  }
+  .command-play, .version-trigger {
+    box-shadow: none;
+  }
+  .picker-shade {
+    backdrop-filter: none;
   }
 }

@@ -8,10 +8,20 @@ const { parseHTML } = await import(process.env.DOM_TEST_HELPER || 'linkedom');
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const read = path => readFileSync(resolve(root, path), 'utf8');
 
-function app(hash = '', storage = new Map()) {
+function app(hash = '', storage = new Map(), features = {}) {
   const { window } = parseHTML(read('index.html'));
   const { document, Event } = window;
   const location = { hash, pathname: '/index.html', search: '' };
+  const metrics = {measurements: 0, barHeight: 60, observedResize: null};
+  document.querySelector('.sound-controls').getBoundingClientRect = () => {
+    metrics.measurements++;
+    return {height: metrics.barHeight};
+  };
+  const ResizeObserver = features.resizeObserver ? class {
+    constructor(callback) { metrics.observedResize = callback; }
+    observe() {}
+  } : undefined;
+
   window.scrollTo = () => {};
   let focused = null;
   window.HTMLElement.prototype.focus = function () { focused = this; };
@@ -46,12 +56,12 @@ function app(hash = '', storage = new Map()) {
     recordings.push(audio);
     return audio;
   }
-  const context = vm.createContext({ window, document, location, Audio: MockAudio, history: { replaceState(_, __, url) { location.hash = url.includes('#') ? '#' + url.split('#')[1] : ''; } }, localStorage: {getItem: key => storage.get(key) ?? null, setItem: (key, value) => storage.set(key, value)}, console });
+  const context = vm.createContext({ window, document, location, Audio: MockAudio, ResizeObserver, history: { replaceState(_, __, url) { location.hash = url.includes('#') ? '#' + url.split('#')[1] : ''; } }, localStorage: {getItem: key => storage.get(key) ?? null, setItem: (key, value) => storage.set(key, value)}, console });
   vm.runInContext(read('soundboard/catalog.js'), context);
   vm.runInContext(read('soundboard/playback.js'), context);
   vm.runInContext(read('soundboard/app.js'), context);
   return {
-    window, document, dialog, recordings, mediaOptions,
+    window, document, dialog, recordings, mediaOptions, metrics,
     get audio() { return recordings.at(-1); },
     get focused() { return focused; },
     route(hash) { location.hash = hash; window.dispatchEvent(new Event('hashchange')); },
@@ -103,10 +113,18 @@ test('selection and voice screens reuse each complete transparent character imag
     assert.equal(portraits.length, 4);
     for (const [index, cls] of ['archer', 'man_at_arms', 'vanguard', 'knight'].entries()) {
       const source = portraits[index].getAttribute('src');
-      const png = readFileSync(resolve(root, source));
-      assert.equal(png.readUInt8(25), 6, 'Portrait must have an RGBA transparency channel');
+      const bitmap = readFileSync(resolve(root, source));
+      assert.equal(bitmap.toString('ascii', 0, 4), 'RIFF');
+      assert.equal(bitmap.toString('ascii', 8, 12), 'WEBP');
+      assert.ok(bitmap.includes(Buffer.from('ALPH')), 'Portrait must retain its transparency channel');
+      assert.match(portraits[index].getAttribute('srcset'), /384w.*640w.*1024w/);
+      assert.equal(portraits[index].getAttribute('decoding'), 'async');
+      for (const candidate of portraits[index].getAttribute('srcset').split(',')) {
+        assert.ok(existsSync(resolve(root, candidate.trim().split(' ')[0])));
+      }
       a.route(`#${faction}/${cls}`);
       assert.equal(a.document.querySelector('.identity-panel img.portrait').getAttribute('src'), source);
+      assert.match(a.document.querySelector('.identity-panel img.portrait').getAttribute('sizes'), /55px/);
       assert.equal(a.document.querySelectorAll('svg.portrait').length, 0, 'Character artwork must not use a clipping viewport');
     }
   }
@@ -422,4 +440,20 @@ test('loading and failed variant auditions update feedback without dismissing th
   a.click(option); await tick();
   assert.equal(option.querySelector('.equalizer').hidden, false);
   assert.equal(a.document.querySelector('.audio-error').hidden, true);
+});
+
+
+test('viewport-height changes avoid layout measurements; only changed toolbar height updates clearance', () => {
+  const a = app('#agatha/vanguard', new Map(), {resizeObserver: true});
+  for (let i = 0; i < 10; i++) a.window.dispatchEvent(new a.window.Event('resize'));
+  assert.equal(a.metrics.measurements, 0);
+  a.click('[data-action="versions"][data-id="personal-8"]');
+  assert.equal(a.metrics.measurements, 1);
+  const clearance = a.document.documentElement.style.getPropertyValue('--controls-clearance');
+  a.metrics.observedResize();
+  a.metrics.observedResize();
+  assert.equal(a.document.documentElement.style.getPropertyValue('--controls-clearance'), clearance);
+  a.metrics.barHeight = 96;
+  a.metrics.observedResize();
+  assert.match(a.document.documentElement.style.getPropertyValue('--controls-clearance'), /128px/);
 });

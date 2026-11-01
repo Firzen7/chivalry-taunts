@@ -28,7 +28,7 @@ The playable recordings follow the 168 verified assignments in the game's class 
 - `assets/ringbearer.ttf`: the installed game's Ringbearer display font.
 - `assets/frame.svg`, `assets/knot.svg`: small shared interface ornaments.
 
-Character portraits use dedicated transparent PNG cutouts in `assets/`, each containing the entire character with clear padding. CSS `object-fit: contain` fits them into both desktop and mobile panels without clipping. The same portrait file is reused in class selection and the selected-character panel. The two faction emblems share a transparent two-cell sheet. None of these production assets contain screenshot backgrounds, text or buttons, so the panel colors remain consistent. The logo is one HTML wordmark using the shared local font, rendered consistently on every screen.
+Character portraits use responsive transparent WebP files in `assets/optimized/`, generated from the original PNG cutouts in `assets/`. Each contains the entire character with clear padding. The browser selects a 384px, 640px, or 1024px image based on the displayed size and pixel density; the compact identity panel requests smaller images than the class cards. CSS `object-fit: contain` fits them into both desktop and mobile panels without clipping. The same portrait file is reused in class selection and the selected-character panel. The two faction emblems share a compressed transparent two-cell WebP sheet with unchanged coordinates. None of these production assets contain screenshot backgrounds, text or buttons, so the panel colors remain consistent. The logo is one HTML wordmark using the shared local font, rendered consistently on every screen.
 
 ## Rebuild and checks
 
@@ -48,3 +48,21 @@ npm test
 ```
 
 The only npm dependency is a development-only DOM implementation. The website itself has no framework, third-party scripts, CDN requests, or installation step. The tests check the actual DOM, menu coverage, audio paths, random selection, exact-version playback, navigation cleanup, picker focus, overlapping instances, inline status cleanup, global sound controls, loading/error recovery, late media events, persistent auditioning, per-version feedback and stable dialog structure, dashboard access with the picker open, keyboard focus across picker and dashboard, preference persistence across reloads, character isolation, restoring random playback, and unavailable or malformed storage. They simulate media events; real browser rendering and media-device playback require browser QA.
+
+## Mobile rendering performance
+
+The scenery is painted in one fixed compositing candidate layer, using `100lvh` so the background size does not continually change as mobile browser chrome collapses. The body no longer uses `background-attachment: fixed`. The large blurred vignette shadow is replaced with a gradient. The floating sound bar is opaque and has no backdrop blur. Touch layouts simplify blurred card/button shadows and omit full-screen picker blur while retaining its dark shade. Hover shadow transitions are disabled on touch layouts.
+
+The toolbar's height is observed directly with `ResizeObserver`. Viewport-height changes no longer run a window resize layout read on browsers that support it, and unchanged toolbar heights do not rewrite the clearance CSS variable. There are no scroll event handlers.
+
+Artwork delivery files are built with Pillow (with WebP support):
+
+```sh
+python3 scripts/optimize_soundboard_assets.py
+```
+
+The script leaves source PNGs intact. All 27 delivery files, including all portrait sizes, total 3,312,792 bytes versus 19,158,175 bytes for the source PNGs. As an example, the four Agatha class portraits at 640px total 432,184 bytes versus 7,999,004 bytes for their original PNGs. These are file-size measurements, not measured network traffic or frame-rate improvements. Smaller portrait variants also decode to fewer pixels. Their alpha channels are preserved exactly relative to the resized originals.
+
+Deploy the updated `index.html`, `soundboard/app.js`, `soundboard/style.css`, and the complete `soundboard/assets/optimized/` directory. The HTML uses a new CSS/JS query version to avoid reusing stale cached files. No new runtime dependencies are required.
+
+Phone frame rates still need an on-device check. These changes target likely paint/compositing and image-memory costs identified in the code; a Motorola G72 trace was not available. For further diagnosis, Chrome's [rendering performance tools](https://developer.chrome.com/docs/devtools/rendering/performance) can highlight repaint regions. Browser guidance also covers [responsive background images](https://web.dev/articles/optimize-css-background-images-with-media-queries).

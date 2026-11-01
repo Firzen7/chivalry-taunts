@@ -8,7 +8,7 @@
   };
   const classes = {archer: 'Archer', man_at_arms: 'Man-at-Arms', vanguard: 'Vanguard', knight: 'Knight'};
   // Production artwork has transparent backgrounds, independent of the panel styling.
-  const emblemSheet = {file: 'soundboard/assets/faction-emblems.png', width: 1774, height: 887};
+  const emblemSheet = {file: 'soundboard/assets/optimized/faction-emblems.webp', width: 1774, height: 887};
   const icons = {
     play: '<path d="m7 4 14 8L7 20Z" fill="currentColor"/>',
     back: '<path d="m15 4-8 8 8 8"/>',
@@ -41,6 +41,7 @@
   let pickerTrigger = null;
   let initialized = false;
   let artworkSerial = 0;
+  let controlsHeight = null;
   const playback = new window.ChivalryPlayback({
     onChange: updatePlayback,
     onError: ({command, version}) => {
@@ -50,9 +51,15 @@
     },
   });
 
-  function artwork(faction, cls = null) {
+  function artwork(faction, cls = null, identity = false) {
     const label = cls ? `${factions[faction].name} ${classes[cls]}` : `${factions[faction].name} emblem`;
-    if (cls) return `<img class="artwork portrait" src="soundboard/assets/${faction}-${cls}.png" alt="${label}" width="1024" height="1536">`;
+    if (cls) {
+      const base = `soundboard/assets/optimized/${faction}-${cls}`;
+      const sizes = identity
+        ? '(max-width:760px) 55px, (max-width:1050px) 156px, (min-width:1600px) 235px, 195px'
+        : '(max-width:760px) calc((100vw - 90px) / 2), (max-width:1050px) calc((90vw - 152px) / 4), 280px';
+      return `<img class="artwork portrait" src="${base}-640.webp" srcset="${base}-384.webp 384w, ${base}-640.webp 640w, ${base}-1024.webp 1024w" sizes="${sizes}" decoding="async" alt="${label}" width="1024" height="1536">`;
+    }
     const cell = emblemSheet.width / 2;
     const x = factions[faction].emblem * cell;
     const clipId = `emblem-clip-${++artworkSerial}`;
@@ -122,7 +129,7 @@
   function renderVoices() {
     const f = factions[route.faction], groups = catalog[route.faction][route.cls];
     return `<section aria-labelledby="page-title"><div class="page-heading voice-heading"><p class="voice-context">${f.name} <span aria-hidden="true">/</span> ${classes[route.cls]}</p><h1 id="page-title">Make yourself heard</h1></div>
-      <div class="voice-layout"><aside class="steel identity-panel" aria-label="Selected voice">${artwork(route.faction)}${artwork(route.faction, route.cls)}<div class="identity-copy"><h2>${classes[route.cls]}</h2><p>${f.name}</p></div>
+      <div class="voice-layout"><aside class="steel identity-panel" aria-label="Selected voice">${artwork(route.faction)}${artwork(route.faction, route.cls, true)}<div class="identity-copy"><h2>${classes[route.cls]}</h2><p>${f.name}</p></div>
       <div class="identity-actions"><a class="steel-button" href="#${route.faction}">Change class</a><a class="steel-button" href="#">Change faction</a></div><a class="identity-change" href="#${route.faction}" aria-label="Change class; ${classes[route.cls]} currently selected">Change ›</a></aside>
       <div class="command-area">${[['personal', 'Personal Messages'], ['tactical', 'Tactical Messages']].map(([group, label]) => `<section class="steel command-panel" aria-labelledby="${group}-title"><h2 id="${group}-title">${label}</h2><div class="commands">${groups[group].map(c => commandRow(c)).join('')}</div></section>`).join('')}
       ${commandRow(groups.battlecry[0], true)}<p class="voice-help">Tap to play. Voices can overlap. Use <strong>•••</strong> to choose a version or stop a recording.</p></div></div></section>`;
@@ -144,7 +151,10 @@
     });
   }
   function updatePickerClearance() {
+    if (controls.hidden) return;
     const height = controls.getBoundingClientRect?.().height || 60;
+    if (height === controlsHeight) return;
+    controlsHeight = height;
     document.documentElement.style.setProperty('--controls-clearance', `calc(${Math.ceil(height) + 32}px + env(safe-area-inset-bottom, 0px))`);
   }
   function stopAll() {
@@ -310,8 +320,12 @@
   updateVolume();
   window.addEventListener('hashchange', renderRoute);
   window.addEventListener('pagehide', stopAll);
-  window.addEventListener('resize', updatePickerClearance);
-  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(updatePickerClearance).observe(controls);
+  if (typeof ResizeObserver !== 'undefined') {
+    // Observe the bar itself; Android's collapsing address bar need not trigger layout reads.
+    new ResizeObserver(updatePickerClearance).observe(controls);
+  } else {
+    window.addEventListener('resize', updatePickerClearance);
+  }
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && dialog.open) closePicker();
     if (event.key === 'Tab' && dialog.open) {
