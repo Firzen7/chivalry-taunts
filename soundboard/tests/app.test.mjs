@@ -15,27 +15,43 @@ function app(hash = '', storage = new Map()) {
   window.scrollTo = () => {};
   let focused = null;
   window.HTMLElement.prototype.focus = function () { focused = this; };
+  Object.defineProperty(document, 'activeElement', {get: () => focused});
   const dialog = document.querySelector('dialog');
   Object.defineProperty(dialog, 'open', { get() { return this.hasAttribute('open'); } });
   dialog.showModal = () => dialog.setAttribute('open', '');
   dialog.close = () => dialog.removeAttribute('open');
-  const audio = document.querySelector('audio');
-  Object.assign(audio, { paused: true, currentTime: 0, duration: NaN, volume: 0.8, muted: false });
-  audio.pause = () => { audio.paused = true; audio.dispatchEvent(new Event('pause')); };
-  audio.load = () => { audio.currentTime = 0; audio.duration = NaN; audio.dispatchEvent(new Event('emptied')); };
-  audio.play = () => {
-    if (audio.rejectNext) { audio.rejectNext = false; return Promise.reject(new Error('Media unavailable')); }
-    audio.paused = false;
-    audio.duration = 4;
-    audio.dispatchEvent(new Event('play'));
-    audio.dispatchEvent(new Event('loadedmetadata'));
-    return Promise.resolve();
-  };
-  const context = vm.createContext({ window, document, location, history: { replaceState(_, __, url) { location.hash = url.includes('#') ? '#' + url.split('#')[1] : ''; } }, localStorage: {getItem: key => storage.get(key) ?? null, setItem: (key, value) => storage.set(key, value)}, console });
+  const recordings = [];
+  const mediaOptions = {};
+  function MockAudio() {
+    const audio = document.createElement('audio');
+    Object.assign(audio, { paused: true, currentTime: 0, duration: NaN, volume: 0.8, muted: false });
+    Object.defineProperty(audio, 'src', {get: () => audio.getAttribute('src') || '', set: value => audio.setAttribute('src', value)});
+    audio.pause = () => { audio.paused = true; audio.dispatchEvent(new Event('pause')); };
+    audio.load = () => { audio.released = true; audio.currentTime = 0; audio.duration = NaN; };
+    audio.finish = () => { audio.paused = true; audio.dispatchEvent(new Event('ended')); };
+    const playing = () => { audio.paused = false; audio.dispatchEvent(new Event('playing')); };
+    audio.play = () => {
+      if (mediaOptions.rejectNext) { mediaOptions.rejectNext = false; return Promise.reject(new Error('Media unavailable')); }
+      if (mediaOptions.deferNext) {
+        mediaOptions.deferNext = false;
+        return new Promise((resolve, reject) => {
+          audio.resolvePlay = () => { playing(); resolve(); };
+          audio.rejectPlay = reject;
+        });
+      }
+      playing();
+      return Promise.resolve();
+    };
+    recordings.push(audio);
+    return audio;
+  }
+  const context = vm.createContext({ window, document, location, Audio: MockAudio, history: { replaceState(_, __, url) { location.hash = url.includes('#') ? '#' + url.split('#')[1] : ''; } }, localStorage: {getItem: key => storage.get(key) ?? null, setItem: (key, value) => storage.set(key, value)}, console });
   vm.runInContext(read('soundboard/catalog.js'), context);
+  vm.runInContext(read('soundboard/playback.js'), context);
   vm.runInContext(read('soundboard/app.js'), context);
   return {
-    window, document, audio, dialog,
+    window, document, dialog, recordings, mediaOptions,
+    get audio() { return recordings.at(-1); },
     get focused() { return focused; },
     route(hash) { location.hash = hash; window.dispatchEvent(new Event('hashchange')); },
     click(selector) {
@@ -95,25 +111,32 @@ test('selection and voice screens reuse each complete transparent character imag
   }
 });
 
-test('command clicks select valid recordings without immediate repetition; player pauses and resumes', async () => {
+test('repeated and different commands overlap; volume and mute affect every active recording', async () => {
   const a = app('#agatha/vanguard');
   const selector = '[data-action="random"][data-id="personal-8"]';
   const files = a.window.CHIVALRY_CATALOG.agatha.vanguard.personal[8].clips.map(c => c.file);
   let last;
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 4; i++) {
     a.click(selector); await tick();
     assert.ok(files.includes(a.audio.src));
     assert.notEqual(a.audio.src, last);
     last = a.audio.src;
   }
-  assert.equal(a.document.querySelector('.player').hidden, false);
-  assert.ok(a.document.querySelector('[data-command="personal-8"]').classList.contains('is-playing'));
-  a.click('.player-toggle'); assert.equal(a.audio.paused, true);
-  a.click('.player-toggle'); await tick(); assert.equal(a.audio.paused, false);
-  a.input('#volume', '0.35'); assert.equal(a.audio.volume, 0.35);
-  a.click('#mute'); assert.equal(a.audio.muted, true);
-  a.click('#mute'); assert.equal(a.audio.muted, false);
-  a.input('#seek', '50'); assert.equal(a.audio.currentTime, 2);
+  a.click('[data-action="random"][data-id="personal-0"]'); await tick();
+  assert.equal(a.recordings.length, 5);
+  assert.ok(a.recordings.every(audio => !audio.paused));
+  assert.match(a.document.querySelector('[data-command="personal-8"] .playback-status').textContent, /4 playing/);
+  assert.match(a.document.querySelector('[data-command="personal-0"] .playback-status').textContent, /Playing Version/);
+  assert.equal(a.document.querySelector('.player'), null);
+  a.input('#volume', '0.35'); assert.ok(a.recordings.every(audio => audio.volume === 0.35));
+  a.click('#mute'); assert.ok(a.recordings.every(audio => audio.muted));
+  a.click('[data-action="random"]'); await tick();
+  assert.equal(a.audio.muted, true); assert.equal(a.audio.volume, 0.35);
+  a.click('#mute'); assert.ok(a.recordings.every(audio => !audio.muted));
+  a.click('[data-action="stop-all"]');
+  assert.ok(a.recordings.every(audio => audio.paused && audio.released));
+  assert.equal(a.document.querySelectorAll('.is-playing').length, 0);
+  assert.equal(a.document.querySelector('#active-count').textContent, 'No voices playing');
 });
 
 test('three-dot picker plays exact versions, restores focus, and also supports battle cry', async () => {
@@ -138,21 +161,22 @@ test('navigation and stop clean up audio; invalid routes recover safely; menu ke
   a.click('[data-action="random"]'); await tick();
   a.click('[data-action="versions"]'); assert.equal(a.dialog.open, true);
   a.dialog.dispatchEvent(new a.window.Event('cancel', { cancelable: true })); assert.equal(a.dialog.open, false);
-  a.route('#masons'); assert.equal(a.audio.paused, true); assert.equal(a.document.querySelector('.player').hidden, true);
+  a.route('#masons'); assert.equal(a.audio.paused, true); assert.equal(a.document.querySelector('.sound-controls').hidden, true);
   assert.equal(a.document.querySelectorAll('.class-card').length, 4);
   a.route('#masons/vanguard');
-  a.click('[data-action="random"]'); await tick(); a.click('[data-action="stop"]'); assert.equal(a.document.querySelector('.player').hidden, true);
+  a.click('[data-action="random"]'); await tick(); a.click('[data-action="stop-all"]'); assert.equal(a.document.querySelectorAll('.is-playing').length, 0);
   a.route('#toString/__proto__'); assert.equal(a.document.querySelectorAll('.faction-card').length, 2);
   a.route('#agatha/unknown'); assert.equal(a.document.querySelectorAll('.class-card').length, 4);
 });
 
-test('failed playback offers retry and does not leave the recording highlighted as playing', async () => {
+test('failed playback clears only its own state and allows playing again', async () => {
   const a = app('#agatha/vanguard');
-  a.audio.rejectNext = true;
+  a.mediaOptions.rejectNext = true;
   a.click('[data-action="random"]'); await tick();
   assert.equal(a.document.querySelector('.audio-error').hidden, false);
   assert.equal(a.document.querySelectorAll('.is-playing').length, 0);
-  a.click('[data-action="retry"]'); await tick();
+  assert.ok(a.audio.released);
+  a.click('[data-action="random"]'); await tick();
   assert.equal(a.document.querySelector('.audio-error').hidden, true);
   assert.equal(a.audio.paused, false);
 });
@@ -215,4 +239,90 @@ test('malformed, obsolete or blocked storage falls back safely; session choices 
   const file = a.audio.src;
   a.click('[data-action="random"][data-id="personal-4"]'); await tick();
   assert.equal(a.audio.src, file);
+});
+
+test('temporary random feedback tracks remaining voices and disappears when the last one ends', async () => {
+  const a = app('#agatha/vanguard');
+  const command = '[data-action="random"][data-id="personal-8"]';
+  const row = a.document.querySelector('[data-command="personal-8"]');
+  a.click(command); await tick();
+  const first = a.audio;
+  const firstStatus = row.querySelector('.playback-status').textContent;
+  assert.match(firstStatus, /^Playing Version \d+$/);
+  assert.equal(row.querySelector('.version-label').hidden, true);
+  assert.equal(row.querySelector('.equalizer').hidden, false);
+  assert.equal(row.querySelector('.command-play').getAttribute('aria-describedby'), 'playback-personal-8');
+  a.click(command); await tick();
+  assert.match(row.querySelector('.playback-status').textContent, /2 playing/);
+  a.audio.finish();
+  assert.equal(first.paused, false);
+  assert.equal(row.querySelector('.playback-status').textContent, firstStatus);
+  first.finish();
+  assert.equal(row.querySelector('.playback-feedback').hidden, true);
+  assert.equal(row.querySelector('.playback-status').textContent, '');
+  assert.equal(row.querySelector('.command-play').hasAttribute('aria-describedby'), false);
+  assert.equal(row.classList.contains('is-playing'), false);
+  assert.ok(a.recordings.every(audio => audio.released));
+});
+
+test('saved version badges survive completion and changes while earlier recordings keep playing', async () => {
+  const a = app('#agatha/vanguard');
+  const row = a.document.querySelector('[data-command="personal-4"]');
+  a.click('[data-action="versions"][data-id="personal-4"]');
+  a.click('[data-version="2"]'); await tick();
+  const chosen = a.audio;
+  chosen.finish();
+  assert.equal(row.querySelector('.version-label').textContent, 'Version 3');
+  assert.equal(row.querySelector('.version-label').hidden, false);
+  assert.equal(row.querySelector('.playback-feedback').hidden, true);
+  a.click('[data-action="random"][data-id="personal-4"]'); await tick();
+  const pinned = a.audio;
+  a.click('[data-action="versions"][data-id="personal-4"]');
+  a.click('[data-version="random"]'); await tick();
+  assert.equal(row.querySelector('.version-label').hidden, true);
+  assert.equal(pinned.paused, false);
+  assert.match(row.querySelector('.playback-status').textContent, /2 playing/);
+});
+
+test('three-dot menu can stop one of several instances without stopping the others or changing preferences', async () => {
+  const storage = new Map();
+  const a = app('#masons/knight', storage);
+  a.click('[data-action="versions"][data-id="personal-8"]');
+  a.click('[data-version="1"]'); await tick();
+  a.click('[data-action="random"][data-id="personal-8"]'); await tick();
+  a.click('[data-action="random"][data-id="personal-0"]'); await tick();
+  a.click('[data-action="versions"][data-id="personal-8"]');
+  assert.equal(a.document.querySelectorAll('.active-recording').length, 2);
+  a.click('[data-action="stop-one"][data-playback="1"]');
+  assert.equal(a.recordings[0].released, true);
+  assert.ok(a.recordings.slice(1).every(audio => !audio.paused));
+  assert.equal(a.document.querySelectorAll('.active-recording').length, 1);
+  a.recordings[1].finish();
+  assert.equal(a.document.querySelector('#active-recordings').hidden, true);
+  assert.equal(a.audio.paused, false);
+  assert.equal(a.document.querySelector('[data-command="personal-8"] .version-label').textContent, 'Version 2');
+  assert.equal(Object.keys(JSON.parse(storage.get('chivalry-command-versions'))).length, 1);
+});
+
+test('pending playback, errors and late events cannot revive stopped voices or disturb other commands', async () => {
+  const a = app('#agatha/vanguard');
+  a.mediaOptions.deferNext = true;
+  a.click('[data-action="random"][data-id="personal-8"]');
+  const pending = a.audio;
+  const row = a.document.querySelector('[data-command="personal-8"]');
+  assert.match(row.querySelector('.playback-status').textContent, /Loading Version/);
+  assert.equal(row.querySelector('.equalizer').hidden, true);
+  a.click('[data-action="stop-all"]');
+  a.click('[data-action="random"][data-id="personal-0"]'); await tick();
+  pending.rejectPlay(new Error('late rejection')); await tick();
+  assert.equal(a.document.querySelector('.audio-error').hidden, true);
+  assert.equal(a.document.querySelectorAll('.is-playing').length, 1);
+  assert.equal(a.audio.paused, false);
+  a.click('[data-action="random"][data-id="personal-8"]'); await tick();
+  a.audio.dispatchEvent(new a.window.Event('error'));
+  assert.equal(row.querySelector('.playback-feedback').hidden, true);
+  assert.equal(a.recordings[1].paused, false);
+  a.window.dispatchEvent(new a.window.Event('pagehide'));
+  assert.ok(a.recordings.every(audio => audio.released));
+  assert.equal(a.document.querySelectorAll('.is-playing').length, 0);
 });

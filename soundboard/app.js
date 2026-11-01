@@ -11,7 +11,6 @@
   const emblemSheet = {file: 'soundboard/assets/faction-emblems.png', width: 1774, height: 887};
   const icons = {
     play: '<path d="m7 4 14 8L7 20Z" fill="currentColor"/>',
-    pause: '<path d="M6 4h4v16H6zm8 0h4v16h-4z" fill="currentColor"/>',
     back: '<path d="m15 4-8 8 8 8"/>',
     speaker: '<path d="M4 9h4l5-4v14l-5-4H4zM17 8q5 4 0 8m3-11q7 7 0 14"/>',
     mute: '<path d="M4 9h4l5-4v14l-5-4H4zm13 0 5 6m0-6-5 6"/>',
@@ -20,12 +19,10 @@
   const icon = (name, css = '') => `<svg class="${css}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">${icons[name]}</svg>`;
   const escape = text => String(text).replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]));
   const main = document.querySelector('main');
-  const audio = document.querySelector('#audio');
-  const player = document.querySelector('.player');
+  const controls = document.querySelector('.sound-controls');
   const dialog = document.querySelector('#versions');
   const announcement = document.querySelector('#announcement');
   const error = document.querySelector('.audio-error');
-  const seek = document.querySelector('#seek');
   const volume = document.querySelector('#volume');
   const lastVersions = new Map();
   const preferenceKey = 'chivalry-command-versions';
@@ -39,12 +36,17 @@
     }
   } catch { /* Preferences remain available in memory when storage is unavailable. */ }
   let route = {};
-  let current = null;
   let pickerCommand = null;
   let pickerTrigger = null;
-  let playbackRequest = 0;
   let initialized = false;
   let artworkSerial = 0;
+  const playback = new window.ChivalryPlayback({
+    onChange: updatePlayback,
+    onError: ({command, version}) => {
+      error.textContent = `Unable to play ${command.name}, Version ${version + 1}. Tap the command to try again.`;
+      error.hidden = false;
+    },
+  });
 
   function artwork(faction, cls = null) {
     const label = cls ? `${factions[faction].name} ${classes[cls]}` : `${factions[faction].name} emblem`;
@@ -84,6 +86,7 @@
     try { localStorage.setItem(preferenceKey, JSON.stringify(Object.fromEntries(versionPreferences))); }
     catch { /* Playback and the current session still work with storage disabled. */ }
     updatePreferenceLabels();
+    updatePlayback();
   }
   function updatePreferenceLabels() {
     document.querySelectorAll('[data-command]').forEach(row => {
@@ -111,7 +114,7 @@
     const version = preferredVersion(command);
     const label = version === null ? `Play a random ${command.name} recording` : `Play ${command.name}, Version ${version + 1}`;
     return `<div class="command-row${battle ? ' battlecry' : ''}" data-command="${command.id}">
-      <button class="command-play" type="button" data-action="random" data-id="${command.id}" aria-label="${escape(label)}">${battle ? icon('horn', 'horn-icon') : ''}${icon('play', 'play-icon')}<span class="command-label"><span>${escape(command.name)}</span><small class="version-label"${version === null ? ' hidden' : ''}>${version === null ? '' : `Version ${version + 1}`}</small></span></button>
+      <button class="command-play" type="button" data-action="random" data-id="${command.id}" aria-label="${escape(label)}">${battle ? icon('horn', 'horn-icon') : ''}${icon('play', 'play-icon')}<span class="command-label"><span>${escape(command.name)}</span><small class="version-label"${version === null ? ' hidden' : ''}>${version === null ? '' : `Version ${version + 1}`}</small><span class="playback-feedback" hidden><span class="equalizer" aria-hidden="true"><i></i><i></i><i></i></span><small class="playback-status" id="playback-${command.id}"></small></span></span></button>
       <button class="version-trigger" type="button" data-action="versions" data-id="${command.id}" aria-label="Choose a ${escape(command.name)} version" aria-haspopup="dialog" aria-controls="versions">•••</button></div>`;
   }
   function renderVoices() {
@@ -120,7 +123,7 @@
       <div class="voice-layout"><aside class="steel identity-panel" aria-label="Selected voice">${artwork(route.faction)}${artwork(route.faction, route.cls)}<div class="identity-copy"><h2>${classes[route.cls]}</h2><p>${f.name}</p></div>
       <div class="identity-actions"><a class="steel-button" href="#${route.faction}">Change class</a><a class="steel-button" href="#">Change faction</a></div><a class="identity-change" href="#${route.faction}" aria-label="Change class; ${classes[route.cls]} currently selected">Change ›</a></aside>
       <div class="command-area">${[['personal', 'Personal Messages'], ['tactical', 'Tactical Messages']].map(([group, label]) => `<section class="steel command-panel" aria-labelledby="${group}-title"><h2 id="${group}-title">${label}</h2><div class="commands">${groups[group].map(c => commandRow(c)).join('')}</div></section>`).join('')}
-      ${commandRow(groups.battlecry[0], true)}<p class="voice-help">Tap to play. Use <strong>•••</strong> to save a favorite version, or choose Random version.</p></div></div></section>`;
+      ${commandRow(groups.battlecry[0], true)}<p class="voice-help">Tap to play. Voices can overlap. Use <strong>•••</strong> to choose a version or stop a recording.</p></div></div></section>`;
   }
   function closePicker() {
     if (!dialog.open) return;
@@ -128,18 +131,9 @@
     if (pickerTrigger?.isConnected) pickerTrigger.focus();
     pickerCommand = null;
   }
-  function stop() {
-    playbackRequest++;
-    audio.pause();
-    audio.removeAttribute('src');
-    audio.load();
-    current = null;
-    player.hidden = true;
+  function stopAll() {
+    playback.stopAll();
     error.hidden = true;
-    document.body.classList.remove('has-audio');
-    seek.value = '0';
-    seek.disabled = true;
-    updateHighlights();
   }
   function renderRoute() {
     const parts = location.hash.slice(1).split('/').filter(Boolean);
@@ -151,10 +145,11 @@
       catch { /* Some file:// browsers disallow URL normalization; the route is still safe. */ }
     }
     closePicker();
-    stop();
+    stopAll();
     route = {faction, cls};
     document.body.style.setProperty('--faction', faction ? factions[faction].color : factions.agatha.color);
     document.body.dataset.stage = cls ? 'voice' : faction ? 'class' : 'faction';
+    controls.hidden = !cls;
     main.innerHTML = cls ? renderVoices() : faction ? renderClasses() : renderFactions();
     document.title = `${cls ? classes[cls] + ' · ' : ''}${faction ? factions[faction].name + ' · ' : ''}Chivalry Voice Commands`;
     const step = cls ? 'voice' : faction ? 'class' : 'faction';
@@ -173,21 +168,48 @@
     }
     initialized = true;
   }
-  function updateHighlights() {
-    document.querySelectorAll('[data-command]').forEach(row => row.classList.toggle('is-playing', !!current && !audio.paused && row.dataset.command === current.command.id));
-    const toggle = document.querySelector('.player-toggle');
-    toggle.innerHTML = icon(audio.paused ? 'play' : 'pause');
-    toggle.setAttribute('aria-label', audio.paused ? 'Resume playback' : 'Pause playback');
+  function updatePlayback() {
+    const active = playback.active;
+    const playingCount = active.filter(entry => entry.state === 'playing').length;
+    const loadingCount = active.length - playingCount;
+    document.querySelector('#active-count').textContent = active.length
+      ? [playingCount ? `${playingCount} playing` : '', loadingCount ? `${loadingCount} loading` : ''].filter(Boolean).join(' · ')
+      : 'No voices playing';
+    document.querySelector('[data-action="stop-all"]').disabled = !active.length;
+    document.querySelectorAll('[data-command]').forEach(row => {
+      const entries = active.filter(entry => entry.command.id === row.dataset.command);
+      const playing = entries.filter(entry => entry.state === 'playing');
+      row.classList.toggle('is-playing', !!playing.length);
+      row.classList.toggle('is-loading', !!entries.length && !playing.length);
+      const feedback = row.querySelector('.playback-feedback');
+      feedback.hidden = !entries.length;
+      row.querySelector('.equalizer').hidden = !playing.length;
+      const status = row.querySelector('.playback-status');
+      const button = row.querySelector('.command-play');
+      if (entries.length) button.setAttribute('aria-describedby', status.id);
+      else button.removeAttribute('aria-describedby');
+      if (entries.length === 1) {
+        status.textContent = `${playing.length ? 'Playing' : 'Loading'} Version ${entries[0].version + 1}`;
+      } else if (entries.length) {
+        const versions = [...new Set(entries.map(entry => entry.version + 1))];
+        const summary = versions.slice(0, 3).join(', ') + (versions.length > 3 ? '…' : '');
+        status.textContent = `${playing.length} playing${entries.length > playing.length ? ` · ${entries.length - playing.length} loading` : ''} · ${versions.length === 1 ? 'Version' : 'Versions'} ${summary}`;
+      } else status.textContent = '';
+    });
+    updateActiveRecordings();
   }
-  function updateProgress() {
-    const duration = audio.duration;
-    document.querySelector('#elapsed').textContent = clock(audio.currentTime);
-    document.querySelector('#duration').textContent = clock(duration);
-    seek.disabled = !Number.isFinite(duration) || duration <= 0;
-    seek.value = seek.disabled ? '0' : String(audio.currentTime / duration * 100);
-    seek.setAttribute('aria-valuetext', `${clock(audio.currentTime)} of ${clock(duration)}`);
+  function updateActiveRecordings() {
+    if (!dialog.open || !pickerCommand) return;
+    const entries = playback.active.filter(entry => entry.command.id === pickerCommand.id);
+    const section = document.querySelector('#active-recordings');
+    section.hidden = !entries.length;
+    const focused = document.activeElement?.dataset.playback;
+    document.querySelector('#active-recording-list').innerHTML = entries.map(entry =>
+      `<div class="active-recording"><span>Version ${entry.version + 1}<small>${entry.state === 'playing' ? 'Playing' : 'Loading'}</small></span><button type="button" data-action="stop-one" data-playback="${entry.id}" aria-label="Stop ${escape(entry.command.name)}, Version ${entry.version + 1}">Stop</button></div>`
+    ).join('');
+    if (focused) (dialog.querySelector(`[data-playback="${focused}"]`) || dialog.querySelector('[data-version="random"]'))?.focus();
   }
-  async function play(command, version = null) {
+  function play(command, version = null) {
     if (!command?.clips.length) return;
     const key = commandKey(command);
     if (version === null) {
@@ -197,22 +219,9 @@
     }
     if (!Number.isInteger(version) || !command.clips[version]) return;
     lastVersions.set(key, version);
-    const request = ++playbackRequest;
-    audio.pause();
-    audio.src = command.clips[version].file;
-    current = {command, version};
-    player.hidden = false;
     error.hidden = true;
-    document.body.classList.add('has-audio');
-    document.querySelector('#playing-command').textContent = command.name;
-    document.querySelector('#playing-version').textContent = `${factions[route.faction].short} ${classes[route.cls]} · Version ${version + 1}`;
     announcement.textContent = `${command.name}, version ${version + 1}`;
-    updateProgress();
-    try { await audio.play(); }
-    catch (failure) {
-      if (request === playbackRequest && failure.name !== 'AbortError') error.hidden = false;
-    }
-    if (request === playbackRequest) updateHighlights();
+    playback.start(command, version);
   }
   function openPicker(command, trigger) {
     if (!command) return;
@@ -222,6 +231,7 @@
     document.querySelector('#versions-title').textContent = command.name;
     document.querySelector('#version-list').innerHTML = `<button type="button" class="version-option" data-action="pick" data-version="random"${selected === null ? ' aria-current="true"' : ''}>Random version ${icon('play')}</button>` + command.clips.map((clip, i) => `<button type="button" class="version-option" data-action="pick" data-version="${i}"${selected === i ? ' aria-current="true"' : ''}>Version ${i + 1}<small>${clock(clip.duration)}</small>${icon('play')}</button>`).join('');
     dialog.showModal();
+    updateActiveRecordings();
   }
   document.addEventListener('click', event => {
     const disabled = event.target.closest('a[aria-disabled="true"]');
@@ -245,13 +255,12 @@
         play(command, version);
         break;
       }
-      case 'toggle':
-        if (!current) break;
-        if (audio.paused) audio.play().catch(() => { error.hidden = false; });
-        else audio.pause();
+      case 'stop-all': stopAll(); break;
+      case 'stop-one': {
+        playback.stop(button.dataset.playback);
+        (dialog.querySelector('[data-action="stop-one"]') || dialog.querySelector('[data-version="random"]'))?.focus();
         break;
-      case 'stop': stop(); break;
-      case 'retry': if (current) play(current.command, current.version); break;
+      }
     }
   });
   dialog.addEventListener('click', event => {
@@ -260,34 +269,28 @@
     if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) closePicker();
   });
   dialog.addEventListener('cancel', event => { event.preventDefault(); closePicker(); });
-  ['play', 'pause', 'ended'].forEach(event => audio.addEventListener(event, updateHighlights));
-  ['loadedmetadata', 'timeupdate', 'durationchange', 'emptied'].forEach(event => audio.addEventListener(event, updateProgress));
-  audio.addEventListener('error', () => { if (current) error.hidden = false; });
-  seek.addEventListener('input', () => { if (Number.isFinite(audio.duration) && audio.duration > 0) audio.currentTime = Number(seek.value) / 100 * audio.duration; });
   function updateVolume() {
-    document.querySelector('#mute').innerHTML = icon(audio.muted || audio.volume === 0 ? 'mute' : 'speaker');
-    document.querySelector('#mute').setAttribute('aria-label', audio.muted ? 'Unmute' : 'Mute');
+    document.querySelector('#mute').innerHTML = icon(playback.muted || playback.volume === 0 ? 'mute' : 'speaker');
+    document.querySelector('#mute').setAttribute('aria-label', playback.muted ? 'Unmute' : 'Mute');
   }
   volume.addEventListener('input', () => {
-    audio.volume = Number(volume.value);
-    audio.muted = false;
+    playback.setVolume(Number(volume.value));
+    playback.setMuted(false);
     updateVolume();
     try { localStorage.setItem('chivalry-volume', volume.value); } catch { /* Storage is optional for file URLs. */ }
   });
-  document.querySelector('#mute').addEventListener('click', () => { audio.muted = !audio.muted; updateVolume(); });
+  document.querySelector('#mute').addEventListener('click', () => { playback.setMuted(!playback.muted); updateVolume(); });
   try {
     const saved = localStorage.getItem('chivalry-volume');
     if (saved !== null && Number.isFinite(Number(saved))) volume.value = String(Math.max(0, Math.min(1, Number(saved))));
   } catch { /* The soundboard also works with storage disabled. */ }
-  audio.volume = Number(volume.value);
+  playback.setVolume(Number(volume.value));
   updateVolume();
   window.addEventListener('hashchange', renderRoute);
+  window.addEventListener('pagehide', stopAll);
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && dialog.open) closePicker();
-    if (event.code === 'Space' && !dialog.open && current && event.target === document.body) {
-      event.preventDefault();
-      document.querySelector('.player-toggle').click();
-    }
+
   });
   if (!catalog || !Object.keys(catalog).length) {
     main.innerHTML = '<p class="notice">The voice collection could not be loaded. Please open the <a href="index.html">full collection</a>.</p>';

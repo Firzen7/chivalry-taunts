@@ -6,13 +6,22 @@ Open **../soundboard.html** directly in a browser, or serve the project root wit
 
 Choose Agatha or Masons, then Archer, Man-at-Arms, Vanguard, or Knight. The URL records the selection, so links can be bookmarked and browser Back/Forward work.
 
-The voice page has both ten-command menus and a separate Battle cry. By default, a command plays a random recording, avoiding the immediately previous take when alternatives exist. Each three-dot menu opens an accessible version picker with a random option and numbered individual recordings. Choosing a specific recording saves it in local storage for that faction, class, and command (including Battle cry). A gold “Version 3” label appears beside the command name, and subsequent command clicks play that chosen recording. The selection survives reloads. Choose “Random version” to remove the label and restore random playback. Saved choices use recording paths so catalog reordering cannot silently change the chosen take. If a saved recording is no longer available, that command falls back to random playback. If browser storage is disabled, selections still work for the current session. Desktop uses a dialog; on narrow screens it becomes a bottom sheet. The player supports pause/resume, seeking, mute, volume, and stop. Volume is remembered when browser storage is available. Navigation stops audio and closes the picker. Space toggles playback when the page body has focus; Escape dismisses the picker.
+The voice page has both ten-command menus and a separate Battle cry. Every click starts an independent recording, so different commands and repeated copies of one command can overlap. By default, random playback avoids the immediately previous take when alternatives exist.
+
+Playback feedback lives beside each command: its version number and a small animated equalizer appear while playing. Random-version feedback disappears when the recording ends. Multiple copies show a playing count and the active version numbers; the count updates as each finishes. Loading recordings have a text-only indicator. Reduced-motion users get static equalizer bars. There is no separate player dashboard.
+
+The compact sticky sound-control bar provides master volume, mute, and **Stop all**, including on mobile. Volume changes affect all current voices and future clicks, and are remembered when browser storage is available. The three-dot menu also lists that command's active recordings, each with its own Stop button. Navigation or leaving the page releases all playing and pending media. A failed recording cleans up without stopping other voices.
+
+Choosing a specific recording in the three-dot menu saves it in local storage for that faction, class, and command (including Battle cry). A gold “Version 3” label stays beside the command name, even after playback ends. Subsequent clicks start that chosen take again, and the selection survives reloads. Choose “Random version” to clear the saved choice and restore random playback; recordings already playing continue until they finish or are stopped. Saved choices use recording paths so catalog reordering cannot silently change the chosen take. Unavailable saved recordings fall back to random playback. If browser storage is disabled, selections still work for the current session.
+
+Desktop uses a version dialog; on narrow screens it becomes a bottom sheet. Escape dismisses the picker. Keyboard users can start voices, select recordings, stop individual instances, and use Stop all through the regular buttons.
 
 The playable recordings follow the 168 verified assignments in the game's class definitions. Extra, unused, and barbarian takes remain available through **Full collection**, rather than being mixed into the original voice command sets.
 
 ## Files and shared artwork
 
-- `app.js`: rendering, hash navigation, version selection, and the shared audio player.
+- `app.js`: rendering, hash navigation, saved preferences, and inline playback feedback.
+- `playback.js`: independent media instances, shared volume, lifecycle cleanup, and per-instance/all-instance stopping.
 - `style.css`: responsive layout, materials, and typography.
 - `catalog.js`: generated, compact command/recording data; no fetch or server required.
 - `assets/castle.png`: clean backdrop, generated with the built-in image tool from the approved faction-design reference. Prompt: “Remove all interface panels, typography, logos, characters, heraldic overlays, cards, borders, buttons and triquetras; only a moonlit medieval castle courtyard and ramparts matching the approved design, dim navy center space for HTML controls.”
@@ -38,4 +47,4 @@ npm install
 npm test
 ```
 
-The only npm dependency is a development-only DOM implementation. The website itself has no framework, third-party scripts, CDN requests, or installation step. The tests check the actual DOM, menu coverage, audio paths, random selection, exact-version playback, navigation cleanup, picker focus, player controls, media-error recovery, preference persistence across reloads, character isolation, restoring random playback, and unavailable or malformed storage. They simulate media events; real browser rendering and media-device playback require browser QA.
+The only npm dependency is a development-only DOM implementation. The website itself has no framework, third-party scripts, CDN requests, or installation step. The tests check the actual DOM, menu coverage, audio paths, random selection, exact-version playback, navigation cleanup, picker focus, overlapping instances, inline status cleanup, global sound controls, per-instance stopping, loading/error recovery, late media events, preference persistence across reloads, character isolation, restoring random playback, and unavailable or malformed storage. They simulate media events; real browser rendering and media-device playback require browser QA.

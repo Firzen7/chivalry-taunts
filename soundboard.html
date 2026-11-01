@@ -8,6 +8,7 @@
   <title>Chivalry · Voice commands</title>
   <link rel="stylesheet" href="soundboard/style.css">
   <script defer src="soundboard/catalog.js"></script>
+  <script defer src="soundboard/playback.js"></script>
   <script defer src="soundboard/app.js"></script>
 </head>
 <body>
@@ -21,24 +22,24 @@
     </nav>
     <a class="collection-link" href="index.html">Full collection <span aria-hidden="true">↗</span></a>
   </header>
+  <section class="sound-controls" aria-label="Sound controls" hidden>
+    <div class="sound-controls-row">
+      <button class="icon-button" id="mute" type="button" aria-label="Mute"></button>
+      <label class="volume-label"><span class="sr-only">Volume</span><input id="volume" type="range" min="0" max="1" step="0.05" value="0.8"></label>
+      <span id="active-count">No voices playing</span>
+      <button class="stop-all" type="button" data-action="stop-all" disabled>Stop all</button>
+    </div>
+    <p class="audio-error" role="alert" hidden></p>
+  </section>
   <main id="main" tabindex="-1"></main>
   <noscript><p class="notice">Please enable JavaScript to choose a voice and play recordings. You can also open the <a href="index.html">full collection</a>.</p></noscript>
   <footer class="site-footer"><span>Chivalry: Medieval Warfare</span><span>A fan-made voice collection · <a href="index.html">Browse all recordings</a></span></footer>
-  <section class="player" aria-label="Audio playback" hidden>
-    <button class="player-toggle icon-button" type="button" aria-label="Pause" data-action="toggle"></button>
-    <div class="player-track"><strong id="playing-command">Choose a command</strong><span id="playing-version"></span></div>
-    <span class="time" id="elapsed">0:00</span>
-    <label class="seek-label"><span class="sr-only">Playback position</span><input id="seek" type="range" min="0" max="100" step="0.1" value="0" disabled></label>
-    <span class="time" id="duration">0:00</span>
-    <button class="icon-button" id="mute" type="button" aria-label="Mute"></button>
-    <label class="volume-label"><span class="sr-only">Volume</span><input id="volume" type="range" min="0" max="1" step="0.05" value="0.8"></label>
-    <button class="icon-button player-close" type="button" aria-label="Stop playback" data-action="stop">×</button>
-  </section>
-  <p class="audio-error notice" role="alert" hidden>Unable to play this recording. <button type="button" data-action="retry">Try again</button></p>
   <p id="announcement" class="sr-only" role="status" aria-live="polite"></p>
-  <audio id="audio" preload="none"></audio>
   <dialog id="versions" aria-labelledby="versions-title">
     <header class="dialog-header"><div><small>Choose a version</small><h2 id="versions-title"></h2></div><button type="button" class="icon-button" data-action="close-versions" aria-label="Close version picker">×</button></header>
+    <section id="active-recordings" aria-label="Active recordings" hidden>
+      <h3>Playing now</h3><div id="active-recording-list"></div>
+    </section>
     <div id="version-list"></div>
     <p class="dialog-note">Your choice is remembered for this character. Choose Random version to shuffle again.</p>
   </dialog>
