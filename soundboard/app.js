@@ -291,6 +291,8 @@
         const command = pickerCommand;
         const version = button.dataset.version === 'random' ? null : Number(button.dataset.version);
         if (!command || version !== null && (!Number.isInteger(version) || !command.clips[version])) break;
+        // Audition a take on its own; the main command buttons still allow layering.
+        stopAll();
         saveVersion(command, version);
         play(command, version);
         break;

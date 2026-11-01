@@ -286,7 +286,7 @@ test('temporary random feedback tracks remaining voices and disappears when the 
   assert.ok(a.recordings.every(audio => audio.released));
 });
 
-test('saved version badges survive completion and changes while earlier recordings keep playing', async () => {
+test('saved badges survive completion and selecting Random replaces the earlier preview', async () => {
   const a = app('#agatha/vanguard');
   const row = a.document.querySelector('[data-command="personal-4"]');
   a.click('[data-action="versions"][data-id="personal-4"]');
@@ -301,8 +301,9 @@ test('saved version badges survive completion and changes while earlier recordin
   a.click('[data-action="versions"][data-id="personal-4"]');
   a.click('[data-version="random"]'); await tick();
   assert.equal(row.querySelector('.version-label').hidden, true);
-  assert.equal(pinned.paused, false);
-  assert.match(row.querySelector('.playback-status').textContent, /2 playing/);
+  assert.equal(pinned.paused, true);
+  assert.equal(pinned.released, true);
+  assert.match(row.querySelector('.playback-status').textContent, /^Playing Version/);
 });
 
 test('variant auditions keep the dialog structure stable with only an inline equalizer', async () => {
@@ -352,7 +353,7 @@ test('pending playback, errors and late events cannot revive stopped voices or d
   assert.equal(a.document.querySelectorAll('.is-playing').length, 0);
 });
 
-test('picker stays open for auditioning and every variant independently reports overlapping playback', async () => {
+test('picker stays open while variant previews replace each other, including repeated selections', async () => {
   const a = app('#agatha/vanguard');
   a.click('[data-action="versions"][data-id="personal-8"]');
   const first = a.document.querySelector('[data-version="0"]');
@@ -365,12 +366,17 @@ test('picker stays open for auditioning and every variant independently reports 
   assert.equal(first.querySelector('.variant-state').textContent, 'Playing');
   a.click(second); await tick();
   assert.equal(a.dialog.open, true);
-  assert.equal(first.classList.contains('is-playing'), true);
+  assert.equal(first.classList.contains('is-playing'), false);
+  assert.equal(firstAudio.paused, true);
+  assert.equal(firstAudio.released, true);
   assert.equal(second.classList.contains('is-playing'), true);
   assert.equal(first.hasAttribute('aria-current'), false);
   assert.equal(second.getAttribute('aria-current'), 'true');
+  const previousSecond = a.audio;
   a.click(second); await tick();
-  assert.equal(second.querySelector('.variant-state').textContent, '2 playing');
+  assert.equal(previousSecond.released, true);
+  assert.equal(second.querySelector('.variant-state').textContent, 'Playing');
+  assert.equal(a.recordings.filter(audio => !audio.paused).length, 1);
   firstAudio.finish();
   assert.equal(first.querySelector('.equalizer').hidden, true);
   assert.equal(first.classList.contains('is-playing'), false);
@@ -456,4 +462,27 @@ test('viewport-height changes avoid layout measurements; only changed toolbar he
   a.metrics.barHeight = 96;
   a.metrics.observedResize();
   assert.match(a.document.documentElement.style.getPropertyValue('--controls-clearance'), /128px/);
+});
+
+
+test('picker previews stop existing mixed voices and pending previews; main buttons can still overlap afterward', async () => {
+  const a = app('#agatha/vanguard');
+  a.click('[data-action="random"][data-id="personal-0"]');
+  a.click('[data-action="random"][data-id="personal-8"]'); await tick();
+  const mixed = [...a.recordings];
+  a.click('[data-action="versions"][data-id="personal-4"]');
+  a.mediaOptions.deferNext = true;
+  a.click('[data-version="0"]');
+  const pending = a.audio;
+  assert.ok(mixed.every(audio => audio.paused && audio.released));
+  a.click('[data-version="1"]'); await tick();
+  assert.equal(pending.released, true);
+  assert.equal(a.recordings.filter(audio => !audio.paused).length, 1);
+  pending.rejectPlay(new Error('Interrupted preview')); await tick();
+  assert.equal(a.document.querySelector('.audio-error').hidden, true);
+  assert.equal(a.audio.paused, false);
+  a.click('[data-action="close-versions"]');
+  a.click('[data-action="random"][data-id="personal-4"]');
+  a.click('[data-action="random"][data-id="personal-8"]'); await tick();
+  assert.equal(a.recordings.filter(audio => !audio.paused).length, 3);
 });
