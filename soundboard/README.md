@@ -66,3 +66,9 @@ The script leaves source PNGs intact. All 27 delivery files, including all portr
 Deploy the updated `index.html`, `soundboard/app.js`, `soundboard/style.css`, and the complete `soundboard/assets/optimized/` directory. The HTML uses a new CSS/JS query version to avoid reusing stale cached files. No new runtime dependencies are required.
 
 Phone frame rates still need an on-device check. These changes target likely paint/compositing and image-memory costs identified in the code; a Motorola G72 trace was not available. For further diagnosis, Chrome's [rendering performance tools](https://developer.chrome.com/docs/devtools/rendering/performance) can highlight repaint regions. Browser guidance also covers [responsive background images](https://web.dev/articles/optimize-css-background-images-with-media-queries).
+
+## Shared-link preview
+
+The static `<head>` in `index.html` contains Open Graph metadata and a large-image sharing card, pointing to `https://tmp.firzen.net/soundboard/assets/link-preview.png`. Deploy `index.html` together with `soundboard/assets/link-preview.png`. The image dimensions, PNG media type, and descriptive alternative text are included so crawlers can read them without running JavaScript.
+
+The configured site address is `https://tmp.firzen.net/`. When moving to a different host, update the canonical URL, `og:url`, `og:image`, and `twitter:image` URLs in `index.html` to the new public HTTPS address. The Open Graph fields follow the [Open Graph protocol](https://ogp.me/).
