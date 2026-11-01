@@ -535,12 +535,17 @@ main {
   font-size: .68rem;
   letter-spacing: .02em;
 }
+body[data-stage="voice"] {
+  padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px));
+}
 .sound-controls {
-  position: sticky;
-  top: 10px;
+  position: fixed;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 10;
   width: min(1000px, 90%);
-  margin: 8px auto 18px;
+  margin: 0;
   padding: 6px 14px;
   border: 1px solid #315981;
   background: #09182af2;
@@ -653,10 +658,9 @@ main {
 }
 @media(max-width:760px) {
   .sound-controls {
-    top: 0;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
     width: calc(100% - 40px);
     padding: 5px 8px;
-    margin-top: 8px;
   }
   .sound-controls-row { gap: 8px; }
   .sound-controls .volume-label { flex: 1; }
