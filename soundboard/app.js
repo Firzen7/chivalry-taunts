@@ -131,8 +131,6 @@
     if (!dialog.open) return;
     dialog.close();
     document.querySelector('#version-list').replaceChildren();
-    document.querySelector('#active-recording-list').replaceChildren();
-    document.querySelector('#active-recordings').hidden = true;
     shade.hidden = true;
     document.body.classList.remove('picker-open');
     setBackgroundInert(false);
@@ -214,9 +212,9 @@
         status.textContent = `${playing.length} playing${entries.length > playing.length ? ` · ${entries.length - playing.length} loading` : ''} · ${versions.length === 1 ? 'Version' : 'Versions'} ${summary}`;
       } else status.textContent = '';
     });
-    updateActiveRecordings();
+    updateVariantFeedback();
   }
-  function updateActiveRecordings() {
+  function updateVariantFeedback() {
     if (!dialog.open || !pickerCommand) return;
     const entries = playback.active.filter(entry => entry.command.id === pickerCommand.id);
     const selected = preferredVersion(pickerCommand);
@@ -229,20 +227,13 @@
       const playing = instances.filter(entry => entry.state === 'playing').length;
       const loading = instances.length - playing;
       option.classList.toggle('is-playing', !!playing);
-      option.querySelector('.variant-feedback').hidden = !instances.length;
       option.querySelector('.equalizer').hidden = !playing;
       option.querySelector('.variant-state').textContent = instances.length === 1
         ? (playing ? 'Playing' : 'Loading')
         : [playing ? `${playing} playing` : '', loading ? `${loading} loading` : ''].filter(Boolean).join(' · ');
     });
-    const section = document.querySelector('#active-recordings');
-    section.hidden = !entries.length;
-    const focused = document.activeElement?.dataset.playback;
-    document.querySelector('#active-recording-list').innerHTML = entries.map(entry =>
-      `<div class="active-recording"><span>Version ${entry.version + 1}<small>${entry.state === 'playing' ? 'Playing' : 'Loading'}</small></span><button type="button" data-action="stop-one" data-playback="${entry.id}" aria-label="Stop ${escape(entry.command.name)}, Version ${entry.version + 1}">Stop</button></div>`
-    ).join('');
-    if (focused) (dialog.querySelector(`[data-playback="${focused}"]`) || dialog.querySelector('[data-version="random"]'))?.focus();
   }
+
   function play(command, version = null) {
     if (!command?.clips.length) return;
     const key = commandKey(command);
@@ -263,7 +254,7 @@
     pickerTrigger = trigger;
     const selected = preferredVersion(command);
     document.querySelector('#versions-title').textContent = command.name;
-    document.querySelector('#version-list').innerHTML = `<button type="button" class="version-option" data-action="pick" data-version="random"${selected === null ? ' aria-current="true"' : ''}>Random version ${icon('play')}</button>` + command.clips.map((clip, i) => `<button type="button" class="version-option" data-action="pick" data-version="${i}"${selected === i ? ' aria-current="true"' : ''}><span class="variant-name">Version ${i + 1}<span class="variant-feedback" hidden><span class="equalizer" aria-hidden="true"><i></i><i></i><i></i></span><small class="variant-state"></small></span></span><small class="variant-duration">${clock(clip.duration)}</small>${icon('play')}</button>`).join('');
+    document.querySelector('#version-list').innerHTML = `<button type="button" class="version-option" data-action="pick" data-version="random"${selected === null ? ' aria-current="true"' : ''}>Random version ${icon('play')}</button>` + command.clips.map((clip, i) => `<button type="button" class="version-option" data-action="pick" data-version="${i}"${selected === i ? ' aria-current="true"' : ''}><span class="variant-name"><span class="variant-indicator" aria-hidden="true"><span class="equalizer" hidden><i></i><i></i><i></i></span></span><span>Version ${i + 1}</span><span class="variant-state sr-only"></span></span><small class="variant-duration">${clock(clip.duration)}</small>${icon('play')}</button>`).join('');
     updatePickerClearance();
     shade.hidden = false;
     document.body.classList.add('picker-open');
@@ -271,7 +262,7 @@
     // A non-modal dialog permits interaction with the undimmed sound controls.
     if (!dialog.open) dialog.show();
     dialog.querySelector('[data-action="close-versions"]').focus();
-    updateActiveRecordings();
+    updateVariantFeedback();
   }
   document.addEventListener('click', event => {
     const disabled = event.target.closest('a[aria-disabled="true"]');
@@ -295,11 +286,7 @@
         break;
       }
       case 'stop-all': stopAll(); break;
-      case 'stop-one': {
-        playback.stop(button.dataset.playback);
-        (dialog.querySelector('[data-action="stop-one"]') || dialog.querySelector('[data-version="random"]'))?.focus();
-        break;
-      }
+
     }
   });
   shade.addEventListener('click', closePicker);

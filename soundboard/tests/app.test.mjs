@@ -287,24 +287,28 @@ test('saved version badges survive completion and changes while earlier recordin
   assert.match(row.querySelector('.playback-status').textContent, /2 playing/);
 });
 
-test('three-dot menu can stop one of several instances without stopping the others or changing preferences', async () => {
-  const storage = new Map();
-  const a = app('#masons/knight', storage);
+test('variant auditions keep the dialog structure stable with only an inline equalizer', async () => {
+  const a = app('#agatha/vanguard');
   a.click('[data-action="versions"][data-id="personal-8"]');
-  a.click('[data-version="1"]'); await tick();
-  a.click('[data-action="random"][data-id="personal-8"]'); await tick();
-  a.click('[data-action="random"][data-id="personal-0"]'); await tick();
-  a.click('[data-action="versions"][data-id="personal-8"]');
-  assert.equal(a.document.querySelectorAll('.active-recording').length, 2);
-  a.click('[data-action="stop-one"][data-playback="1"]');
-  assert.equal(a.recordings[0].released, true);
-  assert.ok(a.recordings.slice(1).every(audio => !audio.paused));
-  assert.equal(a.document.querySelectorAll('.active-recording').length, 1);
-  a.recordings[1].finish();
-  assert.equal(a.document.querySelector('#active-recordings').hidden, true);
-  assert.equal(a.audio.paused, false);
-  assert.equal(a.document.querySelector('[data-command="personal-8"] .version-label').textContent, 'Version 2');
-  assert.equal(Object.keys(JSON.parse(storage.get('chivalry-command-versions'))).length, 1);
+  const option = a.document.querySelector('[data-version="0"]');
+  const rowCount = a.document.querySelectorAll('.version-option').length;
+  const childCount = a.dialog.querySelectorAll('*').length;
+  const indicator = option.querySelector('.variant-indicator');
+  assert.equal(indicator.parentElement.firstElementChild, indicator);
+  assert.equal(indicator.nextElementSibling.textContent, 'Version 1');
+  assert.equal(option.querySelector('.variant-state').classList.contains('sr-only'), true);
+  a.click(option); await tick();
+  const first = a.audio;
+  a.click(option); await tick();
+  assert.equal(a.dialog.open, true);
+  assert.equal(option.querySelector('.equalizer').hidden, false);
+  assert.equal(a.document.querySelectorAll('.version-option').length, rowCount);
+  assert.equal(a.dialog.querySelectorAll('*').length, childCount);
+  assert.equal(a.document.querySelector('#active-recordings'), null);
+  assert.equal(a.dialog.querySelector('[data-action="stop-one"]'), null);
+  first.finish(); a.audio.finish();
+  assert.equal(option.querySelector('.equalizer').hidden, true);
+  assert.equal(a.dialog.querySelectorAll('*').length, childCount);
 });
 
 test('pending playback, errors and late events cannot revive stopped voices or disturb other commands', async () => {
@@ -335,7 +339,7 @@ test('picker stays open for auditioning and every variant independently reports 
   a.click('[data-action="versions"][data-id="personal-8"]');
   const first = a.document.querySelector('[data-version="0"]');
   const second = a.document.querySelector('[data-version="1"]');
-  assert.equal(first.querySelector('.variant-feedback').hidden, true);
+  assert.equal(first.querySelector('.equalizer').hidden, true);
   a.click(first); await tick();
   const firstAudio = a.audio;
   assert.equal(a.dialog.open, true);
@@ -350,13 +354,13 @@ test('picker stays open for auditioning and every variant independently reports 
   a.click(second); await tick();
   assert.equal(second.querySelector('.variant-state').textContent, '2 playing');
   firstAudio.finish();
-  assert.equal(first.querySelector('.variant-feedback').hidden, true);
+  assert.equal(first.querySelector('.equalizer').hidden, true);
   assert.equal(first.classList.contains('is-playing'), false);
   assert.equal(second.classList.contains('is-playing'), true);
   assert.equal(a.dialog.open, true);
   a.click('[data-action="stop-all"]');
   assert.equal(a.dialog.open, true);
-  assert.equal(second.querySelector('.variant-feedback').hidden, true);
+  assert.equal(second.querySelector('.equalizer').hidden, true);
   assert.equal(a.document.querySelector('[data-command="personal-8"] .version-label').textContent, 'Version 2');
 });
 
@@ -413,7 +417,7 @@ test('loading and failed variant auditions update feedback without dismissing th
   assert.equal(option.querySelector('.equalizer').hidden, true);
   a.audio.rejectPlay(new Error('cannot play')); await tick();
   assert.equal(a.dialog.open, true);
-  assert.equal(option.querySelector('.variant-feedback').hidden, true);
+  assert.equal(option.querySelector('.equalizer').hidden, true);
   assert.equal(a.document.querySelector('.audio-error').hidden, false);
   a.click(option); await tick();
   assert.equal(option.querySelector('.equalizer').hidden, false);

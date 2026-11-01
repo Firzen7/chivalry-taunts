@@ -625,39 +625,6 @@ body[data-stage="voice"] {
 .is-loading .command-play {
   border-color: #738ba5;
 }
-#active-recordings {
-  padding-top: 16px;
-  margin-top: 16px;
-  border-top: 1px solid var(--line);
-  max-height: 180px;
-  overflow-y: auto;
-}
-#active-recordings h3 {
-  font-size: 1rem;
-  color: var(--gold);
-  margin-bottom: 10px;
-}
-.active-recording {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  min-height: 46px;
-  font-size: .8rem;
-}
-.active-recording small {
-  margin-left: 10px;
-  color: var(--muted);
-}
-.active-recording button {
-  background: transparent;
-  border: 1px solid var(--line);
-  min-height: 44px;
-  padding: 8px 14px;
-}
-.active-recording button:hover {
-  border-color: var(--gold);
-}
 @media(max-width:760px) {
   .sound-controls {
     bottom: calc(12px + env(safe-area-inset-bottom, 0px));
@@ -786,18 +753,17 @@ body.picker-open .sound-controls {
   background: #b6944c18;
 }
 .variant-name {
-  display: grid;
-  gap: 4px;
-}
-.variant-feedback {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 10px;
 }
-.version-option .variant-state {
-  margin: 0;
-  font-size: .65rem;
-  color: var(--gold);
+.variant-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
 }
 .version-option svg {
   width: 14px;
