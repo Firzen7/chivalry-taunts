@@ -19,7 +19,7 @@ The playable recordings follow the 168 verified assignments in the game's class 
 - `assets/ringbearer.ttf`: the installed game's Ringbearer display font.
 - `assets/frame.svg`, `assets/knot.svg`: small shared interface ornaments.
 
-Character portraits are SVG viewports into the two approved desktop bitmap sheets in `../designs/`. Faction emblems reuse a third sheet. Only the art regions are displayed; the design screenshots are not used as clickable page backgrounds. Browsers cache each shared sheet once, and the same art is reused in class selection, the selected-character panel, and both screen sizes. The logo is one HTML wordmark using the shared local font, rendered consistently on every screen.
+Character portraits use dedicated transparent PNG cutouts in `assets/`, each containing the entire character with clear padding. CSS `object-fit: contain` fits them into both desktop and mobile panels without clipping. The same portrait file is reused in class selection and the selected-character panel. The two faction emblems share a transparent two-cell sheet. None of these production assets contain screenshot backgrounds, text or buttons, so the panel colors remain consistent. The logo is one HTML wordmark using the shared local font, rendered consistently on every screen.
 
 ## Rebuild and checks
 

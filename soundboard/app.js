@@ -3,16 +3,12 @@
   'use strict';
   const catalog = window.CHIVALRY_CATALOG;
   const factions = {
-    agatha: {name: 'Agatha Knights', short: 'Agatha', color: '#71a6eb', emblem: [446, 352, 350, 350]},
-    masons: {name: 'Mason Order', short: 'Masons', color: '#db6b62', emblem: [916, 350, 320, 350]},
+    agatha: {name: 'Agatha Knights', short: 'Agatha', color: '#71a6eb', emblem: 0},
+    masons: {name: 'Mason Order', short: 'Masons', color: '#db6b62', emblem: 1},
   };
   const classes = {archer: 'Archer', man_at_arms: 'Man-at-Arms', vanguard: 'Vanguard', knight: 'Knight'};
-  // Reusable viewports into the approved bitmap sheets, in their native coordinates.
-  const portraits = {
-    agatha: [[225, 310, 270, 400], [548, 310, 270, 400], [865, 310, 270, 400], [1180, 310, 270, 400]],
-    masons: [[190, 300, 280, 390], [530, 300, 280, 390], [865, 300, 280, 390], [1200, 300, 280, 390]],
-  };
-  const sheets = {agatha: 'designs/02-agatha-class-selection.png', masons: 'designs/03-masons-class-selection.png'};
+  // Production artwork has transparent backgrounds, independent of the panel styling.
+  const emblemSheet = {file: 'soundboard/assets/faction-emblems.png', width: 1774, height: 887};
   const icons = {
     play: '<path d="m7 4 14 8L7 20Z" fill="currentColor"/>',
     pause: '<path d="M6 4h4v16H6zm8 0h4v16h-4z" fill="currentColor"/>',
@@ -40,10 +36,10 @@
   let initialized = false;
 
   function artwork(faction, cls = null) {
-    const rectangle = cls ? portraits[faction][Object.keys(classes).indexOf(cls)] : factions[faction].emblem;
-    const file = cls ? sheets[faction] : 'designs/01-faction-selection.png';
     const label = cls ? `${factions[faction].name} ${classes[cls]}` : `${factions[faction].name} emblem`;
-    return `<svg class="artwork ${cls ? 'portrait' : 'crest'}" viewBox="${rectangle.join(' ')}" role="img" aria-label="${label}"><image href="${file}" width="1672" height="941"/></svg>`;
+    if (cls) return `<img class="artwork portrait" src="soundboard/assets/${faction}-${cls}.png" alt="${label}" width="1024" height="1536">`;
+    const cell = emblemSheet.width / 2;
+    return `<svg class="artwork crest" viewBox="${factions[faction].emblem * cell} 0 ${cell} ${emblemSheet.height}" role="img" aria-label="${label}"><image href="${emblemSheet.file}" width="${emblemSheet.width}" height="${emblemSheet.height}"/></svg>`;
   }
   const knot = '<img class="focus-knot" src="soundboard/assets/knot.svg" alt="" width="48" height="48">';
   const clock = seconds => {

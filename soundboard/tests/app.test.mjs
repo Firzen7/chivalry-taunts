@@ -60,7 +60,11 @@ test('both factions and all four classes have 20 commands plus a battle cry; sha
       assert.equal(a.document.querySelectorAll('[data-action="random"]').length, 21);
       assert.equal(a.document.querySelectorAll('.version-trigger').length, 21);
       assert.equal(a.document.querySelectorAll('.wordmark').length, 1);
-      for (const image of a.document.querySelectorAll('image')) assert.ok(existsSync(resolve(root, image.getAttribute('href'))));
+      for (const image of a.document.querySelectorAll('image, img.portrait')) {
+        const source = image.getAttribute('href') || image.getAttribute('src');
+        assert.ok(source.startsWith('soundboard/assets/'), 'Production artwork must not crop a UI screenshot');
+        assert.ok(existsSync(resolve(root, source)), source);
+      }
     }
   }
   assert.equal(a.window.CHIVALRY_CATALOG.agatha.vanguard.personal[0].clips.length, 15);
@@ -70,6 +74,23 @@ test('both factions and all four classes have 20 commands plus a battle cry; sha
     for (const commands of Object.values(groups)) for (const command of commands) {
       assert.ok(command.clips.length);
       for (const clip of command.clips) assert.ok(existsSync(resolve(root, clip.file)), clip.file);
+    }
+  }
+});
+
+test('selection and voice screens reuse each complete transparent character image', () => {
+  const a = app();
+  for (const faction of ['agatha', 'masons']) {
+    a.route(`#${faction}`);
+    const portraits = [...a.document.querySelectorAll('.class-card img.portrait')];
+    assert.equal(portraits.length, 4);
+    for (const [index, cls] of ['archer', 'man_at_arms', 'vanguard', 'knight'].entries()) {
+      const source = portraits[index].getAttribute('src');
+      const png = readFileSync(resolve(root, source));
+      assert.equal(png.readUInt8(25), 6, 'Portrait must have an RGBA transparency channel');
+      a.route(`#${faction}/${cls}`);
+      assert.equal(a.document.querySelector('.identity-panel img.portrait').getAttribute('src'), source);
+      assert.equal(a.document.querySelectorAll('svg.portrait').length, 0, 'Character artwork must not use a clipping viewport');
     }
   }
 });
