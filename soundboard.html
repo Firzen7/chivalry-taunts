@@ -35,12 +35,13 @@
   <noscript><p class="notice">Please enable JavaScript to choose a voice and play recordings. You can also open the <a href="index.html">full collection</a>.</p></noscript>
   <footer class="site-footer"><span>Chivalry: Medieval Warfare</span><span>A fan-made voice collection · <a href="index.html">Browse all recordings</a></span></footer>
   <p id="announcement" class="sr-only" role="status" aria-live="polite"></p>
-  <dialog id="versions" aria-labelledby="versions-title">
+  <div id="picker-shade" class="picker-shade" hidden aria-hidden="true"></div>
+  <dialog id="versions" aria-labelledby="versions-title" aria-modal="false">
     <header class="dialog-header"><div><small>Choose a version</small><h2 id="versions-title"></h2></div><button type="button" class="icon-button" data-action="close-versions" aria-label="Close version picker">×</button></header>
+    <div id="version-list"></div>
     <section id="active-recordings" aria-label="Active recordings" hidden>
       <h3>Playing now</h3><div id="active-recording-list"></div>
     </section>
-    <div id="version-list"></div>
     <p class="dialog-note">Your choice is remembered for this character. Choose Random version to shuffle again.</p>
   </dialog>
 </body>

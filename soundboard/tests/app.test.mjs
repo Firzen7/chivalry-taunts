@@ -18,7 +18,8 @@ function app(hash = '', storage = new Map()) {
   Object.defineProperty(document, 'activeElement', {get: () => focused});
   const dialog = document.querySelector('dialog');
   Object.defineProperty(dialog, 'open', { get() { return this.hasAttribute('open'); } });
-  dialog.showModal = () => dialog.setAttribute('open', '');
+  dialog.showModal = () => { throw new Error('A modal picker would block the dashboard'); };
+  dialog.show = () => dialog.setAttribute('open', '');
   dialog.close = () => dialog.removeAttribute('open');
   const recordings = [];
   const mediaOptions = {};
@@ -148,6 +149,8 @@ test('three-dot picker plays exact versions, restores focus, and also supports b
   assert.equal(a.document.querySelectorAll('.version-option').length, command.clips.length + 1);
   a.click('[data-action="pick"][data-version="1"]'); await tick();
   assert.equal(a.audio.src, command.clips[1].file);
+  assert.equal(a.dialog.open, true);
+  a.click('[data-action="close-versions"]');
   assert.equal(a.dialog.open, false);
   assert.equal(a.focused, a.document.querySelector(trigger));
   a.click('[data-action="versions"][data-id="battlecry-0"]');
@@ -325,4 +328,94 @@ test('pending playback, errors and late events cannot revive stopped voices or d
   a.window.dispatchEvent(new a.window.Event('pagehide'));
   assert.ok(a.recordings.every(audio => audio.released));
   assert.equal(a.document.querySelectorAll('.is-playing').length, 0);
+});
+
+test('picker stays open for auditioning and every variant independently reports overlapping playback', async () => {
+  const a = app('#agatha/vanguard');
+  a.click('[data-action="versions"][data-id="personal-8"]');
+  const first = a.document.querySelector('[data-version="0"]');
+  const second = a.document.querySelector('[data-version="1"]');
+  assert.equal(first.querySelector('.variant-feedback').hidden, true);
+  a.click(first); await tick();
+  const firstAudio = a.audio;
+  assert.equal(a.dialog.open, true);
+  assert.equal(first.querySelector('.equalizer').hidden, false);
+  assert.equal(first.querySelector('.variant-state').textContent, 'Playing');
+  a.click(second); await tick();
+  assert.equal(a.dialog.open, true);
+  assert.equal(first.classList.contains('is-playing'), true);
+  assert.equal(second.classList.contains('is-playing'), true);
+  assert.equal(first.hasAttribute('aria-current'), false);
+  assert.equal(second.getAttribute('aria-current'), 'true');
+  a.click(second); await tick();
+  assert.equal(second.querySelector('.variant-state').textContent, '2 playing');
+  firstAudio.finish();
+  assert.equal(first.querySelector('.variant-feedback').hidden, true);
+  assert.equal(first.classList.contains('is-playing'), false);
+  assert.equal(second.classList.contains('is-playing'), true);
+  assert.equal(a.dialog.open, true);
+  a.click('[data-action="stop-all"]');
+  assert.equal(a.dialog.open, true);
+  assert.equal(second.querySelector('.variant-feedback').hidden, true);
+  assert.equal(a.document.querySelector('[data-command="personal-8"] .version-label').textContent, 'Version 2');
+});
+
+test('dashboard stays usable with picker open, background is inert, and outside click restores focus', async () => {
+  const a = app('#masons/knight');
+  const trigger = '[data-action="versions"][data-id="battlecry-0"]';
+  a.click(trigger);
+  assert.equal(a.dialog.getAttribute('aria-modal'), 'false');
+  assert.equal(a.document.querySelector('#picker-shade').hidden, false);
+  assert.equal(a.document.querySelector('main').hasAttribute('inert'), true);
+  assert.equal(a.document.querySelector('.sound-controls').closest('[inert]'), null);
+  a.click('[data-version="0"]'); await tick();
+  a.input('#volume', '0.25'); assert.equal(a.audio.volume, 0.25);
+  a.click('#mute'); assert.equal(a.audio.muted, true);
+  assert.equal(a.dialog.open, true);
+  a.click('[data-action="stop-all"]'); assert.equal(a.audio.paused, true);
+  assert.equal(a.dialog.open, true);
+  a.click('#picker-shade');
+  assert.equal(a.dialog.open, false);
+  assert.equal(a.document.querySelector('#picker-shade').hidden, true);
+  assert.equal(a.document.querySelector('main').hasAttribute('inert'), false);
+  assert.equal(a.focused, a.document.querySelector(trigger));
+});
+
+test('keyboard focus cycles through both the picker and dashboard; Escape closes without stopping voices', async () => {
+  const a = app('#agatha/vanguard');
+  a.click('[data-action="versions"][data-id="personal-8"]');
+  a.click('[data-version="0"]'); await tick();
+  const tab = shift => {
+    const event = new a.window.Event('keydown', {bubbles: true, cancelable: true});
+    Object.assign(event, {key: 'Tab', shiftKey: shift});
+    a.document.dispatchEvent(event);
+  };
+  const buttons = [...a.dialog.querySelectorAll('button:not([disabled])')];
+  buttons.at(-1).focus(); tab(false);
+  assert.equal(a.focused, a.document.querySelector('#mute'));
+  a.document.querySelector('[data-action="stop-all"]').focus(); tab(false);
+  assert.equal(a.focused, a.document.querySelector('[data-action="close-versions"]'));
+  tab(true);
+  assert.equal(a.focused, a.document.querySelector('[data-action="stop-all"]'));
+  const escape = new a.window.Event('keydown', {bubbles: true});
+  escape.key = 'Escape'; a.document.dispatchEvent(escape);
+  assert.equal(a.dialog.open, false);
+  assert.equal(a.audio.paused, false);
+});
+
+test('loading and failed variant auditions update feedback without dismissing the picker', async () => {
+  const a = app('#agatha/vanguard');
+  a.click('[data-action="versions"][data-id="personal-8"]');
+  a.mediaOptions.deferNext = true;
+  a.click('[data-version="0"]');
+  const option = a.document.querySelector('[data-version="0"]');
+  assert.equal(option.querySelector('.variant-state').textContent, 'Loading');
+  assert.equal(option.querySelector('.equalizer').hidden, true);
+  a.audio.rejectPlay(new Error('cannot play')); await tick();
+  assert.equal(a.dialog.open, true);
+  assert.equal(option.querySelector('.variant-feedback').hidden, true);
+  assert.equal(a.document.querySelector('.audio-error').hidden, false);
+  a.click(option); await tick();
+  assert.equal(option.querySelector('.equalizer').hidden, false);
+  assert.equal(a.document.querySelector('.audio-error').hidden, true);
 });

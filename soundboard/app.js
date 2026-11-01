@@ -21,6 +21,7 @@
   const main = document.querySelector('main');
   const controls = document.querySelector('.sound-controls');
   const dialog = document.querySelector('#versions');
+  const shade = document.querySelector('#picker-shade');
   const announcement = document.querySelector('#announcement');
   const error = document.querySelector('.audio-error');
   const volume = document.querySelector('#volume');
@@ -45,6 +46,7 @@
     onError: ({command, version}) => {
       error.textContent = `Unable to play ${command.name}, Version ${version + 1}. Tap the command to try again.`;
       error.hidden = false;
+      updatePickerClearance();
     },
   });
 
@@ -128,8 +130,24 @@
   function closePicker() {
     if (!dialog.open) return;
     dialog.close();
+    document.querySelector('#version-list').replaceChildren();
+    document.querySelector('#active-recording-list').replaceChildren();
+    document.querySelector('#active-recordings').hidden = true;
+    shade.hidden = true;
+    document.body.classList.remove('picker-open');
+    setBackgroundInert(false);
     if (pickerTrigger?.isConnected) pickerTrigger.focus();
     pickerCommand = null;
+  }
+  function setBackgroundInert(inert) {
+    document.querySelectorAll('main, .site-header, .site-footer').forEach(element => {
+      if (inert) element.setAttribute('inert', '');
+      else element.removeAttribute('inert');
+    });
+  }
+  function updatePickerClearance() {
+    const height = controls.getBoundingClientRect?.().height || 60;
+    document.documentElement.style.setProperty('--controls-clearance', `calc(${Math.ceil(height) + 32}px + env(safe-area-inset-bottom, 0px))`);
   }
   function stopAll() {
     playback.stopAll();
@@ -201,6 +219,22 @@
   function updateActiveRecordings() {
     if (!dialog.open || !pickerCommand) return;
     const entries = playback.active.filter(entry => entry.command.id === pickerCommand.id);
+    const selected = preferredVersion(pickerCommand);
+    dialog.querySelectorAll('.version-option').forEach(option => {
+      const version = option.dataset.version === 'random' ? null : Number(option.dataset.version);
+      if (version === selected) option.setAttribute('aria-current', 'true');
+      else option.removeAttribute('aria-current');
+      if (version === null) return;
+      const instances = entries.filter(entry => entry.version === version);
+      const playing = instances.filter(entry => entry.state === 'playing').length;
+      const loading = instances.length - playing;
+      option.classList.toggle('is-playing', !!playing);
+      option.querySelector('.variant-feedback').hidden = !instances.length;
+      option.querySelector('.equalizer').hidden = !playing;
+      option.querySelector('.variant-state').textContent = instances.length === 1
+        ? (playing ? 'Playing' : 'Loading')
+        : [playing ? `${playing} playing` : '', loading ? `${loading} loading` : ''].filter(Boolean).join(' · ');
+    });
     const section = document.querySelector('#active-recordings');
     section.hidden = !entries.length;
     const focused = document.activeElement?.dataset.playback;
@@ -229,8 +263,14 @@
     pickerTrigger = trigger;
     const selected = preferredVersion(command);
     document.querySelector('#versions-title').textContent = command.name;
-    document.querySelector('#version-list').innerHTML = `<button type="button" class="version-option" data-action="pick" data-version="random"${selected === null ? ' aria-current="true"' : ''}>Random version ${icon('play')}</button>` + command.clips.map((clip, i) => `<button type="button" class="version-option" data-action="pick" data-version="${i}"${selected === i ? ' aria-current="true"' : ''}>Version ${i + 1}<small>${clock(clip.duration)}</small>${icon('play')}</button>`).join('');
-    dialog.showModal();
+    document.querySelector('#version-list').innerHTML = `<button type="button" class="version-option" data-action="pick" data-version="random"${selected === null ? ' aria-current="true"' : ''}>Random version ${icon('play')}</button>` + command.clips.map((clip, i) => `<button type="button" class="version-option" data-action="pick" data-version="${i}"${selected === i ? ' aria-current="true"' : ''}><span class="variant-name">Version ${i + 1}<span class="variant-feedback" hidden><span class="equalizer" aria-hidden="true"><i></i><i></i><i></i></span><small class="variant-state"></small></span></span><small class="variant-duration">${clock(clip.duration)}</small>${icon('play')}</button>`).join('');
+    updatePickerClearance();
+    shade.hidden = false;
+    document.body.classList.add('picker-open');
+    setBackgroundInert(true);
+    // A non-modal dialog permits interaction with the undimmed sound controls.
+    if (!dialog.open) dialog.show();
+    dialog.querySelector('[data-action="close-versions"]').focus();
     updateActiveRecordings();
   }
   document.addEventListener('click', event => {
@@ -251,7 +291,6 @@
         const version = button.dataset.version === 'random' ? null : Number(button.dataset.version);
         if (!command || version !== null && (!Number.isInteger(version) || !command.clips[version])) break;
         saveVersion(command, version);
-        closePicker();
         play(command, version);
         break;
       }
@@ -263,11 +302,7 @@
       }
     }
   });
-  dialog.addEventListener('click', event => {
-    if (event.target !== dialog) return;
-    const bounds = dialog.getBoundingClientRect();
-    if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) closePicker();
-  });
+  shade.addEventListener('click', closePicker);
   dialog.addEventListener('cancel', event => { event.preventDefault(); closePicker(); });
   function updateVolume() {
     document.querySelector('#mute').innerHTML = icon(playback.muted || playback.volume === 0 ? 'mute' : 'speaker');
@@ -288,9 +323,19 @@
   updateVolume();
   window.addEventListener('hashchange', renderRoute);
   window.addEventListener('pagehide', stopAll);
+  window.addEventListener('resize', updatePickerClearance);
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(updatePickerClearance).observe(controls);
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && dialog.open) closePicker();
-
+    if (event.key === 'Tab' && dialog.open) {
+      // Keep keyboard focus within the picker AND the still-accessible dashboard.
+      const targets = [...dialog.querySelectorAll('button:not([disabled])'), ...controls.querySelectorAll('button:not([disabled]), input:not([disabled])')]
+        .filter(element => !element.closest('[hidden]'));
+      const index = targets.indexOf(document.activeElement);
+      const next = event.shiftKey ? (index <= 0 ? targets.length - 1 : index - 1) : (index + 1) % targets.length;
+      event.preventDefault();
+      targets[next]?.focus();
+    }
   });
   if (!catalog || !Object.keys(catalog).length) {
     main.innerHTML = '<p class="notice">The voice collection could not be loaded. Please open the <a href="index.html">full collection</a>.</p>';
