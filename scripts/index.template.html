@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chivalry · Voice collection</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, sans-serif; color: #242b32; background: #f5f3ee; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { max-width: 1200px; margin: auto; padding: 48px 28px; }
+.eyebrow { color: #626962; text-transform: uppercase; letter-spacing: .16em; font-size: 12px; font-weight: 700; }
+h1 { font-family: Georgia, serif; font-weight: 400; font-size: clamp(32px, 5vw, 48px); margin: 12px 0; }
+.intro { color: #60666c; line-height: 1.6; margin-bottom: 28px; }
+.filters { display: flex; gap: 16px; flex-wrap: wrap; align-items: end; }
+label { display: grid; gap: 7px; font-size: 13px; font-weight: 600; }
+.search { flex: 1; min-width: 210px; }
+input, select, button { font: inherit; color: inherit; border: 1px solid #b9bebc; border-radius: 6px; background: white; padding: 11px 12px; }
+select { min-width: 150px; }
+button { cursor: pointer; }
+button:hover { background: #e8eceb; }
+:focus-visible { outline: 3px solid #427baf; outline-offset: 3px; }
+#count { font-size: 13px; color: #62686e; margin: 22px 0 12px; }
+.table-wrap { overflow-x: auto; border: 1px solid #d5d7d2; border-radius: 8px; background: white; }
+table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
+caption { text-align: left; padding: 16px; font-weight: 600; }
+th { background: #eaece7; font-weight: 600; font-size: 12px; letter-spacing: .03em; }
+th, td { padding: 14px 18px; border-bottom: 1px solid #e8e9e5; }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover { background: #fafaf7; }
+.faction { display: inline-block; font-size: 12px; font-weight: 600; border-radius: 4px; padding: 5px 9px; }
+.agatha { color: #214f7a; background: #e8f0f8; }
+.masons { color: #8a3432; background: #f9eae7; }
+.taunt-name { overflow-wrap: anywhere; min-width: 180px; }
+.taunt-name small { display: block; color: #656e75; font-size: 12px; margin-top: 5px; }
+.play { white-space: nowrap; padding: 7px 12px; }
+.play.active { color: white; background: #214f7a; border-color: #214f7a; }
+.pagination { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin: 18px 0; font-size: 13px; }
+button:disabled { opacity: .45; cursor: default; }
+.player { position: sticky; bottom: 12px; border: 1px solid #b9bebc; border-radius: 8px; background: #fff; box-shadow: 0 4px 20px #242b3212; padding: 16px; display: flex; align-items: center; flex-wrap: wrap; gap: 14px; }
+.player > div { flex: 1; min-width: 190px; }
+.player strong { font-size: 12px; color: #62686e; }
+#now-playing { font-size: 14px; margin: 6px 0 0; overflow-wrap: anywhere; }
+#play-error { color: #8a3432; font-size: 13px; margin: 0; }
+audio { width: min(100%, 330px); height: 40px; }
+.download { display: inline-block; padding: 8px 0 8px 10px; font-size: 12px; color: #365d76; }
+#empty { padding: 24px; text-align: center; color: #62686e; }
+footer { margin-top: 22px; color: #62686e; font-size: 12px; line-height: 1.7; }
+footer a { color: #365d76; }
+[hidden] { display: none !important; }
+@media (max-width: 650px) { main { padding: 28px 16px; } th, td { padding: 12px; } select { min-width: 135px; } }
+</style>
+</head>
+<body>
+<main>
+<header>
+<div class="eyebrow">Chivalry: Medieval Warfare</div>
+<h1>Taunts &amp; voice commands</h1>
+<p class="intro">{{COUNT}} voice clips across two factions and four classes. Taunts, laughs, replies, battle cries and tactical calls.</p>
+</header>
+<div class="filters">
+<label class="search">Search voice lines<input id="search" type="search" placeholder="Search by name, command, faction or class…"></label>
+<label>Faction<select id="faction"><option value="">All factions</option><option value="agatha">Agatha</option><option value="masons">Masons</option></select></label>
+<label>Class<select id="class"><option value="">All classes</option><option value="archer">Archer</option><option value="knight">Knight</option><option value="man_at_arms">Man-at-Arms</option><option value="vanguard">Vanguard</option></select></label>
+<label>Voice command<select id="type"><option value="">All commands</option><!-- TYPE OPTIONS --></select></label>
+<button id="reset" type="button">Reset filters</button>
+</div>
+<p id="count" role="status" aria-live="polite">{{COUNT}} voice clips</p>
+<div class="table-wrap" role="region" aria-label="Voice collection" tabindex="0">
+<table>
+<caption>Voice lines by faction and class</caption>
+<thead><tr><th scope="col">Faction</th><th scope="col">Class</th><th scope="col">Taunt / voice name</th><th scope="col">Listen</th></tr></thead>
+<tbody>
+<!-- ROWS -->
+</tbody>
+</table>
+<p id="empty" hidden>No matching voice lines. Try another search or reset the filters.</p>
+</div>
+<nav class="pagination" aria-label="Voice collection pages">
+<button id="previous" type="button">← Previous</button><span id="page-count" aria-live="polite"></span><button id="next" type="button">Next →</button>
+</nav>
+<section class="player" aria-label="Audio player">
+<div><strong>Now playing</strong><p id="now-playing" role="status">Choose a voice line from the table.</p></div>
+<audio id="player" controls preload="none" aria-label="Selected voice line"></audio>
+<p id="play-error" role="alert" hidden>Unable to play this file. Try its MP3 download link.</p>
+</section>
+<footer>Includes personal and tactical messages, objective calls, barbarian variants and legacy clips. Names are the original audio asset names.<br>
+Open this page directly in your browser; no server is needed. <a href="taunts.json">Collection metadata (JSON)</a> · <a href="README.md">Extraction notes</a></footer>
+</main>
+<script>
+const rows = [...document.querySelectorAll('tbody tr')];
+const search = document.querySelector('#search');
+const faction = document.querySelector('#faction');
+const classFilter = document.querySelector('#class');
+const typeFilter = document.querySelector('#type');
+const player = document.querySelector('#player');
+const error = document.querySelector('#play-error');
+let matches = rows;
+let page = 0;
+let activeButton = null;
+const pageSize = 50;
+for (const row of rows) row.searchText = row.textContent.toLowerCase();
+function renderPage() {
+  for (const row of rows) row.hidden = true;
+  for (const row of matches.slice(page * pageSize, (page + 1) * pageSize)) row.hidden = false;
+  const pages = Math.max(1, Math.ceil(matches.length / pageSize));
+  document.querySelector('#count').textContent = `${matches.length} of ${rows.length} voice clips`;
+  document.querySelector('#page-count').textContent = `Page ${page + 1} of ${pages}`;
+  document.querySelector('#previous').disabled = page === 0;
+  document.querySelector('#next').disabled = page >= pages - 1;
+  document.querySelector('#empty').hidden = matches.length !== 0;
+}
+function filter() {
+  const query = search.value.trim().toLowerCase();
+  matches = rows.filter(row => (!faction.value || row.dataset.faction === faction.value)
+    && (!classFilter.value || row.dataset.class === classFilter.value)
+    && (!typeFilter.value || row.dataset.types.split('|').includes(typeFilter.value))
+    && row.searchText.includes(query));
+  page = 0;
+  renderPage();
+}
+search.addEventListener('input', filter);
+faction.addEventListener('change', filter);
+classFilter.addEventListener('change', filter);
+typeFilter.addEventListener('change', filter);
+document.querySelector('#reset').addEventListener('click', () => {
+  search.value = faction.value = classFilter.value = typeFilter.value = '';
+  filter();
+});
+document.querySelector('#previous').addEventListener('click', () => {
+  if (page > 0) { page--; renderPage(); }
+});
+document.querySelector('#next').addEventListener('click', () => {
+  if ((page + 1) * pageSize < matches.length) { page++; renderPage(); }
+});
+function updatePlayButton() {
+  if (!activeButton) return;
+  activeButton.textContent = player.paused ? '▶ Play' : 'Ⅱ Pause';
+  activeButton.classList.toggle('active', !player.paused);
+  activeButton.setAttribute('aria-label', `${player.paused ? 'Play' : 'Pause'} ${activeButton.dataset.label}`);
+}
+document.querySelector('tbody').addEventListener('click', async event => {
+  const button = event.target.closest('button.play');
+  if (!button) return;
+  if (button === activeButton && !player.paused) { player.pause(); return; }
+  error.hidden = true;
+  if (button !== activeButton) {
+    player.pause();
+    updatePlayButton();
+    activeButton = button;
+    player.src = button.dataset.src;
+    document.querySelector('#now-playing').textContent = button.dataset.label;
+    player.setAttribute('aria-label', button.dataset.label);
+  }
+  try { await player.play(); }
+  catch (failure) { if (failure.name !== 'AbortError') error.hidden = false; }
+});
+player.addEventListener('play', updatePlayButton);
+player.addEventListener('pause', updatePlayButton);
+player.addEventListener('ended', updatePlayButton);
+player.addEventListener('error', () => { error.hidden = false; });
+filter();
+</script>
+</body>
+</html>
