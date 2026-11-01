@@ -28,6 +28,16 @@
   const seek = document.querySelector('#seek');
   const volume = document.querySelector('#volume');
   const lastVersions = new Map();
+  const preferenceKey = 'chivalry-command-versions';
+  const versionPreferences = new Map();
+  try {
+    const saved = JSON.parse(localStorage.getItem(preferenceKey));
+    if (saved && typeof saved === 'object' && !Array.isArray(saved)) {
+      for (const [key, file] of Object.entries(saved)) {
+        if (typeof file === 'string') versionPreferences.set(key, file);
+      }
+    }
+  } catch { /* Preferences remain available in memory when storage is unavailable. */ }
   let route = {};
   let current = null;
   let pickerCommand = null;
@@ -58,6 +68,34 @@
     const groups = catalog[route.faction]?.[route.cls];
     return groups ? Object.values(groups).flat().find(c => c.id === id) : null;
   }
+  function commandKey(command) {
+    return `${route.faction}/${route.cls}/${command.id}`;
+  }
+  function preferredVersion(command) {
+    if (!command) return null;
+    const file = versionPreferences.get(commandKey(command));
+    const index = command.clips.findIndex(clip => clip.file === file);
+    return index === -1 ? null : index;
+  }
+  function saveVersion(command, version) {
+    // Store the file identity so catalog reordering cannot select a different take.
+    if (version === null) versionPreferences.delete(commandKey(command));
+    else versionPreferences.set(commandKey(command), command.clips[version].file);
+    try { localStorage.setItem(preferenceKey, JSON.stringify(Object.fromEntries(versionPreferences))); }
+    catch { /* Playback and the current session still work with storage disabled. */ }
+    updatePreferenceLabels();
+  }
+  function updatePreferenceLabels() {
+    document.querySelectorAll('[data-command]').forEach(row => {
+      const command = commandById(row.dataset.command);
+      const version = preferredVersion(command);
+      const badge = row.querySelector('.version-label');
+      badge.hidden = version === null;
+      badge.textContent = version === null ? '' : `Version ${version + 1}`;
+      row.querySelector('.command-play').setAttribute('aria-label', version === null
+        ? `Play a random ${command.name} recording` : `Play ${command.name}, Version ${version + 1}`);
+    });
+  }
   function renderFactions() {
     return `<section aria-labelledby="page-title"><div class="page-heading"><h1 id="page-title">Choose your faction</h1><p>Choose a side. Find your voice.</p></div>
       <div class="faction-grid">${Object.entries(factions).map(([id, f]) => `<a href="#${id}" class="steel selection-card faction-card" style="--faction:${f.color}">${knot}<h2>${f.name}</h2>${artwork(id)}<span class="card-action">Choose ${f.short}</span></a>`).join('')}</div>
@@ -70,8 +108,10 @@
       <a href="#" class="back-button">${icon('back')}Back to factions</a></section>`;
   }
   function commandRow(command, battle = false) {
+    const version = preferredVersion(command);
+    const label = version === null ? `Play a random ${command.name} recording` : `Play ${command.name}, Version ${version + 1}`;
     return `<div class="command-row${battle ? ' battlecry' : ''}" data-command="${command.id}">
-      <button class="command-play" type="button" data-action="random" data-id="${command.id}" aria-label="Play a random ${escape(command.name)} recording">${battle ? icon('horn', 'horn-icon') : ''}${icon('play', 'play-icon')}<span>${escape(command.name)}</span></button>
+      <button class="command-play" type="button" data-action="random" data-id="${command.id}" aria-label="${escape(label)}">${battle ? icon('horn', 'horn-icon') : ''}${icon('play', 'play-icon')}<span class="command-label"><span>${escape(command.name)}</span><small class="version-label"${version === null ? ' hidden' : ''}>${version === null ? '' : `Version ${version + 1}`}</small></span></button>
       <button class="version-trigger" type="button" data-action="versions" data-id="${command.id}" aria-label="Choose a ${escape(command.name)} version" aria-haspopup="dialog" aria-controls="versions">•••</button></div>`;
   }
   function renderVoices() {
@@ -80,7 +120,7 @@
       <div class="voice-layout"><aside class="steel identity-panel" aria-label="Selected voice">${artwork(route.faction)}${artwork(route.faction, route.cls)}<div class="identity-copy"><h2>${classes[route.cls]}</h2><p>${f.name}</p></div>
       <div class="identity-actions"><a class="steel-button" href="#${route.faction}">Change class</a><a class="steel-button" href="#">Change faction</a></div><a class="identity-change" href="#${route.faction}" aria-label="Change class; ${classes[route.cls]} currently selected">Change ›</a></aside>
       <div class="command-area">${[['personal', 'Personal Messages'], ['tactical', 'Tactical Messages']].map(([group, label]) => `<section class="steel command-panel" aria-labelledby="${group}-title"><h2 id="${group}-title">${label}</h2><div class="commands">${groups[group].map(c => commandRow(c)).join('')}</div></section>`).join('')}
-      ${commandRow(groups.battlecry[0], true)}<p class="voice-help">Tap a command to play a random line. Use <strong>•••</strong> to choose a version.</p></div></div></section>`;
+      ${commandRow(groups.battlecry[0], true)}<p class="voice-help">Tap to play. Use <strong>•••</strong> to save a favorite version, or choose Random version.</p></div></div></section>`;
   }
   function closePicker() {
     if (!dialog.open) return;
@@ -149,7 +189,7 @@
   }
   async function play(command, version = null) {
     if (!command?.clips.length) return;
-    const key = `${route.faction}/${route.cls}/${command.id}`;
+    const key = commandKey(command);
     if (version === null) {
       const last = lastVersions.get(key);
       const choices = command.clips.map((_, i) => i).filter(i => command.clips.length === 1 || i !== last);
@@ -178,8 +218,9 @@
     if (!command) return;
     pickerCommand = command;
     pickerTrigger = trigger;
+    const selected = preferredVersion(command);
     document.querySelector('#versions-title').textContent = command.name;
-    document.querySelector('#version-list').innerHTML = `<button type="button" class="version-option" data-action="pick" data-version="random">Random version ${icon('play')}</button>` + command.clips.map((clip, i) => `<button type="button" class="version-option" data-action="pick" data-version="${i}"${current?.command.id === command.id && current.version === i ? ' aria-current="true"' : ''}>Version ${i + 1}<small>${clock(clip.duration)}</small>${icon('play')}</button>`).join('');
+    document.querySelector('#version-list').innerHTML = `<button type="button" class="version-option" data-action="pick" data-version="random"${selected === null ? ' aria-current="true"' : ''}>Random version ${icon('play')}</button>` + command.clips.map((clip, i) => `<button type="button" class="version-option" data-action="pick" data-version="${i}"${selected === i ? ' aria-current="true"' : ''}>Version ${i + 1}<small>${clock(clip.duration)}</small>${icon('play')}</button>`).join('');
     dialog.showModal();
   }
   document.addEventListener('click', event => {
@@ -188,12 +229,18 @@
     const button = event.target.closest('button[data-action]');
     if (!button) return;
     switch (button.dataset.action) {
-      case 'random': play(commandById(button.dataset.id)); break;
+      case 'random': {
+        const command = commandById(button.dataset.id);
+        play(command, preferredVersion(command));
+        break;
+      }
       case 'versions': openPicker(commandById(button.dataset.id), button); break;
       case 'close-versions': closePicker(); break;
       case 'pick': {
         const command = pickerCommand;
         const version = button.dataset.version === 'random' ? null : Number(button.dataset.version);
+        if (!command || version !== null && (!Number.isInteger(version) || !command.clips[version])) break;
+        saveVersion(command, version);
         closePicker();
         play(command, version);
         break;

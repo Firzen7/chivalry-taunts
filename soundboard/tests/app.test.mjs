@@ -8,7 +8,7 @@ const { parseHTML } = await import(process.env.DOM_TEST_HELPER || 'linkedom');
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const read = path => readFileSync(resolve(root, path), 'utf8');
 
-function app(hash = '') {
+function app(hash = '', storage = new Map()) {
   const { window } = parseHTML(read('soundboard.html'));
   const { document, Event } = window;
   const location = { hash, pathname: '/soundboard.html', search: '' };
@@ -31,7 +31,7 @@ function app(hash = '') {
     audio.dispatchEvent(new Event('loadedmetadata'));
     return Promise.resolve();
   };
-  const context = vm.createContext({ window, document, location, history: { replaceState(_, __, url) { location.hash = url.includes('#') ? '#' + url.split('#')[1] : ''; } }, localStorage: {getItem: () => null, setItem() {}}, console });
+  const context = vm.createContext({ window, document, location, history: { replaceState(_, __, url) { location.hash = url.includes('#') ? '#' + url.split('#')[1] : ''; } }, localStorage: {getItem: key => storage.get(key) ?? null, setItem: (key, value) => storage.set(key, value)}, console });
   vm.runInContext(read('soundboard/catalog.js'), context);
   vm.runInContext(read('soundboard/app.js'), context);
   return {
@@ -155,4 +155,64 @@ test('failed playback offers retry and does not leave the recording highlighted 
   a.click('[data-action="retry"]'); await tick();
   assert.equal(a.document.querySelector('.audio-error').hidden, true);
   assert.equal(a.audio.paused, false);
+});
+
+test('custom versions survive reload, label their command, and stay scoped to the character', async () => {
+  const storage = new Map();
+  const a = app('#agatha/vanguard', storage);
+  a.click('[data-action="versions"][data-id="personal-4"]');
+  a.click('[data-action="pick"][data-version="2"]'); await tick();
+  const row = a.document.querySelector('[data-command="personal-4"]');
+  assert.equal(row.querySelector('.version-label').hidden, false);
+  assert.equal(row.querySelector('.version-label').textContent, 'Version 3');
+  const file = a.audio.src;
+  a.click(row.querySelector('.command-play')); await tick();
+  assert.equal(a.audio.src, file);
+  const reloaded = app('#agatha/vanguard', storage);
+  const savedRow = reloaded.document.querySelector('[data-command="personal-4"]');
+  assert.equal(savedRow.querySelector('.version-label').textContent, 'Version 3');
+  assert.match(savedRow.querySelector('.command-play').getAttribute('aria-label'), /Thanks, Version 3/);
+  reloaded.click(savedRow.querySelector('.command-play')); await tick();
+  assert.equal(reloaded.audio.src, file);
+  reloaded.click('[data-action="versions"][data-id="personal-4"]');
+  assert.equal(reloaded.document.querySelector('[data-version="2"]').getAttribute('aria-current'), 'true');
+  reloaded.route('#masons/vanguard');
+  assert.equal(reloaded.document.querySelector('[data-command="personal-4"] .version-label').hidden, true);
+  reloaded.route('#agatha/archer');
+  assert.equal(reloaded.document.querySelector('[data-command="personal-4"] .version-label').hidden, true);
+  reloaded.route('#agatha/vanguard');
+  assert.equal(reloaded.document.querySelector('[data-command="personal-4"] .version-label').textContent, 'Version 3');
+});
+
+test('Random version clears the saved preference, badge, and pinned playback after reload', async () => {
+  const storage = new Map();
+  const a = app('#masons/knight', storage);
+  a.click('[data-action="versions"][data-id="battlecry-0"]');
+  a.click('[data-action="pick"][data-version="1"]'); await tick();
+  assert.equal(a.document.querySelector('.battlecry .version-label').textContent, 'Version 2');
+  a.click('[data-action="versions"][data-id="battlecry-0"]');
+  a.click('[data-version="random"]'); await tick();
+  assert.equal(a.document.querySelector('.battlecry .version-label').hidden, true);
+  assert.deepEqual(JSON.parse(storage.get('chivalry-command-versions')), {});
+  const reloaded = app('#masons/knight', storage);
+  assert.equal(reloaded.document.querySelector('.battlecry .version-label').hidden, true);
+  reloaded.click('[data-action="versions"][data-id="battlecry-0"]');
+  assert.equal(reloaded.document.querySelector('[data-version="random"]').getAttribute('aria-current'), 'true');
+});
+
+test('malformed, obsolete or blocked storage falls back safely; session choices still work', async () => {
+  for (const value of ['invalid-json', 'null', '[]', '{"agatha/vanguard/personal-4":"missing.mp3"}']) {
+    const a = app('#agatha/vanguard', new Map([['chivalry-command-versions', value]]));
+    assert.equal(a.document.querySelector('[data-command="personal-4"] .version-label').hidden, true);
+    a.click('[data-action="random"][data-id="personal-4"]'); await tick();
+    assert.equal(a.audio.paused, false);
+  }
+  const denied = {get() { throw new Error('Storage disabled'); }, set() { throw new Error('Storage disabled'); }};
+  const a = app('#agatha/vanguard', denied);
+  a.click('[data-action="versions"][data-id="personal-4"]');
+  a.click('[data-version="2"]'); await tick();
+  assert.equal(a.document.querySelector('[data-command="personal-4"] .version-label').textContent, 'Version 3');
+  const file = a.audio.src;
+  a.click('[data-action="random"][data-id="personal-4"]'); await tick();
+  assert.equal(a.audio.src, file);
 });
