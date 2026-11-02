@@ -22,13 +22,13 @@
   <meta name="twitter:description" content="Choose your side. Find your voice. A Chivalry: Medieval Warfare voice-command soundboard.">
   <meta name="twitter:image" content="https://tmp.firzen.net/soundboard/assets/link-preview.png">
   <meta name="twitter:image:alt" content="Chivalry Voice Commands, framed by the gold Agatha lion and red Mason eagle against a moonlit castle.">
-  <link rel="stylesheet" href="soundboard/style.css?v=share-dialogs-2">
+  <link rel="stylesheet" href="soundboard/style.css?v=share-button-3">
   <script defer src="soundboard/catalog.js?v=pruned-voices-1"></script>
   <script defer src="soundboard/playback.js"></script>
   <script defer src="soundboard/availability.js?v=local-voices-1"></script>
   <script defer src="soundboard/message-codec.js?v=1"></script>
   <script defer src="soundboard/vendor/qrcode.js"></script>
-  <script defer src="soundboard/voice-share.js?v=dialogs-2"></script>
+  <script defer src="soundboard/voice-share.js?v=button-3"></script>
   <script defer src="soundboard/app.js?v=share-dialogs-2"></script>
 </head>
 <body>
@@ -60,10 +60,8 @@
     <header class="dialog-header"><div><small>Choose a version</small><h2 id="versions-title"></h2></div><button type="button" class="icon-button" data-action="close-versions" aria-label="Close version picker">×</button></header>
     <div id="version-list"></div>
     <p class="dialog-note">Your choice is remembered for this character. Choose Random version to shuffle again.</p>
-    <section id="voice-share" class="voice-share" aria-labelledby="share-title">
-      <h3 id="share-title">Share this voice</h3>
-      <p class="share-selection">Select or preview a version to share it.</p>
-      <button class="steel-button share-open" type="button" disabled>Share</button>
+    <section id="voice-share" class="voice-share" aria-label="Voice sharing">
+      <button class="steel-button share-open" type="button" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m8 11 8-5M8 13l8 5"/><circle cx="5" cy="12" r="3"/><circle cx="19" cy="4" r="3"/><circle cx="19" cy="20" r="3"/></svg>Share this voice</button>
 
     </section>
   </dialog>

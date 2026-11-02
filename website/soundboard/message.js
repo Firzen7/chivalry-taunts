@@ -32,7 +32,7 @@
   portrait.sizes = '(max-width:600px) calc(100vw - 58px), (max-width:680px) calc(100vw - 96px), 560px';
   portrait.alt = `${message.faction === 'agatha' ? 'Agatha Knights' : 'Mason Order'} ${classes[message.class]}`;
   find('message-title').textContent = `Message from ${message.nickname.trim()}`;
-  find('message-text').textContent = message.message;
+  find('message-text').textContent = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.';
   find('message-content').hidden = false;
   document.title = `Message from ${message.nickname.trim()} · Chivalry`;
   const audio = new Audio();
@@ -55,6 +55,8 @@
   find('message-reveal').addEventListener('click', () => {
     if (revealed) return;
     revealed = true;
+    find('message-text').textContent = message.message.trim() ? message.message : '(no message)';
+    find('message-text').classList.toggle('empty-message', !message.message.trim());
     find('message-text').classList.remove('concealed');
     find('message-text').removeAttribute('aria-hidden');
     find('message-text').setAttribute('tabindex', '-1');

@@ -761,7 +761,7 @@ test('sharing an exact take requires a nickname and creates a compact link plus 
   a.click('[data-version="2"]'); await tick();
   assert.equal(form.hidden, true);
   assert.equal(a.document.querySelector('.share-result').hidden, true);
-  assert.equal(section.querySelector('.share-selection').textContent, 'Version 3');
+  assert.match(section.querySelector('.share-open').title, /Version 3/);
 });
 
 test('sharing a random audition freezes the last actual version and uses the current server URL', async () => {

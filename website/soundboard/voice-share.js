@@ -40,7 +40,7 @@ window.ChivalryVoiceShare = class {
     this.result.hidden = true;
     this.error.hidden = true;
     this.section.querySelector('.share-open').disabled = !voice;
-    this.section.querySelector('.share-selection').textContent = voice ? `Version ${voice.version + 1}` : 'Select or preview a version to share it.';
+    this.section.querySelector('.share-open').title = voice ? `${voice.commandName} · Version ${voice.version + 1}` : 'Select or preview a version to share it.';
   }
   get activeDialog() { return this.resultDialog.open ? this.resultDialog : this.formDialog.open ? this.formDialog : null; }
   openForm() {

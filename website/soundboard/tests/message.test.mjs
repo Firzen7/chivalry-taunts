@@ -73,5 +73,18 @@ test('shared voices permit an empty custom message and still reveal and play',()
  const a=app(codec.encode({...payload,message:''}));
  assert.equal(a.document.getElementById('message-error').hidden,true);
  a.click('message-reveal'); assert.equal(a.audio.plays,1);
- assert.equal(a.document.getElementById('message-text').textContent,'');
+ assert.equal(a.document.getElementById('message-text').textContent,'(no message)');
+ assert.equal(a.document.getElementById('message-text').classList.contains('empty-message'),true);
+});
+test('hidden messages always use identical Lorem ipsum, then reveal the actual text',()=>{
+ const a=app({...payload,message:'Short message'});
+ const b=app({...payload,message:'Longer message '.repeat(80)});
+ const empty=app({...payload,message:''});
+ const text=a.document.getElementById('message-text').textContent;
+ assert.ok(text.startsWith('Lorem ipsum'));
+ assert.equal(text,b.document.getElementById('message-text').textContent);
+ assert.equal(text,empty.document.getElementById('message-text').textContent);
+ a.click('message-reveal');
+ assert.equal(a.document.getElementById('message-text').textContent,'Short message');
+ assert.equal(a.document.getElementById('message-text').classList.contains('empty-message'),false);
 });

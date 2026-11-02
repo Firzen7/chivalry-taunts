@@ -1097,8 +1097,6 @@ body.picker-open .sound-controls {
 }
 
 .voice-share { border-top: 1px solid var(--line); padding-top: 18px; margin-top: 18px; }
-.voice-share h3 { color: var(--gold); font: 1.2rem Ringbearer,Georgia,serif; margin: 0 0 8px; }
-.share-selection { color: var(--muted); font-size: .8rem; }
 .share-form { display: grid; gap: 14px; margin-top: 16px; }
 .voice-share label, .share-dialog label { display: grid; gap: 7px; font-size: .85rem; }
 .voice-share input, .voice-share textarea, .share-dialog input, .share-dialog textarea { width: 100%; min-width: 0; padding: 10px; border: 1px solid var(--line); background: #071526; color: var(--text); border-radius: 0; font: inherit; }
@@ -1112,3 +1110,6 @@ body.picker-open .sound-controls {
 .share-dialog h2 { color: var(--gold); font: 1.6rem Ringbearer,Georgia,serif; margin: 0; }
 .share-voice-label { color: var(--muted); font-size: .85rem; }
 .share-dialog .share-edit { margin-top: 16px; }
+
+.share-open { width: 100%; }
+.share-open svg { width: 20px; height: 20px; flex-shrink: 0; }
