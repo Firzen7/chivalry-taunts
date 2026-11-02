@@ -8,6 +8,7 @@ import shutil
 
 from extract_taunts import CLASSES, MESSAGE_GROUPS, COMMAND_LABELS, build_html, command_directory, menu_commands
 from build_soundboard import build
+from build_audio_zip import build_archive
 
 
 def organize(root):
@@ -57,6 +58,7 @@ def organize(root):
     build_html(root, manifest['files'])
     # Partial collections are supported: preserve intentional removals of other audio.
     build(root, allow_missing=True)
+    build_archive(root)
     print(f'Organized {len(plans)} battle cries; original MP3 content verified and preserved.')
 
 

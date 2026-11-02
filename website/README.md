@@ -4,7 +4,7 @@ Open **[index.html](index.html)** for the Chivalry-style faction → class → v
 
 Open either page directly in a browser. The collection works offline, directly from disk, without a server. Keep the HTML alongside the `audio` and `soundboard` folders.
 
-Browse by faction, playable class, original asset name, **message group**, or **voice command**. Select **Personal Messages**, **Tactical Messages**, **Battle cry**, or **Other**. The command dropdown narrows to the selected group and follows the in-game menu order, including “Go for the Objective.” Switching groups clears an incompatible command selection. Each row has a Play button and MP3 download link. A shared player provides pause, seeking, and volume controls. Results are shown 50 at a time.
+Browse by faction, playable class, original asset name, **message group**, or **voice command**. Select **Personal Messages**, **Tactical Messages**, **Battle cry**, or **Other**. The command dropdown narrows to the selected group and follows the in-game menu order, including “Go for the Objective.” Switching groups clears an incompatible command selection. Each row has a Play button and MP3 download link. A shared player provides pause, seeking, and volume controls. Results are shown 50 at a time. The **Download all files** button beside the title downloads the complete audio hierarchy as a ZIP, regardless of active filters.
 
 ## Collection
 

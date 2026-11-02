@@ -4,7 +4,7 @@ Open **[index.html](website/index.html)** for the Chivalry-style faction → cla
 
 Open either page directly in a browser. The collection works offline, directly from disk, without a server. The soundboard checks that recordings are available before offering variants, including when opened directly from disk. Availability results are cached until the page is reloaded. All deployable files are inside `website/`; keep its structure intact.
 
-Browse by faction, playable class, original asset name, **message group**, or **voice command**. Select **Personal Messages**, **Tactical Messages**, **Battle cry**, or **Other**. The command dropdown narrows to the selected group and follows the in-game menu order, including “Go for the Objective.” Switching groups clears an incompatible command selection. Each row has a Play button and MP3 download link. A shared player provides pause, seeking, and volume controls. Results are shown 50 at a time. The full collection page also checks file availability before showing rows; counts, filters, and pagination include only confirmed recordings. Checks work both from disk and over HTTP(S), and are cached until reload. A progress message appears during checks, and temporary failures can be retried.
+Browse by faction, playable class, original asset name, **message group**, or **voice command**. Select **Personal Messages**, **Tactical Messages**, **Battle cry**, or **Other**. The command dropdown narrows to the selected group and follows the in-game menu order, including “Go for the Objective.” Switching groups clears an incompatible command selection. Each row has a Play button and MP3 download link. A shared player provides pause, seeking, and volume controls. Results are shown 50 at a time. The **Download all files** button beside the title downloads the complete audio hierarchy as a ZIP, regardless of active filters. The full collection page also checks file availability before showing rows; counts, filters, and pagination include only confirmed recordings. Checks work both from disk and over HTTP(S), and are cached until reload. A progress message appears during checks, and temporary failures can be retried.
 
 ## Deployment
 
@@ -22,6 +22,8 @@ website/
 │   ├── agatha/
 │   └── masons/
 ├── soundboard/
+├── downloads/
+│   └── chivalry-voice-commands.zip
 ├── taunts.json
 └── README.md
 ```
@@ -109,3 +111,15 @@ By default the extractor writes into `website/` (`--output` can select another s
 ## Soundboard implementation
 
 The responsive soundboard is documented in [soundboard documentation](website/soundboard/README.md). After rebuilding the extracted collection, run `python3 scripts/build_soundboard.py` to refresh its offline catalog.
+
+## Audio ZIP download
+
+The full collection page links to `website/downloads/chivalry-voice-commands.zip`, containing every file and directory currently under `website/audio/`, rooted at `audio/`. It is a prebuilt download that works with static hosting and direct local use. Deploy the ZIP along with the rest of `website/`.
+
+After manually adding, deleting, or moving audio, refresh the archive with:
+
+```sh
+python3 scripts/build_audio_zip.py
+```
+
+Extraction and the battle cry reorganization script rebuild it automatically. The archive contains the whole collection, regardless of the webpage filters.

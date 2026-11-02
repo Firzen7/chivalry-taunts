@@ -455,6 +455,8 @@ def main():
         menu_coverage=coverage, audio_path_aliases=old.get('audio_path_aliases', {}), files=records)
     (root / 'taunts.json').write_text(json.dumps(manifest, indent=2) + '\n')
     build_html(root, records)
+    from build_audio_zip import build_archive
+    build_archive(root)
     print(json.dumps({'files': len(records), 'counts': dict(Counter(f"{r['faction']}/{r['class']}" for r in records)),
                       'voice_types': dict(Counter(t for r in records for t in r['voice_types']))}, indent=2))
 

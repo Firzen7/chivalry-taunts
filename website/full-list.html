@@ -11,6 +11,9 @@ body { margin: 0; }
 main { max-width: 1200px; margin: auto; padding: 48px 28px; }
 .eyebrow { color: #626962; text-transform: uppercase; letter-spacing: .16em; font-size: 12px; font-weight: 700; }
 h1 { font-family: Georgia, serif; font-weight: 400; font-size: clamp(32px, 5vw, 48px); margin: 12px 0; }
+.title-row { display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; }
+.download-all { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 11px 16px; border: 1px solid #214f7a; border-radius: 6px; color: white; background: #214f7a; font-size: 14px; font-weight: 600; text-decoration: none; white-space: nowrap; }
+.download-all:hover { background: #183d60; }
 .intro { color: #60666c; line-height: 1.6; margin-bottom: 28px; }
 .filters { display: flex; gap: 16px; flex-wrap: wrap; align-items: end; }
 label { display: grid; gap: 7px; font-size: 13px; font-weight: 600; }
@@ -55,7 +58,7 @@ footer a { color: #365d76; }
 <main>
 <header>
 <div class="eyebrow">Chivalry: Medieval Warfare</div>
-<h1>Taunts &amp; voice commands</h1>
+<div class="title-row"><h1>Taunts &amp; voice commands</h1><a class="download-all" href="downloads/chivalry-voice-commands.zip" download>Download all files</a></div>
 <p class="intro">Voice clips across two factions and four classes. Taunts, laughs, replies, battle cries and tactical calls.</p>
 </header>
 <div class="filters">
