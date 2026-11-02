@@ -29,7 +29,7 @@
   const base = `soundboard/assets/optimized/${message.faction}-${message.class}`;
   portrait.src = `${base}-640.webp`;
   portrait.srcset = `${base}-384.webp 384w, ${base}-640.webp 640w, ${base}-1024.webp 1024w`;
-  portrait.sizes = '(max-width:600px) 180px, 234px';
+  portrait.sizes = '(max-width:600px) calc(100vw - 58px), (max-width:680px) calc(100vw - 96px), 560px';
   portrait.alt = `${message.faction === 'agatha' ? 'Agatha Knights' : 'Mason Order'} ${classes[message.class]}`;
   find('message-title').textContent = `Message from ${message.nickname.trim()}`;
   find('message-text').textContent = message.message;
