@@ -415,6 +415,10 @@ main {
   gap: 22px;
   min-width: 0;
 }
+.message-column {
+  /* Share desktop grid rows so both panels and battle cry buttons align. */
+  display: contents;
+}
 .command-panel {
   padding: 25px 20px 22px;
   min-width: 0;
@@ -493,30 +497,30 @@ main {
   background: linear-gradient(100deg,#51402066,#102239aa);
 }
 .battlecry {
-  grid-column: 1/-1;
-  max-width: 600px;
+  grid-row: 2;
   width: 100%;
-  margin: 2px auto 0;
+  margin: 0;
 }
 .battlecry .command-play {
   justify-content: center;
   font-family: Ringbearer,Georgia,serif;
-  font-size: 1.6rem;
+  font-size: clamp(1rem,1.4vw,1.35rem);
   color: var(--gold);
-  padding: 18px;
+  padding: 14px 10px;
   min-height: 67px;
   border-color: #b6944c;
   background: linear-gradient(110deg,#332d1960,#0b1420e0);
 }
 .battlecry .version-trigger {
   border-color: #b6944c;
-  width: 55px;
+  width: 40px;
 }
 .battlecry .horn-icon {
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
   color: var(--gold);
-  margin-right: 10px;
+  margin-right: 0;
 }
 .voice-help {
   grid-column: 1/-1;
@@ -993,15 +997,15 @@ body.picker-open .sound-controls {
     gap: 18px;
     width: 100%;
   }
-  .battlecry {
-    order: -1;
-    margin: 0;
-    max-width: none;
+  .message-column {
+    display: grid;
+    grid-template-columns: minmax(0,1fr);
+    gap: 18px;
   }
   .battlecry .command-play {
     min-height: 58px;
     padding: 13px;
-    font-size: 1.45rem;
+    font-size: clamp(1rem,4.5vw,1.35rem);
   }
   .battlecry .horn-icon {
     width: 27px;

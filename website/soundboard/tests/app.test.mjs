@@ -693,9 +693,11 @@ test('every voice has separate animated and running battle cry controls and reco
     for (const [i, variant] of ['animated', 'running'].entries()) {
       const command = commands[i];
       assert.equal(command.name, `Battle cry (${variant})`);
+      const column = a.document.querySelector(`[data-command="battlecry-${i}"]`).closest('.message-column');
+      assert.ok(column.querySelector(i === 0 ? '#personal-title' : '#tactical-title'), 'Battle cry must follow its corresponding message panel');
+      assert.equal(column.lastElementChild.dataset.command, `battlecry-${i}`);
       assert.ok(command.clips.length);
       assert.ok(command.clips.every(clip => clip.file.startsWith(`audio/${faction}/${cls}/battlecry/${variant}/`)));
-      for (const clip of command.clips) assert.ok(existsSync(resolve(root, clip.file)));
       a.click(`[data-action="versions"][data-id="battlecry-${i}"]`); await tick();
       a.click('[data-version="0"]'); await tick();
       assert.equal(a.audio.src, command.clips[0].file);

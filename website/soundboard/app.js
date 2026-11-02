@@ -145,8 +145,8 @@
     return `<section aria-labelledby="page-title"><div class="page-heading voice-heading"><p class="voice-context">${f.name} <span aria-hidden="true">/</span> ${classes[route.cls]}</p><h1 id="page-title">Make yourself heard</h1></div>
       <div class="voice-layout"><aside class="steel identity-panel" aria-label="Selected voice">${artwork(route.faction)}${artwork(route.faction, route.cls, true)}<div class="identity-copy"><h2>${classes[route.cls]}</h2><p>${f.name}</p></div>
       <div class="identity-actions"><a class="steel-button" href="#${route.faction}">Change class</a><a class="steel-button" href="#">Change faction</a></div><a class="identity-change" href="#${route.faction}" aria-label="Change class; ${classes[route.cls]} currently selected">Change ›</a></aside>
-      <div class="command-area">${[['personal', 'Personal Messages'], ['tactical', 'Tactical Messages']].map(([group, label]) => `<section class="steel command-panel" aria-labelledby="${group}-title"><h2 id="${group}-title">${label}</h2><div class="commands">${groups[group].map(c => commandRow(c)).join('')}</div></section>`).join('')}
-      ${groups.battlecry.map(command => commandRow(command, true)).join('')}<p class="voice-help">Tap to play. Voices can overlap. Use <strong>•••</strong> to choose a version or stop a recording.</p></div></div></section>`;
+      <div class="command-area">${[['personal', 'Personal Messages'], ['tactical', 'Tactical Messages']].map(([group, label], index) => `<div class="message-column"><section class="steel command-panel" aria-labelledby="${group}-title"><h2 id="${group}-title">${label}</h2><div class="commands">${groups[group].map(c => commandRow(c)).join('')}</div></section>${commandRow(groups.battlecry[index], true)}</div>`).join('')}
+      <p class="voice-help">Tap to play. Voices can overlap. Use <strong>•••</strong> to choose a version or stop a recording.</p></div></div></section>`;
   }
   function closePicker() {
     if (!dialog.open) return;
