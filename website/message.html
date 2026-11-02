@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#080f1b">
+  <title>A message for you · Chivalry</title>
+  <link rel="stylesheet" href="soundboard/style.css?v=battlecry-placement-1">
+  <link rel="stylesheet" href="soundboard/message.css?v=1">
+  <script defer src="soundboard/catalog.js?v=pruned-voices-1"></script>
+  <script defer src="soundboard/message.js?v=1"></script>
+</head>
+<body class="message-page">
+  <header class="message-header"><a class="wordmark" href="index.html" aria-label="Chivalry Voice Commands"><span>Chivalry</span><small>Voice commands</small></a></header>
+  <main class="message-shell steel">
+    <p id="message-error" role="alert" hidden></p>
+    <section id="message-content" aria-labelledby="message-title" hidden>
+      <button id="message-sound" class="message-sound" type="button" role="switch" aria-checked="true" aria-label="Sound"><span id="sound-label">Sound on</span><span class="sound-switch" aria-hidden="true"></span></button>
+      <img id="message-warrior" class="message-warrior" alt="" width="640" height="960">
+      <h1 id="message-title"></h1>
+      <div class="message-ornament" aria-hidden="true">─ ⚜ ─</div>
+      <div class="message-letter">
+        <p id="message-text" class="message-text concealed" aria-hidden="true"></p>
+        <button id="message-reveal" class="message-action" type="button">Reveal message</button>
+        <button id="message-replay" class="message-action" type="button" hidden><span aria-hidden="true">▶</span> Replay voice</button>
+      </div>
+      <p id="message-audio-error" role="status" hidden>Unable to play this recording. Try Replay voice again.</p>
+    </section>
+    <noscript>Please enable JavaScript to open this message.</noscript>
+  </main>
+</body>
+</html>
