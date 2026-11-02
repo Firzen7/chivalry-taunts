@@ -19,7 +19,7 @@ function app(data=payload, fragment=false) {
  const context=vm.createContext({window,document,location:{search:fragment?'':'?data='+encodeURIComponent(encoded),hash:fragment?'#data='+encoded:''},Audio,URLSearchParams,atob,TextDecoder,console});
  vm.runInContext(read('soundboard/catalog.js'),context);
  vm.runInContext(read('soundboard/message.js'),context);
- return {document,recordings,click:id=>document.getElementById(id).dispatchEvent(new Event('click')),audio:recordings[0]};
+ return {document,window,recordings,click:id=>document.getElementById(id).dispatchEvent(new Event('click')),audio:recordings[0]};
 }
 test('reveal and replay use the same exact voice, with mute and hidden text state',()=>{
  const a=app();

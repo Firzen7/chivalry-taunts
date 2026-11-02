@@ -61,9 +61,11 @@
     find('message-text').focus({preventScroll: true});
     find('message-reveal').hidden = true;
     find('message-replay').hidden = false;
-    // Synchronous play in the reveal gesture also works with mobile autoplay rules.
+    // Start playback inside the reveal gesture, alongside the fade animation.
     play();
   });
   find('message-replay').addEventListener('click', play);
-  window.addEventListener('pagehide', () => { audio.pause(); audio.removeAttribute('src'); audio.load(); });
+  window.addEventListener('pagehide', () => {
+    audio.pause(); audio.removeAttribute('src'); audio.load();
+  });
 })();
