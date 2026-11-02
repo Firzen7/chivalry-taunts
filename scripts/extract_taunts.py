@@ -27,18 +27,38 @@ MESSAGE_GROUPS = {
     'tactical_messages': ('Tactical Messages', [
         'Follow me', 'Forward', 'Retreat', 'Kill archers', 'Objective', 'Hold your ground',
         'Defend me', 'Incoming', 'Behind us', 'All clear']),
+    'battlecry': ('Battle cry', ['Battle cry (animated)', 'Battle cry (running)']),
     'other': ('Other', ['Other']),
 }
 COMMAND_GROUP = {command: group for group, (_, commands) in MESSAGE_GROUPS.items() for command in commands}
 COMMAND_LABELS = {'Objective': 'Go for the Objective'}
 
 
+def battlecry_variants(record):
+    """Use cue references to distinguish standing/animated cries from running cries."""
+    if 'Battle cry' not in record['voice_types']:
+        return []
+    variants = set()
+    for source in record['sources']:
+        for cue in source['voice_cues']:
+            name = cue.rsplit('.', 1)[-1].lower()
+            if name.startswith('battlecry_'):
+                variants.add('running' if name.startswith('battlecry_running_') else 'animated')
+    if not variants:
+        raise ValueError(f'Battle cry has no classifiable cue: {record["taunt_name"]}')
+    return [variant for variant in ('animated', 'running') if variant in variants]
+
+
 def menu_commands(record):
-    return [command for command in COMMAND_GROUP if command != 'Other' and command in record['voice_types']] or ['Other']
+    commands = [command for command in COMMAND_GROUP if command != 'Other' and command in record['voice_types']]
+    commands.extend(f'Battle cry ({variant})' for variant in battlecry_variants(record))
+    return commands or ['Other']
 
 
 def command_directory(command):
     group = COMMAND_GROUP[command]
+    if group == 'battlecry':
+        return Path(group) / command.removeprefix('Battle cry (').removesuffix(')')
     return Path(group) if group == 'other' else Path(group) / category_slug(COMMAND_LABELS.get(command, command))
 
 class Package:
@@ -173,7 +193,7 @@ def category_slug(label):
 
 
 def organize_files(root, records):
-    """Mirror the two game menus, with uncategorized clips directly under other."""
+    """Mirror the two menus and both battle cries, with uncategorized clips under other."""
     categories = sorted({label for r in records for label in r['voice_types']})
     plans, destinations = [], {}
     for r in records:
@@ -428,11 +448,11 @@ def main():
     organize_files(root, records)
     manifest = dict(source_game_folder=str(args.game_folder), sources=sources,
         selection='All non-grunt voice waves in the Manual, Manual_Barb and OBJ packages, all personal/tactical/battle-cry cue references (including cross-package references), and the original Troll taunt duplicates. Exact Ogg duplicates within a faction/class share one collection entry.',
-        file_layout='audio/faction/class/personal_messages|tactical_messages/command/asset_name.mp3; clips with no menu command go directly in audio/faction/class/other/. Shared clips have a copy in every applicable menu command; category_files lists all paths and file is the primary playback path.',
+        file_layout='audio/faction/class/personal_messages|tactical_messages/command/asset_name.mp3; battle cries go in audio/faction/class/battlecry/animated|running/asset_name.mp3; remaining clips go in audio/faction/class/other/. Shared clips have a copy in every applicable command; category_files lists all paths and file is the primary playback path.',
         message_groups={group: {'label': label, 'commands': [COMMAND_LABELS.get(c, c) for c in commands]} for group, (label, commands) in MESSAGE_GROUPS.items()},
         class_mapping='Playable classes from AOCPawnSoundgroup_*.uc menu assignments; group Archer -> Man-at-Arms, MAA -> Archer. Shared cue audio is included in every faction/class that references it. Generic legacy Agatha/Mason voices are assigned to Knight.',
         encoding='ffmpeg libmp3lame -q:a 2; every MP3 fully decoded with ffmpeg -xerror. Rebuilds reuse unchanged, hash-verified MP3s.',
-        menu_coverage=coverage, files=records)
+        menu_coverage=coverage, audio_path_aliases=old.get('audio_path_aliases', {}), files=records)
     (root / 'taunts.json').write_text(json.dumps(manifest, indent=2) + '\n')
     build_html(root, records)
     print(json.dumps({'files': len(records), 'counts': dict(Counter(f"{r['faction']}/{r['class']}" for r in records)),

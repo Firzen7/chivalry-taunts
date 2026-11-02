@@ -91,7 +91,7 @@ function app(hash = '', storage = new Map(), features = {}) {
 }
 const tick = () => new Promise(resolve => setImmediate(resolve));
 
-test('both factions and all four classes have 20 commands plus a battle cry; shared bitmap sheets exist', () => {
+test('both factions and all four classes have 20 commands plus both battle cries; shared bitmap sheets exist', () => {
   const a = app();
   assert.equal(a.document.querySelectorAll('.faction-card').length, 2);
   for (const faction of ['agatha', 'masons']) {
@@ -100,8 +100,8 @@ test('both factions and all four classes have 20 commands plus a battle cry; sha
     for (const cls of ['archer', 'man_at_arms', 'vanguard', 'knight']) {
       a.route(`#${faction}/${cls}`);
       assert.equal(a.document.querySelectorAll('.command-panel').length, 2);
-      assert.equal(a.document.querySelectorAll('[data-action="random"]').length, 21);
-      assert.equal(a.document.querySelectorAll('.version-trigger').length, 21);
+      assert.equal(a.document.querySelectorAll('[data-action="random"]').length, 22);
+      assert.equal(a.document.querySelectorAll('.version-trigger').length, 22);
       assert.equal(a.document.querySelectorAll('.wordmark').length, 1);
       for (const image of a.document.querySelectorAll('image, img.portrait')) {
         const source = image.getAttribute('href') || image.getAttribute('src');
@@ -191,7 +191,7 @@ test('three-dot picker plays exact versions, restores focus, and also supports b
   assert.equal(a.dialog.open, false);
   assert.equal(a.focused, a.document.querySelector(trigger));
   a.click('[data-action="versions"][data-id="battlecry-0"]'); await tick();
-  assert.equal(a.document.querySelector('#versions-title').textContent, 'Battle cry');
+  assert.equal(a.document.querySelector('#versions-title').textContent, 'Battle cry (animated)');
   a.click('[data-version="0"]'); await tick();
   assert.equal(a.audio.src, a.window.CHIVALRY_CATALOG.masons.knight.battlecry[0].clips[0].file);
 });
@@ -535,7 +535,7 @@ test('every categorized recording and battle cry is available in the soundboard'
       assert.ok(command.clips.some(clip => clip.file === file), `Missing ${file}`);
     }
     if (record.voice_types.includes('Battle cry')) {
-      assert.ok(groups.battlecry[0].clips.some(clip => clip.file === record.file), `Missing battle cry ${record.file}`);
+      assert.ok(groups.battlecry.some(command => command.clips.some(clip => clip.file === record.file)), `Missing battle cry ${record.file}`);
     }
   }
   for (const classes of Object.values(catalog)) for (const groups of Object.values(classes)) {
@@ -682,4 +682,39 @@ test('file:// picker matches catalogued files present in the actual project dire
     .map(option => option.dataset.version).filter(version => version !== 'random');
   assert.deepEqual(shown, Array.from(expected));
   assert.equal(a.recordings.length, 0);
+});
+
+test('every voice has separate animated and running battle cry controls and recordings', async () => {
+  const a = app();
+  for (const faction of ['agatha', 'masons']) for (const cls of ['archer', 'man_at_arms', 'vanguard', 'knight']) {
+    a.route(`#${faction}/${cls}`);
+    const commands = a.window.CHIVALRY_CATALOG[faction][cls].battlecry;
+    assert.equal(commands.length, 2);
+    for (const [i, variant] of ['animated', 'running'].entries()) {
+      const command = commands[i];
+      assert.equal(command.name, `Battle cry (${variant})`);
+      assert.ok(command.clips.length);
+      assert.ok(command.clips.every(clip => clip.file.startsWith(`audio/${faction}/${cls}/battlecry/${variant}/`)));
+      for (const clip of command.clips) assert.ok(existsSync(resolve(root, clip.file)));
+      a.click(`[data-action="versions"][data-id="battlecry-${i}"]`); await tick();
+      a.click('[data-version="0"]'); await tick();
+      assert.equal(a.audio.src, command.clips[0].file);
+      a.click('[data-action="close-versions"]');
+    }
+  }
+});
+
+test('old battle cry favorites migrate to their new paths and the corresponding command', async () => {
+  const catalog = app().window.CHIVALRY_CATALOG;
+  for (const [slot, variant] of ['animated', 'running'].entries()) {
+    const file = catalog.agatha.vanguard.battlecry[slot].clips[0].file;
+    const oldFile = file.replace(`/battlecry/${variant}/`, '/other/');
+    const storage = new Map([['chivalry-command-versions', JSON.stringify({'agatha/vanguard/battlecry-0': oldFile})]]);
+    const a = app('#agatha/vanguard', storage);
+    const preferences = JSON.parse(storage.get('chivalry-command-versions'));
+    assert.equal(preferences[`agatha/vanguard/battlecry-${slot}`], file);
+    if (slot === 1) assert.equal(preferences['agatha/vanguard/battlecry-0'], undefined);
+    a.click(`[data-action="random"][data-id="battlecry-${slot}"]`); await tick();
+    assert.equal(a.audio.src, file);
+  }
 });

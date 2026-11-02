@@ -9,8 +9,8 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const read = path => readFileSync(resolve(root, path), 'utf8');
 const tick = () => new Promise(resolve => setImmediate(resolve));
 
-function collection({remote = false, exists = () => true, request, count = 65} = {}) {
-  const rows = Array.from({length: count}, (_, i) => `<tr data-faction="agatha" data-class="vanguard" data-groups="personal_messages" data-types="Yes"><td>Agatha</td><td>Vanguard</td><td>voice-${i}</td><td><button class="play" data-src="audio/voice-${i}.mp3" data-label="voice-${i}">Play</button><a href="audio/voice-${i}.mp3">MP3</a></td></tr>`).join('');
+function collection({remote = false, exists = () => true, request, count = 65, battlecries = false} = {}) {
+  const rows = Array.from({length: count}, (_, i) => `<tr data-faction="agatha" data-class="vanguard" data-groups="${battlecries ? 'battlecry' : 'personal_messages'}" data-types="${battlecries ? `Battle cry (${i % 2 ? 'running' : 'animated'})` : 'Yes'}"><td>Agatha</td><td>Vanguard</td><td>voice-${i}</td><td><button class="play" data-src="audio/voice-${i}.mp3" data-label="voice-${i}">Play</button><a href="audio/voice-${i}.mp3">MP3</a></td></tr>`).join('');
   const {window} = parseHTML(read('full-list.html').replace(/<tbody hidden>[\s\S]*?<\/tbody>/, `<tbody hidden>${rows}</tbody>`));
   const {document, Event} = window;
   for (const select of document.querySelectorAll('select')) {
@@ -102,4 +102,19 @@ test('late full-list availability results respect a newer filter', async () => {
   assert.equal(a.visible().length, 1);
   assert.match(a.visible()[0].textContent, /voice-14/);
   assert.equal(a.document.querySelector('#count').textContent, '1 available voice clips');
+});
+
+test('full list offers Battle cry with animated and running filters', async () => {
+  const a = collection({count: 2, battlecries: true});
+  await tick();
+  assert.ok(a.document.querySelector('#group option[value="battlecry"]'));
+  a.filter('#group', 'battlecry'); await tick();
+  assert.equal(a.visible().length, 2);
+  assert.equal(a.document.querySelectorAll('#type option[data-group="battlecry"]').length, 2);
+  a.filter('#type', 'Battle cry (running)'); await tick();
+  assert.equal(a.visible().length, 1);
+  assert.match(a.visible()[0].textContent, /voice-1/);
+  a.filter('#type', 'Battle cry (animated)'); await tick();
+  assert.equal(a.visible().length, 1);
+  assert.match(a.visible()[0].textContent, /voice-0/);
 });

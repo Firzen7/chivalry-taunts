@@ -38,9 +38,12 @@
       let migrated = false;
       for (const [key, file] of Object.entries(saved)) {
         if (typeof file !== 'string') continue;
-        const path = /^(agatha|masons)\//.test(file) ? `audio/${file}` : file;
-        versionPreferences.set(key, path);
-        if (path !== file) migrated = true;
+        const original = /^(agatha|masons)\//.test(file) ? `audio/${file}` : file;
+        const path = window.CHIVALRY_AUDIO_ALIASES?.[original] || original;
+        // Running favorites used to share the single battle cry command.
+        const targetKey = path.includes('/battlecry/running/') ? key.replace(/\/battlecry-0$/, '/battlecry-1') : key;
+        versionPreferences.set(targetKey, path);
+        if (path !== file || targetKey !== key) migrated = true;
       }
       if (migrated) localStorage.setItem(preferenceKey, JSON.stringify(Object.fromEntries(versionPreferences)));
     }
@@ -143,7 +146,7 @@
       <div class="voice-layout"><aside class="steel identity-panel" aria-label="Selected voice">${artwork(route.faction)}${artwork(route.faction, route.cls, true)}<div class="identity-copy"><h2>${classes[route.cls]}</h2><p>${f.name}</p></div>
       <div class="identity-actions"><a class="steel-button" href="#${route.faction}">Change class</a><a class="steel-button" href="#">Change faction</a></div><a class="identity-change" href="#${route.faction}" aria-label="Change class; ${classes[route.cls]} currently selected">Change ›</a></aside>
       <div class="command-area">${[['personal', 'Personal Messages'], ['tactical', 'Tactical Messages']].map(([group, label]) => `<section class="steel command-panel" aria-labelledby="${group}-title"><h2 id="${group}-title">${label}</h2><div class="commands">${groups[group].map(c => commandRow(c)).join('')}</div></section>`).join('')}
-      ${commandRow(groups.battlecry[0], true)}<p class="voice-help">Tap to play. Voices can overlap. Use <strong>•••</strong> to choose a version or stop a recording.</p></div></div></section>`;
+      ${groups.battlecry.map(command => commandRow(command, true)).join('')}<p class="voice-help">Tap to play. Voices can overlap. Use <strong>•••</strong> to choose a version or stop a recording.</p></div></div></section>`;
   }
   function closePicker() {
     if (!dialog.open) return;

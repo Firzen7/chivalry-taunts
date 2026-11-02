@@ -4,7 +4,7 @@ Open **[index.html](website/index.html)** for the Chivalry-style faction → cla
 
 Open either page directly in a browser. The collection works offline, directly from disk, without a server. The soundboard checks that recordings are available before offering variants, including when opened directly from disk. Availability results are cached until the page is reloaded. All deployable files are inside `website/`; keep its structure intact.
 
-Browse by faction, playable class, original asset name, **message group**, or **voice command**. Select **Personal Messages**, **Tactical Messages**, or **Other**. The command dropdown narrows to the selected group and follows the in-game menu order, including “Go for the Objective.” Switching groups clears an incompatible command selection. Each row has a Play button and MP3 download link. A shared player provides pause, seeking, and volume controls. Results are shown 50 at a time. The full collection page also checks file availability before showing rows; counts, filters, and pagination include only confirmed recordings. Checks work both from disk and over HTTP(S), and are cached until reload. A progress message appears during checks, and temporary failures can be retried.
+Browse by faction, playable class, original asset name, **message group**, or **voice command**. Select **Personal Messages**, **Tactical Messages**, **Battle cry**, or **Other**. The command dropdown narrows to the selected group and follows the in-game menu order, including “Go for the Objective.” Switching groups clears an incompatible command selection. Each row has a Play button and MP3 download link. A shared player provides pause, seeking, and volume controls. Results are shown 50 at a time. The full collection page also checks file availability before showing rows; counts, filters, and pagination include only confirmed recordings. Checks work both from disk and over HTTP(S), and are cached until reload. A progress message appears during checks, and temporary failures can be retried.
 
 ## Deployment
 
@@ -68,16 +68,19 @@ website/audio/<faction>/<class>/
 │   ├── incoming/
 │   ├── behind_us/
 │   └── all_clear/
+├── battlecry/
+│   ├── animated/
+│   └── running/
 └── other/
 ```
 
-Factions are `agatha` and `masons`; classes are `archer`, `knight`, `man_at_arms`, and `vanguard`. Each personal/tactical command folder contains its MP3s. Sounds with no matching menu command, such as battle cries and unmatched legacy takes, go directly into `other/`. A clip with a recognized menu command is kept under that command even if it also has a legacy cue label such as “Reform the line.”
+Factions are `agatha` and `masons`; classes are `archer`, `knight`, `man_at_arms`, and `vanguard`. Each personal/tactical command folder contains its MP3s. Battle cries are classified from their original sound cue references and stored in `battlecry/animated/` (standing animation) or `battlecry/running/`. All eight voices have both directories. The soundboard offers a separate control for each type; the full collection has a Battle cry group with animated/running command filters. Unmatched legacy takes go directly into `other/`. A clip with a recognized menu command is kept under that command even if it also has a legacy cue label such as “Reform the line.”
 
 The 19 clips used by two menu commands have identical MP3 copies in both command folders. The HTML lists each distinct clip once and includes shared clips in either applicable message group. `website/taunts.json` records the grouping in `message_groups` and `menu_commands`, every applicable path in `category_files`, and the primary playback path in `file`. Empty menu folders are retained. Existing asset filenames and audio bytes are preserved; names are game identifiers, not transcriptions.
 
 ## Coverage and verification
 
-The extractor reads the installed game's `AOCPawnSoundgroup_Archer`, `ManAtArms`, `Knight`, and `Vanguard` source definitions. It resolves all **168 assignments**: 20 personal/tactical menu entries plus a battle cry for each of eight faction/class combinations. Every referenced wave is checked against the exported collection. This audit is saved in `website/taunts.json` under `menu_coverage`.
+The extractor reads the installed game's `AOCPawnSoundgroup_Archer`, `ManAtArms`, `Knight`, and `Vanguard` source definitions. It resolves all **168 assignments**: 20 personal/tactical menu entries plus a battle cry for each of eight faction/class combinations. Every referenced wave is checked against the exported collection. The running battle cry cues are resolved separately from the same audio packages; the website exposes 22 commands per voice (176 total). This audit is saved in `website/taunts.json` under `menu_coverage`.
 
 The extraction includes voice waves from `A_VO_Manual`, `A_VO_Manual_Barb`, and `A_VO_OBJ`, and follows cue graphs across package boundaries. It preserves additional and legacy takes even when they are not linked to a current menu. Clips with no matching menu command appear under **Other**; their original voice-type labels remain in the metadata and row descriptions. Sprint-attack grunts and silent placeholders are excluded. This is a voice-command collection; it is not an inventory of all game audio, NPC dialogue, damage sounds, or Workshop content.
 
