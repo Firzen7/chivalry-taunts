@@ -11,7 +11,7 @@ const read = path => readFileSync(resolve(root, path), 'utf8');
 function app(hash = '', storage = new Map(), features = {}) {
   const { window } = parseHTML(read('index.html'));
   const { document, Event } = window;
-  const location = { hash, pathname: '/index.html', search: '', protocol: features.request ? 'https:' : 'file:' };
+  const location = { hash, pathname: '/index.html', search: '', protocol: features.request ? 'https:' : 'file:', href: features.request ? 'https://example.test/index.html' : 'file:///tmp/index.html' };
   const metrics = {measurements: 0, barHeight: 60, observedResize: null, requests: [], localProbes: []};
   const fetch = (file, options) => {
     metrics.requests.push({file, options});
@@ -29,12 +29,16 @@ function app(hash = '', storage = new Map(), features = {}) {
   window.scrollTo = () => {};
   let focused = null;
   window.HTMLElement.prototype.focus = function () { focused = this; };
+  window.HTMLElement.prototype.setCustomValidity = function (message) { this.validationMessage = message; };
+  window.HTMLElement.prototype.reportValidity = function () { const input = this.querySelector('[name="nickname"]'); return !!input.value.trim() && !input.validationMessage; };
   Object.defineProperty(document, 'activeElement', {get: () => focused});
-  const dialog = document.querySelector('dialog');
-  Object.defineProperty(dialog, 'open', { get() { return this.hasAttribute('open'); } });
-  dialog.showModal = () => { throw new Error('A modal picker would block the dashboard'); };
-  dialog.show = () => dialog.setAttribute('open', '');
-  dialog.close = () => dialog.removeAttribute('open');
+  const dialog = document.querySelector('#versions');
+  for (const popup of document.querySelectorAll('dialog')) {
+    Object.defineProperty(popup, 'open', {get() {return this.hasAttribute('open');}});
+    popup.showModal = () => {throw new Error('A modal picker would block the dashboard');};
+    popup.show = () => popup.setAttribute('open', '');
+    popup.close = () => popup.removeAttribute('open');
+  }
   const recordings = [];
   const mediaOptions = {};
   function MockAudio() {
@@ -71,11 +75,11 @@ function app(hash = '', storage = new Map(), features = {}) {
     };
     return audio;
   }
-  const context = vm.createContext({ window, document, location, fetch, AbortController, setTimeout, clearTimeout, Audio: MockAudio, ResizeObserver, history: { replaceState(_, __, url) { location.hash = url.includes('#') ? '#' + url.split('#')[1] : ''; } }, localStorage: {getItem: key => storage.get(key) ?? null, setItem: (key, value) => storage.set(key, value)}, console });
+  const context = vm.createContext({ window, document, URL, TextEncoder, atob, btoa, location, fetch, AbortController, setTimeout, clearTimeout, Audio: MockAudio, ResizeObserver, history: { replaceState(_, __, url) { location.hash = url.includes('#') ? '#' + url.split('#')[1] : ''; } }, localStorage: {getItem: key => storage.get(key) ?? null, setItem: (key, value) => storage.set(key, value)}, console });
   vm.runInContext(read('soundboard/catalog.js'), context);
   vm.runInContext(read('soundboard/playback.js'), context);
   vm.runInContext(read('soundboard/availability.js'), context);
-  vm.runInContext(read('soundboard/app.js'), context);
+  for (const file of ['message-codec.js', 'vendor/qrcode.js', 'voice-share.js', 'app.js']) vm.runInContext(read('soundboard/' + file), context);
   return {
     window, document, dialog, recordings, mediaOptions, metrics,
     get audio() { return recordings.at(-1); },
@@ -437,7 +441,7 @@ test('keyboard focus cycles through both the picker and dashboard; Escape closes
     Object.assign(event, {key: 'Tab', shiftKey: shift});
     a.document.dispatchEvent(event);
   };
-  const buttons = [...a.dialog.querySelectorAll('button:not([disabled])')];
+  const buttons = [...a.dialog.querySelectorAll('button:not([disabled])')].filter(button => !button.closest('[hidden]'));
   buttons.at(-1).focus(); tab(false);
   assert.equal(a.focused, a.document.querySelector('#mute'));
   a.document.querySelector('[data-action="stop-all"]').focus(); tab(false);
@@ -727,4 +731,90 @@ test('old battle cry favorites migrate to their new paths and the corresponding 
     a.click(`[data-action="random"][data-id="battlecry-${slot}"]`); await tick();
     assert.equal(a.audio.src, file);
   }
+});
+
+test('sharing an exact take requires a nickname and creates a compact link plus a local QR code', async () => {
+  const a = app('#agatha/knight');
+  a.click('[data-action="versions"][data-id="personal-4"]'); await tick();
+  const section = a.document.querySelector('#voice-share');
+  assert.equal(section.querySelector('.share-open').disabled, true);
+  a.click('[data-version="1"]'); await tick();
+  a.click('.share-open');
+  const form = a.document.querySelector('.share-form');
+  const nickname = form.querySelector('input');
+  const submit = () => form.dispatchEvent(new a.window.Event('submit', {cancelable: true}));
+  nickname.value = '   '; submit();
+  assert.equal(a.document.querySelector('.share-result').hidden, true);
+  nickname.value = 'Žižka ⚔'; nickname.dispatchEvent(new a.window.Event('input'));
+  form.querySelector('textarea').value = ''; submit();
+  assert.equal(a.document.querySelector('.share-result').hidden, false);
+  const url = new URL(a.document.querySelector('.share-link').value);
+  assert.equal(url.pathname, '/message.html');
+  assert.equal(url.hostname, 'tmp.firzen.net');
+  const payload = JSON.parse(Buffer.from(url.searchParams.get('data'), 'base64url').toString());
+  assert.equal(payload.f, 'a'); assert.equal(payload.c, 'k'); assert.equal(payload.n, 'Žižka ⚔'); assert.equal(payload.m, '');
+  const expanded = a.window.ChivalryMessageCodec.expand(payload);
+  assert.equal(expanded.voice_variant, a.window.CHIVALRY_CATALOG.agatha.knight.personal[4].clips[1].file);
+  assert.equal(a.document.querySelector('.share-visit').href, url.href);
+  assert.ok(a.document.querySelector('.share-qr path').getAttribute('d').length > 100);
+  a.click('#share-result-dialog .share-close');
+  a.click('[data-version="2"]'); await tick();
+  assert.equal(form.hidden, true);
+  assert.equal(a.document.querySelector('.share-result').hidden, true);
+  assert.equal(section.querySelector('.share-selection').textContent, 'Version 3');
+});
+
+test('sharing a random audition freezes the last actual version and uses the current server URL', async () => {
+  const a = app('#masons/vanguard', new Map(), {request: async () => audioResponse()});
+  a.click('[data-action="versions"][data-id="battlecry-1"]'); await tick();
+  a.click('[data-version="random"]'); await tick();
+  const played = a.audio.src;
+  a.click('.share-open');
+  const form = a.document.querySelector('.share-form');
+  form.querySelector('input').value = 'Firzen';
+  form.querySelector('textarea').value = 'See you on the battlefield!';
+  form.dispatchEvent(new a.window.Event('submit', {cancelable: true}));
+  const url = new URL(a.document.querySelector('.share-link').value);
+  assert.equal(url.hostname, 'example.test');
+  const payload = JSON.parse(Buffer.from(url.searchParams.get('data'), 'base64url').toString());
+  assert.ok(payload.v.startsWith('br/'));
+  assert.equal(a.window.ChivalryMessageCodec.expand(payload).voice_variant, played);
+});
+
+test('sharing uses separate form/result dialogs with editing, dismissal, and navigation cleanup', async () => {
+  const a = app('#agatha/vanguard');
+  a.click('[data-action="versions"][data-id="personal-4"]'); await tick();
+  a.click('[data-version="0"]'); await tick();
+  a.click('.share-open');
+  const formDialog = a.document.querySelector('#share-form-dialog');
+  const resultDialog = a.document.querySelector('#share-result-dialog');
+  const form = formDialog.querySelector('form');
+  assert.equal(formDialog.open, true);
+  assert.equal(a.dialog.hidden, true);
+  assert.equal(a.focused, form.querySelector('input'));
+  form.querySelector('input').value = 'Firzen';
+  form.querySelector('textarea').value = 'For Agatha!';
+  form.dispatchEvent(new a.window.Event('submit', {cancelable: true}));
+  assert.equal(formDialog.open, false);
+  assert.equal(resultDialog.open, true);
+  assert.equal(a.focused, resultDialog.querySelector('.share-copy'));
+  a.click('.share-edit');
+  assert.equal(formDialog.open, true);
+  assert.equal(resultDialog.open, false);
+  assert.equal(form.querySelector('textarea').value, 'For Agatha!');
+  const escape = new a.window.Event('keydown', {bubbles: true, cancelable: true});
+  escape.key = 'Escape'; a.document.dispatchEvent(escape);
+  assert.equal(formDialog.open, false);
+  assert.equal(a.dialog.open, true);
+  assert.equal(a.dialog.hidden, false);
+  assert.equal(a.focused, a.document.querySelector('.share-open'));
+  a.click('.share-open');
+  a.click('#picker-shade');
+  assert.equal(formDialog.open, false);
+  assert.equal(a.dialog.open, true);
+  a.click('.share-open');
+  a.route('#masons');
+  assert.equal(formDialog.open, false);
+  assert.equal(resultDialog.open, false);
+  assert.equal(a.dialog.open, false);
 });

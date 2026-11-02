@@ -11,7 +11,7 @@ Open `message.html?data=BASE64_JSON` or `message.html#data=BASE64_JSON`. Encode 
 | `f` | Faction | `a` = agatha, `m` = masons |
 | `c` | Class | `k` = knight, `a` = archer, `v` = vanguard, `m` = man_at_arms |
 | `n` | Nickname | Up to 80 characters |
-| `m` | Custom message | Up to 4,000 characters, including Unicode and newlines |
+| `m` | Custom message | Optional; up to 4,000 characters, including Unicode and newlines (use an empty string when omitted) |
 | `v` | Voice recording | Folder shortcut followed by the remaining path |
 
 | Voice prefix | Expanded folder beneath `audio/<faction>/<class>/` |

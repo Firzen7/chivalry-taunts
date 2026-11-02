@@ -21,6 +21,7 @@
   const main = document.querySelector('main');
   const controls = document.querySelector('.sound-controls');
   const dialog = document.querySelector('#versions');
+  const voiceShare = new window.ChivalryVoiceShare(document.querySelector('#voice-share'));
   const shade = document.querySelector('#picker-shade');
   const announcement = document.querySelector('#announcement');
   const error = document.querySelector('.audio-error');
@@ -151,6 +152,7 @@
   function closePicker() {
     if (!dialog.open) return;
     pickerRequest++;
+    voiceShare.setVoice(null);
     dialog.close();
     document.querySelector('#version-list').replaceChildren();
     document.querySelector('#version-list').removeAttribute('aria-busy');
@@ -247,6 +249,10 @@
     if (!dialog.open || !pickerCommand) return;
     const entries = playback.active.filter(entry => entry.command.id === pickerCommand.id);
     const selected = preferredVersion(pickerCommand);
+    const shareVersion = selected ?? lastVersions.get(commandKey(pickerCommand));
+    voiceShare.setVoice(Number.isInteger(shareVersion) && availability.ready(pickerCommand)?.includes(shareVersion)
+      ? {faction: route.faction, cls: route.cls, commandName: pickerCommand.name, version: shareVersion, file: pickerCommand.clips[shareVersion].file}
+      : null);
     dialog.querySelectorAll('[data-action="pick"]').forEach(option => {
       const version = option.dataset.version === 'random' ? null : Number(option.dataset.version);
       if (version === selected) option.setAttribute('aria-current', 'true');
@@ -371,7 +377,7 @@
 
     }
   });
-  shade.addEventListener('click', closePicker);
+  shade.addEventListener('click', () => voiceShare.activeDialog ? voiceShare.close() : closePicker());
   dialog.addEventListener('cancel', event => { event.preventDefault(); closePicker(); });
   function updateVolume() {
     document.querySelector('#mute').innerHTML = icon(playback.muted || playback.volume === 0 ? 'mute' : 'speaker');
@@ -399,10 +405,14 @@
     window.addEventListener('resize', updatePickerClearance);
   }
   document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && dialog.open) closePicker();
+    if (event.key === 'Escape' && dialog.open) {
+      event.preventDefault();
+      if (voiceShare.activeDialog) voiceShare.close();
+      else closePicker();
+    }
     if (event.key === 'Tab' && dialog.open) {
       // Keep keyboard focus within the picker AND the still-accessible dashboard.
-      const targets = [...dialog.querySelectorAll('button:not([disabled])'), ...controls.querySelectorAll('button:not([disabled]), input:not([disabled])')]
+      const targets = [...(voiceShare.activeDialog || dialog).querySelectorAll('button:not([disabled]), input:not([disabled]), textarea:not([disabled]), a[href]'), ...controls.querySelectorAll('button:not([disabled]), input:not([disabled])')]
         .filter(element => !element.closest('[hidden]'));
       const index = targets.indexOf(document.activeElement);
       const next = event.shiftKey ? (index <= 0 ? targets.length - 1 : index - 1) : (index + 1) % targets.length;

@@ -15,7 +15,7 @@
     message = window.ChivalryMessageCodec.expand(JSON.parse(new TextDecoder('utf-8', {fatal: true}).decode(bytes)));
     if (!message || typeof message !== 'object' || Array.isArray(message)) throw new Error();
     if (!['agatha', 'masons'].includes(message.faction) || !['archer', 'man_at_arms', 'vanguard', 'knight'].includes(message.class)) throw new Error();
-    if (typeof message.nickname !== 'string' || !message.nickname.trim() || message.nickname.length > 80 || typeof message.message !== 'string' || !message.message.trim() || message.message.length > 4000) throw new Error();
+    if (typeof message.nickname !== 'string' || !message.nickname.trim() || message.nickname.length > 80 || typeof message.message !== 'string' || message.message.length > 4000) throw new Error();
     const groups = window.CHIVALRY_CATALOG?.[message.faction]?.[message.class];
     if (typeof message.voice_variant !== 'string' || !groups || !Object.values(groups).flat().some(command => command.clips.some(clip => clip.file === message.voice_variant))) {
       throw new Error('The voice recording in this link is not available for this warrior.');

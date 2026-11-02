@@ -701,7 +701,7 @@ body.picker-open .sound-controls {
   background: #010711a8;
   backdrop-filter: blur(3px);
 }
-#versions {
+#versions, .share-dialog {
   position: fixed;
   top: calc((100svh - var(--controls-clearance, 100px)) / 2);
   left: 50%;
@@ -1050,7 +1050,7 @@ body.picker-open .sound-controls {
     font-size: .62rem;
     gap: 7px;
   }
-  #versions {
+  #versions, .share-dialog {
     position: fixed;
     inset: auto auto var(--controls-clearance, 100px) 50%;
     transform: translateX(-50%);
@@ -1095,3 +1095,20 @@ body.picker-open .sound-controls {
     backdrop-filter: none;
   }
 }
+
+.voice-share { border-top: 1px solid var(--line); padding-top: 18px; margin-top: 18px; }
+.voice-share h3 { color: var(--gold); font: 1.2rem Ringbearer,Georgia,serif; margin: 0 0 8px; }
+.share-selection { color: var(--muted); font-size: .8rem; }
+.share-form { display: grid; gap: 14px; margin-top: 16px; }
+.voice-share label, .share-dialog label { display: grid; gap: 7px; font-size: .85rem; }
+.voice-share input, .voice-share textarea, .share-dialog input, .share-dialog textarea { width: 100%; min-width: 0; padding: 10px; border: 1px solid var(--line); background: #071526; color: var(--text); border-radius: 0; font: inherit; }
+.voice-share textarea, .share-dialog textarea { resize: vertical; }
+.share-result { margin-top: 18px; }
+.share-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+.share-qr { display: block; width: min(100%, 320px); height: auto; aspect-ratio: 1; margin: 18px auto 0; background: white; }
+.share-error { color: var(--gold); font-size: .85rem; }
+.share-copy-status { font-size: .8rem; }
+
+.share-dialog h2 { color: var(--gold); font: 1.6rem Ringbearer,Georgia,serif; margin: 0; }
+.share-voice-label { color: var(--muted); font-size: .85rem; }
+.share-dialog .share-edit { margin-top: 16px; }

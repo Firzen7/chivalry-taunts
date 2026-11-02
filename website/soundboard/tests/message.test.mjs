@@ -68,3 +68,10 @@ test('compact testing links select the exact recording and reject invalid paths'
   assert.equal(invalid.document.getElementById('message-error').hidden,false);
  }
 });
+test('shared voices permit an empty custom message and still reveal and play',()=>{
+ const codec=app().window.ChivalryMessageCodec;
+ const a=app(codec.encode({...payload,message:''}));
+ assert.equal(a.document.getElementById('message-error').hidden,true);
+ a.click('message-reveal'); assert.equal(a.audio.plays,1);
+ assert.equal(a.document.getElementById('message-text').textContent,'');
+});

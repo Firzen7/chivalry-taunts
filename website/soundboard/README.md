@@ -81,3 +81,9 @@ The configured site address is `https://tmp.firzen.net/`. When moving to a diffe
 ## Folder layout
 
 This folder lives under `website/soundboard/`. Audio paths in the catalog and collection metadata are relative to `website/`, under `audio/agatha/` and `audio/masons/`. The extractor, catalog builder, and artwork optimizer all target `website/` by default. Public metadata and extraction notes are `website/taunts.json` and `website/README.md`. Existing saved choices using the former faction paths are migrated automatically to their corresponding `audio/` paths.
+
+## Sharing a voice
+
+The variant picker includes **Share this voice**. Select a numbered take or preview Random version, then click Share. Share opens a separate dialog containing the required nickname and optional message fields. Generate link opens a results dialog with the compact `message.html` URL, Copy link and Open message controls, and a matching QR code. Edit message returns to the filled form. Closing either dialog with its close button, Escape, or the outside shade returns to the variant picker. The sound controls remain available throughout. Selecting another recording resets the share form and output so a previous take cannot be shared accidentally. Favorites and random auditions both use the exact recording identity.
+
+Links use the current server's URL, including subdirectory deployments. When testing from `file://`, links use the public canonical address configured in `index.html`. QR generation runs entirely locally using the bundled MIT-licensed Kazuhiko Arase QRCode implementation (`vendor/qrcode.js`, license alongside); no external QR service or CDN is involved. Messages too large for a QR code prompt the sender to shorten them. Keyboard navigation includes the form and result controls while leaving the sound dashboard accessible.
