@@ -1,8 +1,11 @@
 @font-face { font-family: MessageDisplay; src: url('assets/eb-garamond-bold.woff') format('woff'); font-weight: 700; font-display: swap; }
 .message-page { padding: 28px 20px 40px; }
+.message-invitation { margin: auto 0 0; padding-top: 24px; text-align: center; color: var(--muted); font-size: .85rem; line-height: 1.6; }
+.message-invitation a { color: #79a7d7; text-decoration: underline; text-underline-offset: 3px; }
+.message-invitation a:hover { color: var(--text); }
 .message-header { display: flex; justify-content: center; margin-bottom: 28px; }
 .message-header .wordmark { text-align: center; }
-.message-shell { position: relative; width: min(100%, 720px); margin: 0 auto; padding: 28px; text-align: center; }
+.message-shell { position: relative; display: flex; flex-direction: column; min-height: 0; width: min(100%, 720px); margin: 0 auto; padding: 28px 28px 10px; text-align: center; }
 .message-shell h1 { margin: 10px 0; color: var(--gold); font: 700 clamp(1.7rem,4vw,2.8rem)/1.25 MessageDisplay,Georgia,serif; overflow-wrap: anywhere; }
 .message-portrait { width: min(100%, 560px); aspect-ratio: 8 / 5; overflow: hidden; margin: 12px auto 0; -webkit-mask-image: linear-gradient(#000 80%, transparent); mask-image: linear-gradient(#000 80%, transparent); }
 /* Preserve the full-body source for other pages; frame its upper body here. */
@@ -17,9 +20,9 @@
 .message-sound[aria-checked="false"] .sound-switch { background: #526477; }
 .message-sound[aria-checked="false"] .sound-switch::after { transform: translateX(0); }
 .message-ornament { color: var(--gold); margin: 0 0 18px; }
-.message-letter { display: grid; align-content: center; justify-items: center; position: relative; min-height: 220px; padding: 26px; border: 1px solid var(--line); box-shadow: inset 0 0 0 3px #061326; background: #051427b3; }
-.message-text { width: 100%; margin: 0; color: #e9e7e2; font: clamp(1.05rem,2.3vw,1.35rem)/1.7 Georgia,serif; white-space: pre-wrap; overflow-wrap: anywhere; }
-.message-text.concealed { height: 168px; overflow: hidden; filter: blur(7px); user-select: none; pointer-events: none; }
+.message-letter { display: grid; grid-template-rows: minmax(0,1fr) auto; justify-items: center; position: relative; height: 220px; min-height: 0; overflow: hidden; padding: 26px; border: 1px solid var(--line); box-shadow: inset 0 0 0 3px #061326; background: #051427b3; }
+.message-text { width: 100%; min-height: 0; height: 100%; overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: stable both-edges; margin: 0; color: #e9e7e2; font: clamp(1.05rem,2.3vw,1.35rem)/1.7 Georgia,serif; white-space: pre-wrap; overflow-wrap: anywhere; }
+.message-text.concealed { overflow: hidden; filter: blur(7px); user-select: none; pointer-events: none; }
 .message-text.empty-message { font-style: italic; }
 .message-text:not(.concealed) { animation: message-reveal 1s ease-out both; }
 @keyframes message-reveal {
@@ -37,7 +40,7 @@
 #message-audio-error { color: var(--gold); font-size: .85rem; }
 @media(max-width:600px) {
   .message-page { padding: 20px 12px 28px; }
-  .message-shell { padding: 16px; }
+  .message-shell { padding: 16px 16px 10px; }
   .message-sound { position: static; margin-right: 12px; }
   .message-letter { padding: 22px 18px; }
 }
