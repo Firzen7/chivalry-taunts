@@ -7,7 +7,7 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = ROOT / 'soundboard/assets'
+ASSETS = ROOT / 'website/soundboard/assets'
 OUTPUT = ASSETS / 'optimized'
 PORTRAIT_WIDTHS = (384, 640, 1024)
 

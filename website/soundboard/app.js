@@ -31,9 +31,14 @@
   try {
     const saved = JSON.parse(localStorage.getItem(preferenceKey));
     if (saved && typeof saved === 'object' && !Array.isArray(saved)) {
+      let migrated = false;
       for (const [key, file] of Object.entries(saved)) {
-        if (typeof file === 'string') versionPreferences.set(key, file);
+        if (typeof file !== 'string') continue;
+        const path = /^(agatha|masons)\//.test(file) ? `audio/${file}` : file;
+        versionPreferences.set(key, path);
+        if (path !== file) migrated = true;
       }
+      if (migrated) localStorage.setItem(preferenceKey, JSON.stringify(Object.fromEntries(versionPreferences)));
     }
   } catch { /* Preferences remain available in memory when storage is unavailable. */ }
   let route = {};

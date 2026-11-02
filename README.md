@@ -1,10 +1,32 @@
 # Chivalry: Medieval Warfare voice collection
 
-Open **[index.html](index.html)** for the Chivalry-style faction → class → voice-command interface, or **[full-list.html](full-list.html)** for the full collection table.
+Open **[index.html](website/index.html)** for the Chivalry-style faction → class → voice-command interface, or **[full-list.html](website/full-list.html)** for the full collection table.
 
-Open either page directly in a browser. The collection works offline, directly from disk, without a server. Keep the HTML alongside the faction folders.
+Open either page directly in a browser. The collection works offline, directly from disk, without a server. All deployable files are inside `website/`; keep its structure intact.
 
 Browse by faction, playable class, original asset name, **message group**, or **voice command**. Select **Personal Messages**, **Tactical Messages**, or **Other**. The command dropdown narrows to the selected group and follows the in-game menu order, including “Go for the Objective.” Switching groups clears an incompatible command selection. Each row has a Play button and MP3 download link. A shared player provides pause, seeking, and volume controls. Results are shown 50 at a time.
+
+## Deployment
+
+Deploy the **contents of `website/`** as the web server's document root. You can also point a local static server at this directory:
+
+```sh
+python3 -m http.server --directory website
+```
+
+```text
+website/
+├── index.html
+├── full-list.html
+├── audio/
+│   ├── agatha/
+│   └── masons/
+├── soundboard/
+├── taunts.json
+└── README.md
+```
+
+Development scripts, design mockups, and reference resources stay outside the deployment folder. The existing public URLs for pages and assets are preserved, except audio URLs now start with `audio/`. Saved version choices from the previous audio layout are migrated automatically.
 
 ## Collection
 
@@ -23,7 +45,7 @@ For example, Agatha Vanguard has **289 clips**, including **15 Yes**, **16 No**,
 The hierarchy mirrors the two in-game menus beneath every faction/class folder:
 
 ```text
-<faction>/<class>/
+website/audio/<faction>/<class>/
 ├── personal_messages/
 │   ├── yes/
 │   ├── no/
@@ -51,11 +73,11 @@ The hierarchy mirrors the two in-game menus beneath every faction/class folder:
 
 Factions are `agatha` and `masons`; classes are `archer`, `knight`, `man_at_arms`, and `vanguard`. Each personal/tactical command folder contains its MP3s. Sounds with no matching menu command, such as battle cries and unmatched legacy takes, go directly into `other/`. A clip with a recognized menu command is kept under that command even if it also has a legacy cue label such as “Reform the line.”
 
-The 19 clips used by two menu commands have identical MP3 copies in both command folders. The HTML lists each distinct clip once and includes shared clips in either applicable message group. `taunts.json` records the grouping in `message_groups` and `menu_commands`, every applicable path in `category_files`, and the primary playback path in `file`. Empty menu folders are retained. Existing asset filenames and audio bytes are preserved; names are game identifiers, not transcriptions.
+The 19 clips used by two menu commands have identical MP3 copies in both command folders. The HTML lists each distinct clip once and includes shared clips in either applicable message group. `website/taunts.json` records the grouping in `message_groups` and `menu_commands`, every applicable path in `category_files`, and the primary playback path in `file`. Empty menu folders are retained. Existing asset filenames and audio bytes are preserved; names are game identifiers, not transcriptions.
 
 ## Coverage and verification
 
-The extractor reads the installed game's `AOCPawnSoundgroup_Archer`, `ManAtArms`, `Knight`, and `Vanguard` source definitions. It resolves all **168 assignments**: 20 personal/tactical menu entries plus a battle cry for each of eight faction/class combinations. Every referenced wave is checked against the exported collection. This audit is saved in `taunts.json` under `menu_coverage`.
+The extractor reads the installed game's `AOCPawnSoundgroup_Archer`, `ManAtArms`, `Knight`, and `Vanguard` source definitions. It resolves all **168 assignments**: 20 personal/tactical menu entries plus a battle cry for each of eight faction/class combinations. Every referenced wave is checked against the exported collection. This audit is saved in `website/taunts.json` under `menu_coverage`.
 
 The extraction includes voice waves from `A_VO_Manual`, `A_VO_Manual_Barb`, and `A_VO_OBJ`, and follows cue graphs across package boundaries. It preserves additional and legacy takes even when they are not linked to a current menu. Clips with no matching menu command appear under **Other**; their original voice-type labels remain in the metadata and row descriptions. Sprint-attack grunts and silent placeholders are excluded. This is a voice-command collection; it is not an inventory of all game audio, NPC dialogue, damage sounds, or Workshop content.
 
@@ -63,7 +85,7 @@ The internal audio group names are misleading: the game assigns the Archer's voi
 
 Embedded Ogg streams are converted using FFmpeg's `libmp3lame -q:a 2`, retaining source channels and sample rates. Every MP3 was fully decoded using `ffmpeg -xerror` and inspected with `ffprobe`. Exact Ogg duplicates within a faction/class share one collection entry, with an MP3 copy in each applicable category; all source references are retained, including duplicate Troll-package taunts.
 
-`taunts.json` records source hashes, export IDs, cue references, voice-command labels, durations, output hashes, and relative paths. The original game files are read only.
+`website/taunts.json` records source hashes, export IDs, cue references, voice-command labels, durations, output hashes, and relative paths. The original game files are read only.
 
 ## Rebuild
 
@@ -79,8 +101,8 @@ Inspect source coverage without writing files:
 python3 scripts/extract_taunts.py /path/to/chivalrymedievalwarfare --audit-only
 ```
 
-The build maintains the message-group and command folders and updates MP3s, `taunts.json`, and `full-list.html`. Unchanged, hash-verified MP3s are reused. Edit `scripts/index.template.html` to change the page before rebuilding. The package reader targets this installation's uncompressed UE3 version 860 format and rejects unsupported layouts.
+By default the extractor writes into `website/` (`--output` can select another site root). The build maintains the message-group and command folders and updates MP3s, `website/taunts.json`, and `website/full-list.html`. Unchanged, hash-verified MP3s are reused. Edit `scripts/index.template.html` to change the page before rebuilding. The package reader targets this installation's uncompressed UE3 version 860 format and rejects unsupported layouts.
 
 ## Soundboard implementation
 
-The responsive soundboard is documented in [soundboard/README.md](soundboard/README.md). After rebuilding the extracted collection, run `python3 scripts/build_soundboard.py` to refresh its offline catalog.
+The responsive soundboard is documented in [soundboard documentation](website/soundboard/README.md). After rebuilding the extracted collection, run `python3 scripts/build_soundboard.py` to refresh its offline catalog.

@@ -1,6 +1,6 @@
 # Chivalry voice soundboard — visual concepts
 
-Four separate screen designs for an alternative interface inspired by Chivalry: Medieval Warfare. The collection browser is available at `full-list.html`; `index.html` is the implemented soundboard.
+Four separate screen designs for an alternative interface inspired by Chivalry: Medieval Warfare. The collection browser is available at `website/full-list.html`; `website/index.html` is the implemented soundboard.
 
 1. **Faction selection:** two heraldic panels for Agatha Knights and Mason Order.
 2. **Agatha class selection:** Archer, Man-at-Arms, Vanguard, and Knight in their blue faction equipment.

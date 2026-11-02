@@ -38,7 +38,7 @@ Refresh the catalog after extracting or reorganizing audio:
 python3 scripts/build_soundboard.py
 ```
 
-The builder verifies every recording path, all eight voices, and all 21 commands per voice. It reads `taunts.json` without changing the original collection or its HTML.
+The builder defaults to the project’s `website/` directory (`--root` can select another site root). It verifies every recording path, all eight voices, and all 21 commands per voice. It reads `taunts.json` without changing the original collection or its HTML.
 
 Run the interaction tests from the project root with Node 20 or newer:
 
@@ -63,7 +63,7 @@ python3 scripts/optimize_soundboard_assets.py
 
 The script leaves source PNGs intact. All 27 delivery files, including all portrait sizes, total 3,312,792 bytes versus 19,158,175 bytes for the source PNGs. As an example, the four Agatha class portraits at 640px total 432,184 bytes versus 7,999,004 bytes for their original PNGs. These are file-size measurements, not measured network traffic or frame-rate improvements. Smaller portrait variants also decode to fewer pixels. Their alpha channels are preserved exactly relative to the resized originals.
 
-Deploy the updated `index.html`, `soundboard/app.js`, `soundboard/style.css`, and the complete `soundboard/assets/optimized/` directory. The HTML uses a new CSS/JS query version to avoid reusing stale cached files. No new runtime dependencies are required.
+Deploy the complete contents of the project’s `website/` directory. The public pages, soundboard, optimized assets, and `audio/` recordings are all self-contained there. The HTML uses a new CSS/JS query version to avoid reusing stale cached files. No new runtime dependencies are required.
 
 Phone frame rates still need an on-device check. These changes target likely paint/compositing and image-memory costs identified in the code; a Motorola G72 trace was not available. For further diagnosis, Chrome's [rendering performance tools](https://developer.chrome.com/docs/devtools/rendering/performance) can highlight repaint regions. Browser guidance also covers [responsive background images](https://web.dev/articles/optimize-css-background-images-with-media-queries).
 
@@ -72,3 +72,7 @@ Phone frame rates still need an on-device check. These changes target likely pai
 The static `<head>` in `index.html` contains Open Graph metadata and a large-image sharing card, pointing to `https://tmp.firzen.net/soundboard/assets/link-preview.png`. Deploy `index.html` together with `soundboard/assets/link-preview.png`. The image dimensions, PNG media type, and descriptive alternative text are included so crawlers can read them without running JavaScript.
 
 The configured site address is `https://tmp.firzen.net/`. When moving to a different host, update the canonical URL, `og:url`, `og:image`, and `twitter:image` URLs in `index.html` to the new public HTTPS address. The Open Graph fields follow the [Open Graph protocol](https://ogp.me/).
+
+## Folder layout
+
+This folder lives under `website/soundboard/`. Audio paths in the catalog and collection metadata are relative to `website/`, under `audio/agatha/` and `audio/masons/`. The extractor, catalog builder, and artwork optimizer all target `website/` by default. Public metadata and extraction notes are `website/taunts.json` and `website/README.md`. Existing saved choices using the former faction paths are migrated automatically to their corresponding `audio/` paths.

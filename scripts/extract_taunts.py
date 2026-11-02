@@ -185,7 +185,7 @@ def organize_files(root, records):
                 raise ValueError(f'Audio hash mismatch: {path}')
         commands = menu_commands(r)
         category_files = {
-            command: (Path(r['faction']) / r['class'] / command_directory(command) / source.name).as_posix()
+            command: (Path('audio') / r['faction'] / r['class'] / command_directory(command) / source.name).as_posix()
             for command in commands
         }
         for rel in category_files.values():
@@ -200,7 +200,7 @@ def organize_files(root, records):
     for faction in ('agatha', 'masons'):
         for cls in CLASSES:
             for command in COMMAND_GROUP:
-                (root / faction / cls / command_directory(command)).mkdir(parents=True, exist_ok=True)
+                (root / 'audio' / faction / cls / command_directory(command)).mkdir(parents=True, exist_ok=True)
     desired_paths = {root / rel for _, _, files, _ in plans for rel in files.values()}
     for r, source, category_files, old_paths in plans:
         primary = next(iter(category_files.values()))
@@ -222,7 +222,7 @@ def organize_files(root, records):
     for faction in ('agatha', 'masons'):
         for cls in CLASSES:
             for label in categories:
-                directory = root / faction / cls / category_slug(label)
+                directory = root / 'audio' / faction / cls / category_slug(label)
                 if directory.is_dir() and directory.name not in MESSAGE_GROUPS and not any(directory.iterdir()):
                     directory.rmdir()
 
@@ -349,7 +349,7 @@ def collect(game):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('game_folder', type=Path)
-    parser.add_argument('--output', type=Path, default=Path(__file__).resolve().parents[1])
+    parser.add_argument('--output', type=Path, default=Path(__file__).resolve().parents[1] / 'website')
     parser.add_argument('--audit-only', action='store_true', help='Inspect coverage without writing files')
     args = parser.parse_args()
     root = args.output.resolve()
@@ -362,7 +362,7 @@ def main():
     old = json.loads((root / 'taunts.json').read_text()) if (root / 'taunts.json').exists() else {'files': []}
     previous = {(r['faction'], r['class'], r['source_ogg_sha256']): r for r in old['files']}
     # Reuse existing paths, including collision suffixes from the initial collection.
-    paths = {(Path(r['faction']) / r['class'] / Path(r['file']).name).as_posix().lower() for r in old['files']}
+    paths = {(Path('audio') / r['faction'] / r['class'] / Path(r['file']).name).as_posix().lower() for r in old['files']}
     records, jobs, seen = [], [], {}
     for c in candidates:
         key = (c['faction'], c['class_'], c['digest'])
@@ -376,13 +376,13 @@ def main():
             rel = Path(prior['file'])
         else:
             filename = re.sub(r'[^A-Za-z0-9_-]', '_', c['taunt_name']) + '.mp3'
-            rel = Path(c['faction']) / c['class_'] / filename
+            rel = Path('audio') / c['faction'] / c['class_'] / filename
             if str(rel).lower() in paths:
                 suffix = Path(c['source']['package']).stem + '_' + str(c['source']['export_index'])
                 rel = rel.with_stem(rel.stem + '__' + suffix)
             if str(rel).lower() in paths:
                 raise ValueError(f'Filename collision: {rel}')
-        paths.add((Path(c['faction']) / c['class_'] / rel.name).as_posix().lower())
+        paths.add((Path('audio') / c['faction'] / c['class_'] / rel.name).as_posix().lower())
         r = dict(faction=c['faction'], **{'class': c['class_']}, taunt_name=c['taunt_name'], file=rel.as_posix(),
                  voice_types=c['voice_types'], source_ogg_sha256=c['digest'], sources=[c['source']],
                  category_files=prior.get('category_files', {}) if prior else {})
@@ -428,7 +428,7 @@ def main():
     organize_files(root, records)
     manifest = dict(source_game_folder=str(args.game_folder), sources=sources,
         selection='All non-grunt voice waves in the Manual, Manual_Barb and OBJ packages, all personal/tactical/battle-cry cue references (including cross-package references), and the original Troll taunt duplicates. Exact Ogg duplicates within a faction/class share one collection entry.',
-        file_layout='faction/class/personal_messages|tactical_messages/command/asset_name.mp3; clips with no menu command go directly in faction/class/other/. Shared clips have a copy in every applicable menu command; category_files lists all paths and file is the primary playback path.',
+        file_layout='audio/faction/class/personal_messages|tactical_messages/command/asset_name.mp3; clips with no menu command go directly in audio/faction/class/other/. Shared clips have a copy in every applicable menu command; category_files lists all paths and file is the primary playback path.',
         message_groups={group: {'label': label, 'commands': [COMMAND_LABELS.get(c, c) for c in commands]} for group, (label, commands) in MESSAGE_GROUPS.items()},
         class_mapping='Playable classes from AOCPawnSoundgroup_*.uc menu assignments; group Archer -> Man-at-Arms, MAA -> Archer. Shared cue audio is included in every faction/class that references it. Generic legacy Agatha/Mason voices are assigned to Knight.',
         encoding='ffmpeg libmp3lame -q:a 2; every MP3 fully decoded with ffmpeg -xerror. Rebuilds reuse unchanged, hash-verified MP3s.',

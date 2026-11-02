@@ -486,3 +486,17 @@ test('picker previews stop existing mixed voices and pending previews; main butt
   a.click('[data-action="random"][data-id="personal-8"]'); await tick();
   assert.equal(a.recordings.filter(audio => !audio.paused).length, 3);
 });
+
+test('saved favorites from the old faction paths migrate to the new audio folder', async () => {
+  const catalog = app('#agatha/vanguard').window.CHIVALRY_CATALOG;
+  const file = catalog.agatha.vanguard.personal[4].clips[2].file;
+  assert.ok(file.startsWith('audio/agatha/'));
+  const storage = new Map([['chivalry-command-versions', JSON.stringify({
+    'agatha/vanguard/personal-4': file.slice('audio/'.length),
+  })]]);
+  const a = app('#agatha/vanguard', storage);
+  assert.equal(a.document.querySelector('[data-command="personal-4"] .version-label').textContent, 'Version 3');
+  a.click('[data-action="random"][data-id="personal-4"]'); await tick();
+  assert.equal(a.audio.src, file);
+  assert.equal(JSON.parse(storage.get('chivalry-command-versions'))['agatha/vanguard/personal-4'], file);
+});

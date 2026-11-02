@@ -1,6 +1,6 @@
 {
   "name": "chivalry-voice-collection",
   "private": true,
-  "scripts": { "test": "node --test soundboard/tests/*.test.mjs" },
+  "scripts": { "test": "node --test website/soundboard/tests/*.test.mjs" },
   "devDependencies": { "linkedom": "0.18.12" }
 }
