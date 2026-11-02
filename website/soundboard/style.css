@@ -1113,3 +1113,4 @@ body.picker-open .sound-controls {
 
 .share-open { width: 100%; }
 .share-open svg { width: 20px; height: 20px; flex-shrink: 0; }
+.share-message-count { display: block; margin-top: -9px; text-align: right; color: var(--muted); font-size: .7rem; }

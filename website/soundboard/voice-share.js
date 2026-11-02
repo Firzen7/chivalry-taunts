@@ -9,6 +9,12 @@ window.ChivalryVoiceShare = class {
     this.form = this.formDialog.querySelector('form');
     this.result = this.resultDialog.querySelector('.share-result');
     this.error = this.formDialog.querySelector('.share-error');
+    const messageInput = this.form.querySelector('textarea');
+    const updateCount = () => {
+      this.form.querySelector('.share-message-count').textContent = `${messageInput.value.length} / 120 characters`;
+    };
+    messageInput.addEventListener('input', updateCount);
+    updateCount();
     for (const dialog of [this.formDialog, this.resultDialog]) {
       dialog.querySelector('.share-close').addEventListener('click', () => this.close());
       dialog.addEventListener('cancel', event => { event.preventDefault(); this.close(); });
