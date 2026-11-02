@@ -1,0 +1,51 @@
+{
+  "existing_mp3s": 2905,
+  "counts": {
+    "referenced_in_game_source": 2281,
+    "likely_unused_no_cue": 35,
+    "possibly_unused_unreferenced_cue": 542,
+    "referenced_in_cooked_content": 47
+  },
+  "verified_game_provenance": 2905,
+  "relocated_files": 16,
+  "source_packages": [
+    {
+      "package": "UDKGame/CookedPC/AOC/Sound/VO/A_VO_Manual.upk",
+      "sha256_matches_extraction": true
+    },
+    {
+      "package": "UDKGame/CookedPC/AOC/Sound/VO/A_VO_OBJ.upk",
+      "sha256_matches_extraction": true
+    },
+    {
+      "package": "UDKGame/CookedPC/Sound/A_VO_Manual_Barb.upk",
+      "sha256_matches_extraction": true
+    },
+    {
+      "package": "UDKGame/CookedPC/Sound/Troll_VO.upk",
+      "sha256_matches_extraction": true
+    }
+  ],
+  "source_files_scanned": 3203,
+  "cooked_packages_scanned": 1000,
+  "cooked_packages_read": 996,
+  "unresolved_cues": [],
+  "unreadable_import_tables": [
+    {
+      "package": "UDKGame/CookedPC/LocalShaderCache-PC-D3D-SM3.upk",
+      "error": "Name table is compressed or unsupported"
+    },
+    {
+      "package": "UDKGame/CookedPC/RefShaderCache-PC-D3D-SM3.upk",
+      "error": "Name table is compressed or unsupported"
+    },
+    {
+      "package": "UDKGame/CookedPC/RefShaderCache-PC-D3D-SM5.upk",
+      "error": "Name table is compressed or unsupported"
+    },
+    {
+      "package": "UDKGame/CookedPC/RefShaderCache-PC-OpenGL.upk",
+      "error": "Name table is compressed or unsupported"
+    }
+  ]
+}

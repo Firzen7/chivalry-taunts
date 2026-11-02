@@ -545,16 +545,21 @@ test('every categorized recording and battle cry is available in the soundboard'
   }
 });
 
-test('Agatha Knight objective picker exposes and plays all 91 objective recordings', async () => {
+test('Agatha Knight objective picker exposes and plays every remaining objective recording', async () => {
   const a = app('#agatha/knight');
   const command = a.window.CHIVALRY_CATALOG.agatha.knight.tactical[4];
-  assert.equal(command.clips.length, 91);
+  const expected = JSON.parse(read('taunts.json')).files
+    .filter(record => record.faction === 'agatha' && record.class === 'knight')
+    .map(record => record.category_files.Objective).filter(Boolean);
+  assert.ok(expected.length > 1);
+  assert.deepEqual(Array.from(command.clips, clip => clip.file).sort(), expected.sort());
   a.click('[data-action="versions"][data-id="tactical-4"]'); await tick();
-  assert.equal(a.document.querySelectorAll('.version-option').length, 92);
-  a.click('[data-version="90"]'); await tick();
-  assert.equal(a.audio.src, command.clips[90].file);
+  assert.equal(a.document.querySelectorAll('.version-option').length, expected.length + 1);
+  const last = command.clips.length - 1;
+  a.click(`[data-version="${last}"]`); await tick();
+  assert.equal(a.audio.src, command.clips[last].file);
   assert.equal(a.dialog.open, true);
-  assert.equal(a.document.querySelector('[data-command="tactical-4"] .version-label').textContent, 'Version 91');
+  assert.equal(a.document.querySelector('[data-command="tactical-4"] .version-label').textContent, `Version ${last + 1}`);
 });
 
 const audioResponse = (status = 200, type = 'audio/mpeg') => new Response(null, {status, headers: {'Content-Type': type}});
@@ -646,7 +651,7 @@ test('availability requests are bounded and late results cannot reopen a picker 
     await tick();
   }
   assert.equal(maximum, 6);
-  assert.equal(a.metrics.requests.length, 91);
+  assert.equal(a.metrics.requests.length, a.window.CHIVALRY_CATALOG.agatha.knight.tactical[4].clips.length);
   assert.equal(a.dialog.open, false);
   assert.equal(a.document.querySelector('#version-list').textContent, '');
   assert.equal(a.recordings.length, 0);
@@ -686,6 +691,7 @@ test('file:// picker matches catalogued files present in the actual project dire
 
 test('every voice has separate animated and running battle cry controls and recordings', async () => {
   const a = app();
+  const manifest = JSON.parse(read('taunts.json'));
   for (const faction of ['agatha', 'masons']) for (const cls of ['archer', 'man_at_arms', 'vanguard', 'knight']) {
     a.route(`#${faction}/${cls}`);
     const commands = a.window.CHIVALRY_CATALOG[faction][cls].battlecry;
@@ -697,7 +703,9 @@ test('every voice has separate animated and running battle cry controls and reco
       assert.ok(column.querySelector(i === 0 ? '#personal-title' : '#tactical-title'), 'Battle cry must follow its corresponding message panel');
       assert.equal(column.lastElementChild.dataset.command, `battlecry-${i}`);
       assert.ok(command.clips.length);
-      assert.ok(command.clips.every(clip => clip.file.startsWith(`audio/${faction}/${cls}/battlecry/${variant}/`)));
+      const categoryPaths = new Set(manifest.files.filter(record => record.faction === faction && record.class === cls)
+        .map(record => record.category_files[command.name]).filter(Boolean));
+      assert.ok(command.clips.every(clip => categoryPaths.has(clip.file)), 'Every battle cry must belong to the matching metadata category, including relocated files');
       a.click(`[data-action="versions"][data-id="battlecry-${i}"]`); await tick();
       a.click('[data-version="0"]'); await tick();
       assert.equal(a.audio.src, command.clips[0].file);

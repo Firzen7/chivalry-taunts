@@ -30,17 +30,17 @@ Development scripts, design mockups, and reference resources stay outside the de
 
 ## Collection
 
-**2,938 distinct clips** (2,957 MP3 files including copies shared between categories), covering personal and tactical voice menus, battle cries, objective calls, barbarian variants, and legacy/alternate takes. Some clips serve more than one command; their command labels reflect all known cue references.
+**2,309 collection entries** (2,328 MP3 files including copies shared between categories), covering personal and tactical voice menus, battle cries, objective calls, barbarian variants, and legacy/alternate takes. Some clips serve more than one command; their command labels reflect all known cue references. The current collection excludes 577 audit candidates removed at the owner’s request; metadata and both website catalogs list only remaining files. The archival extractor can recreate the larger original set.
 
 | Class | Agatha | Masons |
 | --- | ---: | ---: |
-| Archer | 296 | 516 |
-| Knight | 441 | 484 |
-| Man-at-Arms | 321 | 299 |
-| Vanguard | 289 | 292 |
-| **Total** | **1347** | **1591** |
+| Archer | 289 | 308 |
+| Knight | 283 | 255 |
+| Man-at-Arms | 318 | 296 |
+| Vanguard | 278 | 282 |
+| **Total** | **1168** | **1141** |
 
-For example, Agatha Vanguard has **289 clips**, including **15 Yes**, **16 No**, **7 Laugh**, and **7 Taunt** clips referenced by its personal menu. The remaining clips include other messages, objective calls, battle cries, and alternate takes.
+For example, Agatha Vanguard has **278 clips**, including **15 Yes**, **16 No**, **7 Laugh**, and **7 Taunt** clips referenced by its personal menu. The remaining clips include other messages, objective calls, battle cries, and alternate takes.
 
 The hierarchy mirrors the two in-game menus beneath every faction/class folder:
 
@@ -82,7 +82,7 @@ The 19 clips used by two menu commands have identical MP3 copies in both command
 
 The extractor reads the installed game's `AOCPawnSoundgroup_Archer`, `ManAtArms`, `Knight`, and `Vanguard` source definitions. It resolves all **168 assignments**: 20 personal/tactical menu entries plus a battle cry for each of eight faction/class combinations. Every referenced wave is checked against the exported collection. The running battle cry cues are resolved separately from the same audio packages; the website exposes 22 commands per voice (176 total). This audit is saved in `website/taunts.json` under `menu_coverage`.
 
-The extraction includes voice waves from `A_VO_Manual`, `A_VO_Manual_Barb`, and `A_VO_OBJ`, and follows cue graphs across package boundaries. It preserves additional and legacy takes even when they are not linked to a current menu. Clips with no matching menu command appear under **Other**; their original voice-type labels remain in the metadata and row descriptions. Sprint-attack grunts and silent placeholders are excluded. This is a voice-command collection; it is not an inventory of all game audio, NPC dialogue, damage sounds, or Workshop content.
+The extraction includes voice waves from `A_VO_Manual`, `A_VO_Manual_Barb`, and `A_VO_OBJ`, and follows cue graphs across package boundaries. The archival extractor preserves additional and legacy takes even when they are not linked to a current menu; the deployed collection has subsequently been pruned as described above. Clips with no matching menu command appear under **Other**; their original voice-type labels remain in the metadata and row descriptions. Sprint-attack grunts and silent placeholders are excluded. This is a voice-command collection; it is not an inventory of all game audio, NPC dialogue, damage sounds, or Workshop content.
 
 The internal audio group names are misleading: the game assigns the Archer's voice menus to the `MAA` group and Man-at-Arms to the `Archer` group. The collection follows the playable class definitions. Generic legacy Agatha/Mason voices are assigned to Knight. Shared clips are included in every faction/class whose cues reference them.
 

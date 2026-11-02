@@ -1,0 +1,2894 @@
+{
+  "decision": "User requested removal of all 577 static-audit candidates after making a backup.",
+  "removed_files": 577,
+  "remaining_files": 2328,
+  "remaining_metadata_records": 2309,
+  "note": "The original audit reports describe the pre-removal snapshot. Candidate status was an inference, not proof of runtime non-use.",
+  "removed": [
+    {
+      "file": "audio/agatha/archer/other/battlecry_01.mp3",
+      "mp3_sha256": "eb11054e2df56be591b3d321af574783df50644c76073250872eaf8ae3b31c2b",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/agatha/archer/other/defend_the_line_01.mp3",
+      "mp3_sha256": "dccc6154eaed8bc3c120cbaa2f8b511a8febd8424ee9f3b32ec95c7376673b2c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/archer/other/rally_together_01.mp3",
+      "mp3_sha256": "7d9f24e11961820fe092d90db485ee6451577249fd797d420d0f1403d85d6a63",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/archer/other/stick_together_men_01.mp3",
+      "mp3_sha256": "a295e84acf80d1fd62969d60c3159b7807e7d9fc48c1eda29f952d12455a62c7",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/archer/other/unite_01.mp3",
+      "mp3_sha256": "79736c81ba371974b1c1ca9928d7850a9bee3c32b83974f0189f584ce0793828",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/archer/other/welcome_07.mp3",
+      "mp3_sha256": "1671eddff58cc744a7ebf2d60195f3afce02d702b0a1e31b5be2b33a04650e9d",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/agatha/archer/other/welcome_08.mp3",
+      "mp3_sha256": "ea682042d35b04bcfd7765cd984151f1a16168936f12e6e0d969e8f5b0c2bb1a",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/attack_01.mp3",
+      "mp3_sha256": "79e02557f26de9e73eb87785aefc45795032991ce78d507df2806240577545f6",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/barb_buck_battlecry_01.mp3",
+      "mp3_sha256": "a5b95f5f4cf35063ed46276df6d5f05735869d93ec50499db94257bef99a0419",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/barb_buck_battlecry_02.mp3",
+      "mp3_sha256": "aeeb31ae02bd2a65353f5aa8d94ed7cc7b040d443596986b3cd8c11cb5b34255",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/barb_buck_battlecry_03.mp3",
+      "mp3_sha256": "ce0917bc13dcdd7957bc313a6b998b7ce429b84081d9af20a6f4c5265235d1bf",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/barb_buck_battlecry_04.mp3",
+      "mp3_sha256": "27769ffdce0554f3d352a0bcad362eabf7eb39c5b3ac66020f57a707ba844353",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/barb_buck_battlecry_05.mp3",
+      "mp3_sha256": "bf7f046d6bf2d8fff11d2c7b1435f6ead6fc5327dd44d2d265cce79387230386",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/barb_buck_battlecry_06.mp3",
+      "mp3_sha256": "167d93a36ca5c13ef86cec6af8317577c40f9aafd373b6b32626b7f566fdecee",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/barb_buck_battlecry_07.mp3",
+      "mp3_sha256": "1c197090b52d221e6a6c1b51d8b21474c65dce8cc09af6ba6945b496f580dd27",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/barb_buck_battlecry_08.mp3",
+      "mp3_sha256": "6df6430b2bc934b6bb48d556b75fe50c066214c250a887347b77979b40bc6af9",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/defend_the_line_01.mp3",
+      "mp3_sha256": "dccc6154eaed8bc3c120cbaa2f8b511a8febd8424ee9f3b32ec95c7376673b2c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/glory_01.mp3",
+      "mp3_sha256": "7fe721944a649ad71ddd1ff05e554df3fc6ad2d9b1187e0f331233d87385ffe9",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/good_prevail_01.mp3",
+      "mp3_sha256": "ef2c60dc4ca7a1cbc318bf92d2a4fb3e2f97365fd8fcb20161a28a105a38e78d",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/laugh_01.mp3",
+      "mp3_sha256": "53820a0979e680c6ad873f8e40a67b7a923b68d05dd7e2588c32051a31704582",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/laugh_02.mp3",
+      "mp3_sha256": "f06bf32bf364e0161c29aebdf038b3741a84d03683c4f0f5eee4ad09ad704222",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/laugh_03.mp3",
+      "mp3_sha256": "5c56e613ecc37c1c50d471eacf9ff4ed597dd99aaf44b80a0e1cf5e82d3a7389",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/new_incoming_04.mp3",
+      "mp3_sha256": "6c7c6322f03d590e5402fc5d5a542167200b839507d390f2138bb05ac19e6486",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/new_incoming_08.mp3",
+      "mp3_sha256": "96d797a1b81640ac504076c3a966eceee3855b8fcfb5df7659275bb93463535b",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/onward_to_glory_03.mp3",
+      "mp3_sha256": "9ac3fa3cf46361a98986ef5ce033115c35d9c4793c937a2a6607383a26a5e74c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/pappas_ag_battlecry_animated_01.mp3",
+      "mp3_sha256": "2d8f0e5bfa226f0127aeeaae862de4b5c95cef8634c09ba9c467562a3aa39bbf",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/pappas_ag_forward_01.mp3",
+      "mp3_sha256": "b84c9a8a3dc16c50ff584879d20b4675ea68fa8c0a048eff288d1a9040c1bfc0",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/rally_together_01.mp3",
+      "mp3_sha256": "7d9f24e11961820fe092d90db485ee6451577249fd797d420d0f1403d85d6a63",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/stick_together_men_01.mp3",
+      "mp3_sha256": "a295e84acf80d1fd62969d60c3159b7807e7d9fc48c1eda29f952d12455a62c7",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/to_arms_01.mp3",
+      "mp3_sha256": "df7f189928e944a84ba296be7b092a4d37f1343366ce5f80179532dd0a4ad17e",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/unite_01.mp3",
+      "mp3_sha256": "79736c81ba371974b1c1ca9928d7850a9bee3c32b83974f0189f584ce0793828",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/will_not_fall.mp3",
+      "mp3_sha256": "1aa2a835bc23359e206ce201b4e29e78dea9b155ba4cdc8b22bb8d0b26d6ba2a",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/other/will_not_fall_02.mp3",
+      "mp3_sha256": "ef68355b618de15afdb71f7bcd712d6f85ac4c97b92b6a4a7e5312781ab36c48",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/got_your_back/got_your_back_01__A_VO_Manual_2398.mp3",
+      "mp3_sha256": "4eeb9b55c41924c6d2a7cd4dbf6b439946d0864fe8cd908580ddb79a74da7ef6",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/got_your_back/got_your_back_02__A_VO_Manual_2399.mp3",
+      "mp3_sha256": "9515bac48c373d58ab919a79798b2a3d9b12f16bfff7778613b3b666d2e97aa7",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/got_your_back/got_your_back_03__A_VO_Manual_2400.mp3",
+      "mp3_sha256": "82f0f6900b19649774e1a58039cc37066c13b49ca70a143a5a79549b1039b6a4",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/got_your_back/got_your_back_04__A_VO_Manual_2401.mp3",
+      "mp3_sha256": "c70dc80cc75cb893e2673610507d01f911a705379f03538296e99a4506c34731",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/got_your_back/got_your_back_05__A_VO_Manual_2402.mp3",
+      "mp3_sha256": "1e0da3de6debd35dc9e9d90cbfba539a915af2b0a9295505d36e884a032a2065",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/got_your_back/im_with_you_01.mp3",
+      "mp3_sha256": "80667e9ac9cfea7a7a48183b7f6b6a4f9be6010e82a961fcdce6fbd4a1d318b5",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/got_your_back/im_with_you_04.mp3",
+      "mp3_sha256": "f93d3f517cc1a53dba48416343573f81110baecd2a80cbe844cc5d12f91a21de",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/got_your_back/im_with_you_05.mp3",
+      "mp3_sha256": "4e0d087ef60d46c75d0be30f3e1e22d2fc95833aa9021ddbd40730dedcf4b4bf",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/help/buck_barb_help_01.mp3",
+      "mp3_sha256": "542be423044891b90587339f2f2f636b30de14212a07f232d1065705d0613cac",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/help/buck_barb_help_02.mp3",
+      "mp3_sha256": "39eb06443a9e11a4fc09d57f8acdaa29651fc5330a88cf4c943413c5bc5caf87",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/help/buck_barb_help_03.mp3",
+      "mp3_sha256": "e0c425f20cc393b79f2b07e0169c9c265d882fd5767662e02337d64ae92d37d2",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/help/buck_barb_help_04.mp3",
+      "mp3_sha256": "fd0b0f384a04ef18aa7770aa29386a1d7d0f5ec7076836b7385b9516171cd1fc",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/help/buck_barb_help_05.mp3",
+      "mp3_sha256": "2ad35b021e914bdde2832f712ab13fc5c7fddc2783a51351555ab094d201da0c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/help/buck_barb_help_06.mp3",
+      "mp3_sha256": "6ccd7baa90d774a45d9711a39358336e39996b1d35a4b1235f1a02dcd2c624e8",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/help/buck_barb_help_07.mp3",
+      "mp3_sha256": "0266d548629a8e8a568fa0f18565373e3a1d360efc64f46ab7deb0f416b5e7c5",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/help/buck_barb_help_08.mp3",
+      "mp3_sha256": "eb89b8d7e8e827b9a95bef6c5d00f0ad5ae5f63f01077d6a3614d9d791d5b135",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/help/buck_barb_help_09.mp3",
+      "mp3_sha256": "d836e5b57ec3b522fd2ce9ebb49503a87566d97caff0b64290b4d90b3e36a9d2",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/help/buck_barb_help_10.mp3",
+      "mp3_sha256": "92a7f6b06ccda684934b8fea9dac960bbb630d2cbc07f22aa7f5eea52faf4cbf",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/help/buck_barb_help_11.mp3",
+      "mp3_sha256": "aae67bb712b2f6f9adfc655ed79debbd99f2b45b9d784e1231c73a5ffd7df1be",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/help/buck_barb_help_12.mp3",
+      "mp3_sha256": "350cd4eadd38a664c72e0bce56de8395177a0e07d10cc0b2e14ddafe547aa10a",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/laugh/laugh_04.mp3",
+      "mp3_sha256": "9d412aa9869c5afade2179c3c14ccd394835aa53d19d58aca26ef32297effdd8",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/laugh/laugh_06.mp3",
+      "mp3_sha256": "b8333f9f06e1b5745c0be0bd3be39d8c7de27fef313e35653ae5af9abd5cbc0f",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/laugh/laugh_07.mp3",
+      "mp3_sha256": "e84312efd59f88c7bbfadf39091bfb01d24c92892c9e87ea093618c6338ce206",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/laugh/laugh_10.mp3",
+      "mp3_sha256": "3732715838a49ea0f0e098d842cc5963e94d1455455dcf94dffef71ec2160ff5",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/laugh/laugh_11.mp3",
+      "mp3_sha256": "4fdfe97edadfaf246929d0e460f1d494ff402ab3fa07b3a4cec2eae7f1ea3eed",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/taunt/barb_buck_taunt_01.mp3",
+      "mp3_sha256": "08c832ebfc4dbc4191ebfd99423898e3ff94cecf50811e34f67cf20b3b8a9067",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/taunt/barb_buck_taunt_02.mp3",
+      "mp3_sha256": "4e8e00702b7e60d6acfc142e93551ef0bc3cf9d0100f9e29890f14ae3e30193a",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/taunt/barb_buck_taunt_03.mp3",
+      "mp3_sha256": "aab48952d8fb8699542da239b75797ec35ad09362cf8ecc8c16973797a0e20d3",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/taunt/barb_buck_taunt_04.mp3",
+      "mp3_sha256": "7af5894fd9244bf25489c73271c3662517ece020b9af5bc2262754e3859cf24c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/taunt/barb_buck_taunt_05.mp3",
+      "mp3_sha256": "4db5c93b1036bd17764b8432b193dda48a4400a39cdbffb257ad701530688589",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/taunt/barb_buck_taunt_06.mp3",
+      "mp3_sha256": "d0e79fa9efab231e11d1ef09311773ce5c2305142ad8d872a701ec7a1bd827b4",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/taunt/barb_buck_taunt_07.mp3",
+      "mp3_sha256": "a0e20b21018459abb646597c47a0308343fd4464626e5a9d6139babc51d3097e",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/taunt/barb_buck_taunt_08.mp3",
+      "mp3_sha256": "a7f0188d971ea49ccf91c8e92189d4a60e835e5ad334d6ba17125ab2c25376a2",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/taunt/taunt_dogs_01.mp3",
+      "mp3_sha256": "0a7d2d6f380c3ce4adf0279bb1af50edb21280b8a16f8ae859330ff2011f46b0",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/taunt/taunt_dogs_02.mp3",
+      "mp3_sha256": "d70e1d0dd0b3c6bd34b0f968a7bb24fd57be90404f37bd10ebac7a3864daaaec",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/taunt/taunt_elf_locks.mp3",
+      "mp3_sha256": "8aff0eaba0ff6ab4fe3591d37d9835eb7039228cebdfb0da7e650f0b24f54e54",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/taunt/taunt_hang_yourselves.mp3",
+      "mp3_sha256": "17f8fa7169c4ae98df458932f7bb74d420b4140fd6bae53853c7405688a4f1ec",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/taunt/taunt_idle_brain.mp3",
+      "mp3_sha256": "be13422d6e50e0bf7437be42f20901000a6f22f1032ea877397631638ec27b16",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/taunt/taunt_much_low_peasantry__legacy.mp3",
+      "mp3_sha256": "09b17a3a2f80391ad027c077732559734245827ae043587bdf4d6fb1d99236b0",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/taunt/taunt_oak_would_run.mp3",
+      "mp3_sha256": "9b9c829f8655697f407667fdd1bc069417ae76c33b3096c15a4de86ca7b621ca",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/taunt/taunt_peevish_01.mp3",
+      "mp3_sha256": "ba9e75c0fc206bacc060e21edf56b01a8876d618c614299966c17ca8191d845f",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/taunt/taunt_peevish_02.mp3",
+      "mp3_sha256": "13d05be9c3378b6206d0d36a1ddc08192f69f0b0c351a5604f3e43f2301e52d8",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/taunt/taunt_rogue_01.mp3",
+      "mp3_sha256": "69ed2e959d2fc2cd7351ac0e70769545aede32fbe9f049c446c33e00326b93aa",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/taunt/taunt_rogues_01.mp3",
+      "mp3_sha256": "23a906e5bf2b6cf0c5c6558b51b7ae1df24f736bb7eb06f28470b3c4056f06c6",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/taunt/taunt_rogues_02.mp3",
+      "mp3_sha256": "b9d2de0c92e4dd4a2191753fadfffe2ec885a8d7f1516f5cbf4fa3e964e01cce",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/taunt/taunt_turkey_cock_01.mp3",
+      "mp3_sha256": "eb0e2a25e0c96e2f0289cb84000571e7f5d668b3d2df242fb368fe1892cbc4ac",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/taunt/taunt_ye_blew_01.mp3",
+      "mp3_sha256": "b7fafe1b2c39117b4bab4bd3e44a2b7c8059d9841cef25f5fc27a57fa80cde69",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/personal_messages/taunt/taunt_ye_blew_02.mp3",
+      "mp3_sha256": "a52d2305a5dd41a115e9f65b1c591f48663eefa9e32cc6d96ed7a6e467af7b87",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/behind_us/behind_us_01.mp3",
+      "mp3_sha256": "e705e0eb79dde0befc4321cf1b36fc5e75da8eb625e71acba3a4979fd859962b",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/behind_us/behind_us_02.mp3",
+      "mp3_sha256": "bd3c43f7f0b00ed545a738edc3ab28619e4b515a7e0826af5eb00544448daa81",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/behind_us/behind_us_03.mp3",
+      "mp3_sha256": "f421522045bc3c21edec6ed474c9e7e86340bacec9a6c4024ccaad9d6d544b7f",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/behind_us/from_the_rear_02.mp3",
+      "mp3_sha256": "1e0a969b220a03bdc4af30588bd5d3f725f229234a61e128e536200b571f62ba",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/follow_me/follow_me_01.mp3",
+      "mp3_sha256": "c6373dd2064651a6e84ea1c95df1847f787f3544a5806a3aaf1580373c98b3ef",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/follow_me/follow_me_02.mp3",
+      "mp3_sha256": "808d7f8fad206dd742e597dbebe97fdfbc338d5f2666df2b87abe4ed93ec5260",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/follow_me/follow_me_03.mp3",
+      "mp3_sha256": "56951799b13eb7b9352662a13ef6dd401304b6066a3a1b36c91b3ddd1e8c3a1a",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/follow_me/follow_me_04.mp3",
+      "mp3_sha256": "0585f4be8d5ac027f4bc3819d38273071f8a1d0caa3e8f9f5f4ce1dba77e2a2a",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/follow_me/follow_me_05.mp3",
+      "mp3_sha256": "1e1344e818a7a78c59fbfffe992bc4d5be00439a9b2f312645d0cf0f7385f5f4",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/follow_me/follow_me_06.mp3",
+      "mp3_sha256": "3d9aee9cbb567665e9b8bd7e72edcecf195a196af30dc7c6e817dea39ff44bad",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/follow_me/follow_me_07.mp3",
+      "mp3_sha256": "bc1775cfe8c64496054e9fc8b0decda88b64378d0194ac6e193b42d7b24a6a59",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/follow_me/follow_me_08.mp3",
+      "mp3_sha256": "d8600953292c39ae5550c10697e2f99186b06d02e5766a16cd32f30a41159826",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/follow_me/over_here_01.mp3",
+      "mp3_sha256": "85d61282fb6a8a43a9e9785b71143058ccdfc33eff6421a729fbe8803b99c0d7",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/follow_me/over_here_02.mp3",
+      "mp3_sha256": "ed845ddded3336a26e02db81b2d30fb82cd16252e09ded9d877cce81855c7442",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/follow_me/stick_with_me_01.mp3",
+      "mp3_sha256": "f0504c67b49eb8d4b726e698b787ce1359259d7d8537a3cf63fed6b3cf31b34c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/follow_me/this_way_01.mp3",
+      "mp3_sha256": "e03c036041cc6b0676e90bade65c9671cafb8fb16a3419916e18a7a92f488e79",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/follow_me/this_way_02.mp3",
+      "mp3_sha256": "30ff02e1a89dcb09be601d504ac041ce1b1102b0e3ba2c051993631dc032534b",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/follow_me/this_way_03.mp3",
+      "mp3_sha256": "86fe676fb97c29b269460a9880138dfdfce6e81ed5537e4159dd2a313ac37f07",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/hold_your_ground/defend_here_01.mp3",
+      "mp3_sha256": "4d33f3ec176ca4bfa3ada70282400214f278900fb8cd114adb61258b11082811",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/hold_your_ground/defend_here_02.mp3",
+      "mp3_sha256": "e791308c14aede0f0b7a0878f88a26f484fbc883305e6f09a78bfcf1d41ff011",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/hold_your_ground/defend_here_03.mp3",
+      "mp3_sha256": "8a2f0fa541c73e7fde526f5924b1a189c84e3c1fff39c1079ab8f804b94d2a03",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/hold_your_ground/defend_here_04.mp3",
+      "mp3_sha256": "d15a11674468f06de02f74d26bf1051fe8cc6af66782a88297bf3aaf667334c6",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/hold_your_ground/defend_here_05.mp3",
+      "mp3_sha256": "6223c811371ed8c838d9e9ff3f47dac60264740dd2c1e2066618535b8cc637ba",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/hold_your_ground/defend_here_06.mp3",
+      "mp3_sha256": "f2f84eba06fbae2ffc340f02931cb9d8d3254961846fbc816f9a165af8b19ee8",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/hold_your_ground/defend_here_07.mp3",
+      "mp3_sha256": "b04e14b3642366df8ebc2d9345c9fec52b37895c058dec1fc925b49de6cca581",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/hold_your_ground/hold_your_ground_03__A_VO_Manual_2412.mp3",
+      "mp3_sha256": "b7cc68edaf14848297a6716175c29e1a44caf83b8c7546c53fbf03588520fafe",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/hold_your_ground/hold_your_ground_04.mp3",
+      "mp3_sha256": "efaddf283f4ed724b5b931c60dd1f099336f1bc7bf1611f894785c23101da4e5",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/hold_your_ground/hold_your_ground_05.mp3",
+      "mp3_sha256": "4285a1a5e39dde86c8f27733140e877409556016f83336bb785555dbba043e69",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/hold_your_ground/hold_your_ground_06__A_VO_Manual_2415.mp3",
+      "mp3_sha256": "5e3527610479e533c4c80042d4d68cd0768bd56ee659d1dc3713bdb16693d541",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/hold_your_ground/hold_your_ground_07.mp3",
+      "mp3_sha256": "47d2fca2f59a5f140de981af73857a613560c12e280b3e775710f696e3168f2d",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/hold_your_ground/hold_your_ground_08__A_VO_Manual_2417.mp3",
+      "mp3_sha256": "05da8a8eb127fb8ce0439e7a859b4254fffd4e2ba4e434f5097cfff032c8736d",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/incoming/new_incoming_01.mp3",
+      "mp3_sha256": "a815f10646b80ed8a356b3053a506895e7dea854dd5e932b04edf74867cbd5ac",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/incoming/new_incoming_02.mp3",
+      "mp3_sha256": "1e6872655f618c0e860d783aae2321396be758e4392466cd97f5d032fed6735f",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/incoming/new_incoming_04__A_VO_Manual_3268.mp3",
+      "mp3_sha256": "5d250d1c1205f7462e2f4b963ffc3f55085877ac84fe9445dd45eaee7c85267b",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/incoming/new_incoming_05.mp3",
+      "mp3_sha256": "cbaf22da29e036b25c4b26be27055bbc73550ae09146a22a1f517f6e7e07d7e1",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/incoming/new_incoming_06.mp3",
+      "mp3_sha256": "6aba5eae28574539d5e61d03d5e8968e77beab085dfe0fdaf2f5c9ca02a03a4c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/incoming/new_incoming_08__A_VO_Manual_3272.mp3",
+      "mp3_sha256": "d31f04533b22b7fae9203519a9d69254f41682c68c619f6931092df42612ea52",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/kill_archers/get_those_archers_01.mp3",
+      "mp3_sha256": "c28677fcc4853c7f4732359237dbd9c9189370045e88af32c4ddaab835c8d079",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/kill_archers/get_those_archers_04.mp3",
+      "mp3_sha256": "6145cdcbe7f57b28e7915b0d8f82f19165b798d647ca0497a97f8b6e81496e6b",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/kill_archers/mark_you_archers_01.mp3",
+      "mp3_sha256": "20dc82886763938d33af1790f20104bb6d0440d4b59a0cb2a168dc7ea2838d79",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/kill_archers/mark_you_archers_02.mp3",
+      "mp3_sha256": "37485c58f3cdfe17897790caad977cb2f7fe656fe3f2f628fb1bb168de31f664",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/kill_archers/mark_you_archers_04.mp3",
+      "mp3_sha256": "cdb4f6f915de04dbab1b88f98c411a7e59b5873b833a53b5dda186ddce42bc81",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/kill_archers/thin_out_archers_01.mp3",
+      "mp3_sha256": "6a93ba49ffaf9b63597b9ef5a73d5aeb490426814966e4d5bc97431eaf22fe4d",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/kill_archers/thin_out_archers_02.mp3",
+      "mp3_sha256": "ddb50c9f2323fd690819533df659d8eeee9ae3194ef867f646e00eb666678195",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/kill_archers/thin_out_archers_03.mp3",
+      "mp3_sha256": "2a60e163fd1b054aeb0b876b1a203081ffe1df71ee3907e5de059df932832f95",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/kill_archers/thin_out_archers_04.mp3",
+      "mp3_sha256": "ee8a5cbd877d9b379311a5476949508f27941e041b8f39b4c47589cbb1c63e2f",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/kill_archers/thin_out_archers_05.mp3",
+      "mp3_sha256": "e94ca4ebb84e66e2f758fc566be8b0acc5426467813022748fdb229c410551a4",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/retreat/fall_back_01.mp3",
+      "mp3_sha256": "7fd2cb7a60772eaa451086b28dacbbd404a0b7e394514195d1aae4f7ca84c2ad",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/retreat/fall_back_new_01.mp3",
+      "mp3_sha256": "1bdddd2743459100212b2bd1351d7f55679c04ff7e52977805f061479d10307c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/retreat/fall_back_new_02.mp3",
+      "mp3_sha256": "04579763c04150e4aea8937e651716dceba24edbea4bc605eae5dc5ca4f106c5",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/retreat/fall_back_new_04.mp3",
+      "mp3_sha256": "fca70e1da70961829710549f4a12a6f549080508bbd09e8c9e869ac31406ac71",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/retreat/light_fading_02.mp3",
+      "mp3_sha256": "df35aa3c24be0a1f9146b20634245b2c51e96103cdafedc10eda3630f9fc7ec2",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/knight/tactical_messages/retreat/wives_and_children_01.mp3",
+      "mp3_sha256": "4c37fe1ecb829445272789a6059df56d52400fcd1760f308947615cf48024f2a",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/man_at_arms/other/buck_yes_01.mp3",
+      "mp3_sha256": "f5ee7f90b067b5d9b629da4bf8ed48d05089f11854e1b79e06d0587f52ec425b",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/agatha/man_at_arms/personal_messages/taunt/buck_taunt_01_08.mp3",
+      "mp3_sha256": "98d20e7b52420145b10eea150176d09d6d64b5c7dc99ed57e2b91a9ba671f070",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/agatha/man_at_arms/personal_messages/taunt/buck_taunt_01_14.mp3",
+      "mp3_sha256": "6358424dc196021445b29563f0b84544f33d384813833ae3021d8d5316609845",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/agatha/vanguard/other/defend_the_line_01.mp3",
+      "mp3_sha256": "dccc6154eaed8bc3c120cbaa2f8b511a8febd8424ee9f3b32ec95c7376673b2c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/vanguard/other/rally_together_01.mp3",
+      "mp3_sha256": "7d9f24e11961820fe092d90db485ee6451577249fd797d420d0f1403d85d6a63",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/vanguard/other/stick_together_men_01.mp3",
+      "mp3_sha256": "a295e84acf80d1fd62969d60c3159b7807e7d9fc48c1eda29f952d12455a62c7",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/agatha/vanguard/other/unite_01.mp3",
+      "mp3_sha256": "79736c81ba371974b1c1ca9928d7850a9bee3c32b83974f0189f584ce0793828",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/battlecry/animated/barb_brandon_battlecry_01.mp3",
+      "mp3_sha256": "109c0ae4939ee2a0f698f7cbe4d7d62eff3457c4e5ae83b7c2bc37f8b1770825",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/battlecry/animated/barb_brandon_battlecry_02.mp3",
+      "mp3_sha256": "4dbf442e7a528d0fb9cb3cd6072e8f475d704d93ec17a0ffd1020029822e544f",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/battlecry/animated/barb_brandon_battlecry_03.mp3",
+      "mp3_sha256": "07b1171262e4e8a0ae112da37bbefec1f3f1bd37794eadf160e714f267e7e440",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/battlecry/animated/barb_brandon_battlecry_04.mp3",
+      "mp3_sha256": "c3fd4ff4391d28f337a76dbbc120671bfb9d4b0c37895a82a7ef604c5ccae6f8",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/battlecry/animated/barb_brandon_battlecry_05.mp3",
+      "mp3_sha256": "deda378d1130c66dcae360b9ab1fed50c8bb91ccee05af18e28687faf760a49f",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/battlecry/animated/barb_brandon_battlecry_06.mp3",
+      "mp3_sha256": "693310423474f6b23a3e4450cceff6267a334abe5a9f5436078ef69731a8706c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/battlecry/animated/barb_brandon_battlecry_07.mp3",
+      "mp3_sha256": "026b9451996408420dc2c7277b5e4f5abd1160b377498d372e123fa2a06d8feb",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/battlecry/animated/barb_brandon_battlecry_08.mp3",
+      "mp3_sha256": "4e23f31d59f7c372c72c3e13853a50045a7b5d1f5d8c256b7d633816a0f461f0",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/battlecry/running/barb_brandon_battlecry_running_01.mp3",
+      "mp3_sha256": "9b784357eb1813b47525028402ea3ffa0f7a7e0d83989da029fbd038bcd4fc8f",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/battlecry/running/barb_brandon_battlecry_running_02.mp3",
+      "mp3_sha256": "fd0d981761eadcea26a0089ae5a44cb5a85b54c95710191b7bcda367fa386f8a",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/battlecry/running/barb_brandon_battlecry_running_03.mp3",
+      "mp3_sha256": "31564eacf60206a4c310cff102931c64f24f079fdb6c39b14974274eb4e5cee7",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/battlecry/running/barb_brandon_battlecry_running_04.mp3",
+      "mp3_sha256": "b90eb9c378250a69581b31ab38f5b8595f1e87d7a4c44ffaeb2fba0f86ae84e2",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/battlecry/running/barb_brandon_battlecry_running_05.mp3",
+      "mp3_sha256": "62db5d257824adbd484ad71332439cce7223f836e59e0bd2a00ee8307d4885ad",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/battlecry/running/barb_brandon_battlecry_running_06.mp3",
+      "mp3_sha256": "1219f349b91679ba5ef9e0180f7bf51c184761190b8a2fe3e60f734624f3f7c8",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/battlecry/running/barb_brandon_battlecry_running_07.mp3",
+      "mp3_sha256": "3b72d1c1633ef2e8c314d75cb650b675ab895cba62616882c48279935d3b50c6",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/battlecry/running/barb_brandon_battlecry_running_08.mp3",
+      "mp3_sha256": "fc6516de0f3dc41cf99c4ec97ebff28b5082d319a113f1eb8ea442e76df490e5",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/battlecry/running/barb_brandon_battlecry_running_09.mp3",
+      "mp3_sha256": "d9b8acc5d96304f60e4f60cfcae03ec511048ce0a65afa18b240fa124076d5c3",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/battlecry/running/barb_brandon_battlecry_running_10.mp3",
+      "mp3_sha256": "54ae2392c17b09c02ef8819adbdaf188bd9fb78ab94e62de4ba1039f14e0269d",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/battlecry/running/barb_brandon_battlecry_running_11.mp3",
+      "mp3_sha256": "c3581aeda25c8d86d12372848d299c3aba9815de25fc3f16ae72c622a38c40bc",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/got_your_back/barb_brandon_got_ur_back_01.mp3",
+      "mp3_sha256": "6c7546b862fdd907ca243e551c685fd13219388ed18cecccb3c5a5601b2c6113",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/got_your_back/barb_brandon_got_ur_back_02.mp3",
+      "mp3_sha256": "d6f52db3f1ee852c26b3895af848434d2bf65a3c6a5b0bcc75d688303f7c4f09",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/got_your_back/barb_brandon_got_ur_back_03.mp3",
+      "mp3_sha256": "f10e8644fdf272af4e9ea1c844daaf371dda0ba2b9de1e63a8f7be68c05b8e65",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/got_your_back/barb_brandon_got_ur_back_04.mp3",
+      "mp3_sha256": "b39175abf249773af3553cc85ec03268428eec9e0d3f481b253bcf33d0c153ac",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/got_your_back/barb_brandon_got_ur_back_05.mp3",
+      "mp3_sha256": "d887124ff6ac7fd922bc900f9db31d7835c64080afa94b7e780fd806bfb688ca",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/got_your_back/barb_brandon_got_ur_back_06.mp3",
+      "mp3_sha256": "95a8f767b3f6b348f525ec9be6a49d76471d7393b2008a2699beb51976cb8438",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/got_your_back/barb_brandon_got_ur_back_07.mp3",
+      "mp3_sha256": "aac2ba0f7c286700f1ab5fe1f6111c6ad90057d5dc732ceedb969f1e36bfe444",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/got_your_back/barb_brandon_got_ur_back_08.mp3",
+      "mp3_sha256": "1ccf4cda5d936ca2618579a07c6fde587bae7ffaf5a7fab710384dfcc9915071",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/got_your_back/barb_brandon_got_ur_back_09.mp3",
+      "mp3_sha256": "cc63aa344512e650919dbbe553da162dca3f4b49e2e79f1a824cd5d7f756ec59",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/got_your_back/barb_brandon_got_ur_back_10.mp3",
+      "mp3_sha256": "5b2723c49e6d11c86d15b2039bbfc924051e97b60d267e76b777501f534bffab",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/got_your_back/barb_brandon_got_ur_back_11.mp3",
+      "mp3_sha256": "801589dff13915ad8f4757663132f8651aedd1cfb1b37ef864649cb32a2aa082",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/got_your_back/barb_brandon_got_ur_back_12.mp3",
+      "mp3_sha256": "8d836f6c76063a187f099d42e4749bf0cb07186039177fbd1c40334392411122",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/got_your_back/barb_brandon_got_ur_back_13.mp3",
+      "mp3_sha256": "5c73a234bffcac8959bf138b522ec8bdb3e21ec3e06289956258ab74cd697cf3",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/help/barb_brandon_help_01.mp3",
+      "mp3_sha256": "7550e7a61591625bcd46f2a63bb2731b615c8e12c2a46d8b62ae1cb23c7cae1b",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/help/barb_brandon_help_02.mp3",
+      "mp3_sha256": "d9d8b599237bbd650366206153f615078310947d08c5ee8f8e20188b391b460f",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/help/barb_brandon_help_03.mp3",
+      "mp3_sha256": "3320fb75f750cc5a8e62aa3412dfe03579b6ef761eb7ca1d1108d9484d6de78d",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/help/barb_brandon_help_04.mp3",
+      "mp3_sha256": "603a5599133007963632825b036ceb6121e70eea04beed2c03d40f813c11b264",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/help/barb_brandon_help_05.mp3",
+      "mp3_sha256": "5dfa7031b65eae03b90874151bba81e613f2f022d819de4984bfa7ab42e18c89",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/help/barb_brandon_help_06.mp3",
+      "mp3_sha256": "91ae6a51a17b903935396b348c3089cbb984da7ea01a175f8037fd23a23267b9",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/help/barb_brandon_help_07.mp3",
+      "mp3_sha256": "5824ff8e2591cd8800fe45552fef5ac8f61930ed204204cd02bcce54a7dae22a",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/help/barb_brandon_help_08.mp3",
+      "mp3_sha256": "db8da82133e76064ecf2c3548d3059c2f213a8d078ea7141375aff4e04194e3c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/help/barb_brandon_help_09.mp3",
+      "mp3_sha256": "977186f086a303b904db347533768d0d42ba1a9e7b00003e8ed02f9c58ca6456",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/help/barb_brandon_help_10.mp3",
+      "mp3_sha256": "03c5007e39da04e7a6fd2b1cea3441f05a4ba71c73221aa2215cc485d610004b",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/help/barb_brandon_help_11.mp3",
+      "mp3_sha256": "3b4c8e5db10eb0f89c3c7badc67b79c8ff9313e83d2ff512c51fa4f53cca2be7",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/laugh/barb_brandon_laugh_01.mp3",
+      "mp3_sha256": "cdde98e9727e820bd31dcefb31eba4060e163408fcdb4aca4a6a04e41543c070",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/laugh/barb_brandon_laugh_02.mp3",
+      "mp3_sha256": "047780bfd1f2df7863dc5a56c6f1819623458d6890a90211a5c5a2ca5957ad13",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/laugh/barb_brandon_laugh_03.mp3",
+      "mp3_sha256": "30ae3f8b87f7f40c0302ebfc96fb2eae07f5555619b4b006c18fc82660b356fb",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/laugh/barb_brandon_laugh_04.mp3",
+      "mp3_sha256": "4ae0acd80e75742c52d0bd5ce1e1e840cc3c65bf0b1d63612b411176c3f47876",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/laugh/barb_brandon_laugh_05.mp3",
+      "mp3_sha256": "0c17633a660d2404d4a318ccc562054f752f2a8a78ce9832a85ebb6d14d2ee61",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/laugh/barb_brandon_laugh_06.mp3",
+      "mp3_sha256": "66bf1d424c51d84daaad06fd732bc3d0401616cdacbf14dfde18158baef97483",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/laugh/barb_brandon_laugh_07.mp3",
+      "mp3_sha256": "794962e1cd921e031019cd96896242b8a7706cc66d63c1a0108eae43f7ff4f25",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/laugh/barb_brandon_laugh_08.mp3",
+      "mp3_sha256": "cd159cf352719ad6de027fc3da9284939fa50a282f75f3aad4cf4fe2c54b76eb",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/laugh/barb_brandon_laugh_09.mp3",
+      "mp3_sha256": "823f5ce777d27054cbc01fbf2d644221d3bfd5e56fc3c3ce82d168385cc17022",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/laugh/barb_brandon_laugh_10.mp3",
+      "mp3_sha256": "556a875c2c00dc90e59058e36b131da6fd9d8dfc87a69a60c0c8796f3a9bcefb",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/laugh/barb_brandon_laugh_11.mp3",
+      "mp3_sha256": "aaaf4759c722e10a08ad32befe385098b35297ca23c69fff53ccc2697f72aacd",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/no/barb_brandon_no_01.mp3",
+      "mp3_sha256": "bbccbac033d42618ae99a2333f94f4f653b6bff0bcabee3af653cede8003263a",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/no/barb_brandon_no_02.mp3",
+      "mp3_sha256": "bba454de6479ac4781b3d3fba6f8acbb188b1270e50fd10922969bab13d7f1cc",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/no/barb_brandon_no_03.mp3",
+      "mp3_sha256": "5fde3f3c2bcc87b80d26ad4eeafc62c14b5bcf7b0ffb1e131550e2316ace553b",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/no/barb_brandon_no_04.mp3",
+      "mp3_sha256": "4c68d75ff23add886a9cf57c7a2997fc09823a21512103b8e4a7e009e1882a4e",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/no/barb_brandon_no_05.mp3",
+      "mp3_sha256": "67bc88fb33a23740e7d4f8241a1e6c371b6920df5890044ea7cd597f882d40cb",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/no/barb_brandon_no_06.mp3",
+      "mp3_sha256": "613edf278aa53c65a1a9193d43b0e7904715782f6a6cad59336fc9d4393b5da8",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/no/barb_brandon_no_07.mp3",
+      "mp3_sha256": "af518a1b21c745933431e726fbd6dc4ec1904ed517210ca7e7643d0103a0cad1",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/no/barb_brandon_no_08.mp3",
+      "mp3_sha256": "e7da335263ae210f835fbb6795aed15090565df1d1ff2bc31b4b59ada36470cb",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/no/barb_brandon_no_09.mp3",
+      "mp3_sha256": "48ea14f056302612f9cff029ece3c558fec6e0c7f9414b76b98618a9c2c3750e",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/no/barb_brandon_no_10.mp3",
+      "mp3_sha256": "c3296426cb39726fab4320f5d46ef972fe440414138c90f6b604bd40891485fb",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/respect/barb_brandon_respect_01.mp3",
+      "mp3_sha256": "321969fa5b881eb54e125fab43205cd33f82e2f46a8fe0f1948f5e6580c2564d",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/respect/barb_brandon_respect_02.mp3",
+      "mp3_sha256": "1ac9c808c625440a6bb62b8946ef59f74fd953d79288df43d4ecb0925e872bcd",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/respect/barb_brandon_respect_03.mp3",
+      "mp3_sha256": "2df00576fc45bcfd90963a8e2974ba91a54fec4f52742ede60dde5371015bb56",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/respect/barb_brandon_respect_04.mp3",
+      "mp3_sha256": "8e766284220ba1cb0f2f52c4bd97bfe28c776818b0fbbc550d18a30b8fe5cb33",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/respect/barb_brandon_respect_05.mp3",
+      "mp3_sha256": "add3f32591a6bd76c83475014260ec2873a2365f0ee60af9fc436705dd719588",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/respect/barb_brandon_respect_06.mp3",
+      "mp3_sha256": "61c7557e0659e17879acd6a326ce2e6b60ad4cd18c2ca47d76d6896f69d753c8",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/respect/barb_brandon_respect_07.mp3",
+      "mp3_sha256": "7a58a23def23099f6ec99c40d66111d9189475432abbd5294197e0eb01b440d5",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/respect/barb_brandon_respect_08.mp3",
+      "mp3_sha256": "c079ac7c22af5d7ddfa89632d7513e92070d61aa7172cf23a091d933515c37ff",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/respect/barb_brandon_respect_09.mp3",
+      "mp3_sha256": "9ca97d8d1003b5f8db8f027f854658ac3abeac558d2bd6d6d5510a81b9e1e9d0",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/respect/barb_brandon_respect_10.mp3",
+      "mp3_sha256": "1a759d945477bbfd6f442ba6d204160000d09493f236b47d3fb503d79a5d52c3",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/respect/barb_brandon_respect_11.mp3",
+      "mp3_sha256": "31c7bd8f3ae62ade8faef4e6f1129dd14ecbbad33674df386cf16c7e3aa28bef",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/sorry/barb_brandon_sorry_01.mp3",
+      "mp3_sha256": "11c3c49a10b61cf3693bca32dc25399b0665bd2a93018204c16ddf8cdc08ff60",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/sorry/barb_brandon_sorry_02.mp3",
+      "mp3_sha256": "cd01d6606bf6391080a3626d6cf9e12a7304a80ff9365cb1f480a66c93b0c452",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/sorry/barb_brandon_sorry_03.mp3",
+      "mp3_sha256": "260eaf879ac80cef70d05979695431c27326bc2484710df0d4844d556ab0d1cb",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/sorry/barb_brandon_sorry_04.mp3",
+      "mp3_sha256": "3cfb8f3b7cd873eeb7da91e178bbdc6c89010237514f52f48e05a892e1df4edc",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/sorry/barb_brandon_sorry_05.mp3",
+      "mp3_sha256": "aae07c6818d11284792a089fc46e9f0ea894d41be021938c19020cc65dbcc696",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/sorry/barb_brandon_sorry_06.mp3",
+      "mp3_sha256": "6c2c277482f5c38c8243564f5c09d778632738e15c528a48a9d280dc52a3e5a9",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/sorry/barb_brandon_sorry_07.mp3",
+      "mp3_sha256": "b93e753dade24ee59423791229f0fed77726a6cd314461eb967bbe7a49978863",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/sorry/barb_brandon_sorry_08.mp3",
+      "mp3_sha256": "1ac12cf3c256681c17f0b0e8f0e809531213bdbaa0a2a37f941f92bef866cfaf",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/sorry/barb_brandon_sorry_09.mp3",
+      "mp3_sha256": "d1ac7ec3fcf87246fa1149f1d7e77cb302322a57ad4f166b2689f23e613f2959",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/sorry/barb_brandon_sorry_10.mp3",
+      "mp3_sha256": "d64306a9f4edd4633913ff1c426e59736cc2a941bd9f4b281bd2bb2286f3c945",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/sorry/barb_brandon_sorry_11.mp3",
+      "mp3_sha256": "e81b53d9fc50f5f85d39df63d32595cb92023444808a3eb8b430e34ccb81e9bd",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/taunt/barb_brandon_taunt_01.mp3",
+      "mp3_sha256": "cbebce6c4c8007ee7e7222bd685de208ac7321e92f0ab0d6d4e0e97cddd7d1f1",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/taunt/barb_brandon_taunt_02.mp3",
+      "mp3_sha256": "c2ab5f1a854b8d15bab9f1eb6875bf16a4a8fefece01a03c46439e3ea0f41c87",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/taunt/barb_brandon_taunt_03.mp3",
+      "mp3_sha256": "ae14d411b23a967de861733c755f3ba92d92045985c5551920df989382716aa1",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/taunt/barb_brandon_taunt_04.mp3",
+      "mp3_sha256": "219b3d9e0f85cdca33b873c7cb0bd42db6591e2091903d82229b617ebfe57374",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/taunt/barb_brandon_taunt_05.mp3",
+      "mp3_sha256": "e4c5d9a5076bf7daa3bd3ff0ffcadb1b4e399fa14379427f0941f95952c8a0ca",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/taunt/barb_brandon_taunt_06.mp3",
+      "mp3_sha256": "5a8583aa96dc1907f53b0260256495d2cccfc18873e6e8488ad1a34eb25d2608",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/taunt/barb_brandon_taunt_07.mp3",
+      "mp3_sha256": "0e01eaf7be078c5344c30413409fbcd8ebb6d2f75435f1126ef6e1fb0f2e8226",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/taunt/barb_brandon_taunt_08.mp3",
+      "mp3_sha256": "a2f7c6d41788f70df21c86d301956fa71017bacdf8de75ae2ee96a854b1a0b9a",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/taunt/barb_brandon_taunt_09.mp3",
+      "mp3_sha256": "3cf3f39cec401c7baeef8634ac76e7d758f4088b3a2ffb73a0abb166077f9ce1",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/taunt/barb_brandon_taunt_10.mp3",
+      "mp3_sha256": "0ae8144c2386db534c9e39b2d5f46ad2dbbca627d54e87306ab02e0d96256605",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/thanks/barb_brandon_thanks_01.mp3",
+      "mp3_sha256": "6c9479bb1eba9d5e807e694f0df6d60ceb6f5af7b57be5b308e92db85c240f4d",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/thanks/barb_brandon_thanks_02.mp3",
+      "mp3_sha256": "7126aa9351ff5f6c340b7213b5307f179294bcc0e3d27a75289496a7f7325d60",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/thanks/barb_brandon_thanks_03.mp3",
+      "mp3_sha256": "04ed8d9d6d2c09acc06e1e433d886e7e8955c09113c03c3a6f484f0a4b5b0d3c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/thanks/barb_brandon_thanks_04.mp3",
+      "mp3_sha256": "8b6f22f2a127d46644bec53c6b0027bcd2c797590ebd62b450b7203fe7841932",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/thanks/barb_brandon_thanks_05.mp3",
+      "mp3_sha256": "28bd0411bc64a9f5c214fb7e9542ea8689da02be7a064183d4f534db5b815b49",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/thanks/barb_brandon_thanks_06.mp3",
+      "mp3_sha256": "93fc973a8e1fc9ba93bd2287b1f4283ca88e65390f1049c5b2ba22b555931d24",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/thanks/barb_brandon_thanks_07.mp3",
+      "mp3_sha256": "bcc668cc1850e457ae08964a3aa480ccfc6540445fe0f67b5a2f583a1ac7d607",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/thanks/barb_brandon_thanks_08.mp3",
+      "mp3_sha256": "f6ab1808ba22f086a96fa54c8c0014c42a2812f0f979cc5aa3fa5fd36e455392",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/thanks/barb_brandon_thanks_09.mp3",
+      "mp3_sha256": "f0e1fd09fcbe07927c02ae9b2c6333ad7836a518e02db7bd33fc6ce235f8ad98",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/thanks/barb_brandon_thanks_10.mp3",
+      "mp3_sha256": "1b6f3cf977dea8486f013d44b31f58e286546bf52a88f916df9b0a52168d2347",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/thanks/barb_brandon_thanks_11.mp3",
+      "mp3_sha256": "fd73a005990167bab5979161c27a8ddb2b09421a8519bfb339e259ee36ef9c88",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/yes/barb_brandon_yes_01.mp3",
+      "mp3_sha256": "95e291b70ebbd460d363155d3cb4e84d4e43638fc987ac1a20c6a1ce8f296635",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/yes/barb_brandon_yes_02.mp3",
+      "mp3_sha256": "4bd6f1247edaa8e21ed1cf4d23eaef8fa0065c9b8285599003c7d7365324e271",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/yes/barb_brandon_yes_03.mp3",
+      "mp3_sha256": "07affd8a12b559edbfcc361fce5cc4464fd4d9547229e76ac86dafbfcd4eb716",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/yes/barb_brandon_yes_04.mp3",
+      "mp3_sha256": "071efed04ffc1174fa69ac0796b910c50be8a0397fa66f517f17af38b7abc091",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/yes/barb_brandon_yes_05.mp3",
+      "mp3_sha256": "d5cb9db4f5b93866f45a889be839623f24dd2d34990a5965c8d6a84e67e4b292",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/yes/barb_brandon_yes_06.mp3",
+      "mp3_sha256": "463fdde6ce51216cfa69673560f6ba885819ea364b503d07c2b6ea1a4ebbdf04",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/yes/barb_brandon_yes_07.mp3",
+      "mp3_sha256": "b63b61f55a8196ae69813578f0582705362635fedd361e1a801cc9d7cb5377de",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/yes/barb_brandon_yes_08.mp3",
+      "mp3_sha256": "e5d91d41119b06424b9d364c23d3f29085e96e20df80c6506bca9d7d090d039d",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/yes/barb_brandon_yes_09.mp3",
+      "mp3_sha256": "14117d79bcce006b9de539f175769b72f20c62c0c70cdc95d06314892dcd6b2d",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/yes/barb_brandon_yes_10.mp3",
+      "mp3_sha256": "79400184b7fcad5c66b1c26349331e9439ee4287de9e72a7fc8a8f330660c1de",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/youre_welcome/barb_brandon_ur_welcome_01.mp3",
+      "mp3_sha256": "7135f098f4d83ab10a9273641f39b2adc6f8beddf5a0897aa7f903cf3b8ab071",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/youre_welcome/barb_brandon_ur_welcome_02.mp3",
+      "mp3_sha256": "acf3382efcc60add9e45ebb5d8d1ec684d41a0aed7b4722fb29c5eb773ebbc2d",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/youre_welcome/barb_brandon_ur_welcome_03.mp3",
+      "mp3_sha256": "0b6232ff5871a1cd6676afaeab5a856c4d25c309fdf8989f4d3ed10de1348b8a",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/youre_welcome/barb_brandon_ur_welcome_04.mp3",
+      "mp3_sha256": "893723098237eab9d3c5713af9991cc57656add52002ffaa77ca45e223c1e7e2",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/youre_welcome/barb_brandon_ur_welcome_05.mp3",
+      "mp3_sha256": "28661a38fc5546e3e92a715be8b8fdc0e3faa1126e32733ec66475ee144f492f",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/youre_welcome/barb_brandon_ur_welcome_06.mp3",
+      "mp3_sha256": "2f96af9bba5d6079b9b6b7ff04f736c6417acbd96c39ade0c95ab9d31127c20e",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/youre_welcome/barb_brandon_ur_welcome_07.mp3",
+      "mp3_sha256": "6cd1a71d23d056dd869b2e08b4ee65e579195682f6f24badb6cdd285282a73d8",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/personal_messages/youre_welcome/barb_brandon_ur_welcome_08.mp3",
+      "mp3_sha256": "736433a8242f9415949406e23a30ba98a8c90fabce2e76a2c3ed4fd2bfecb0e7",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/all_clear/barb_brandon_all_clear_01.mp3",
+      "mp3_sha256": "d3c810e6a5fa72c703a30f6d0bb112f8b2a2b1faef000f8993a27be9491bdb90",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/all_clear/barb_brandon_all_clear_02.mp3",
+      "mp3_sha256": "1187fea7b06332a25908aa331377604d069e1826052ff6e6eb57d8a818386030",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/all_clear/barb_brandon_all_clear_03.mp3",
+      "mp3_sha256": "10ba3ed708a8475b51e455a952dde846842e7f234a4a7aea256797cdb1e2f7b6",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/all_clear/barb_brandon_all_clear_04.mp3",
+      "mp3_sha256": "1c302dc1250ea01c831d535a6eedace64ad813eb11a31cfbff7f99e7ed1f5a70",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/all_clear/barb_brandon_all_clear_05.mp3",
+      "mp3_sha256": "3b18e8f2fb23f5003b80bf953c7904515118f6196805ad5b9e2943c54de812c6",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/all_clear/barb_brandon_all_clear_06.mp3",
+      "mp3_sha256": "50074b586a9e6fff6a1fcb13b004537fb24c857cc86532412e671204a60769c4",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/all_clear/barb_brandon_all_clear_07.mp3",
+      "mp3_sha256": "b5a9a81e8922e7209a66a8c142f68803353e262736316fa1cf07b5b17636febf",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/all_clear/barb_brandon_all_clear_08.mp3",
+      "mp3_sha256": "ef8aae1b0e6498645a253531b2869a03ee53af65de32f16698e27b3ce9a55ce6",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/all_clear/barb_brandon_all_clear_09.mp3",
+      "mp3_sha256": "f224013b083b6e83c916fdb4ee8c719b811ce9767d243f36720dcba5d50cfd20",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/behind_us/barb_brandon_behind_us_01.mp3",
+      "mp3_sha256": "335ca4166ea74296c740aec0bab7cfe188c8056f27a1cd2a6ad508a3ccb8aa7f",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/behind_us/barb_brandon_behind_us_02.mp3",
+      "mp3_sha256": "9c925499119a53b255658b0c6de6f0f3c1a28aae42cafad48595d047270c09ef",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/behind_us/barb_brandon_behind_us_03.mp3",
+      "mp3_sha256": "f72d4ff86d53d914d30af45c3bbda97a656aefe3d7827f2d15ea3aaa9c907107",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/behind_us/barb_brandon_behind_us_04.mp3",
+      "mp3_sha256": "9d9b957ca3beef1be0b10fa00570ad3658f7d45193786ed3efbfa65d6383f380",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/behind_us/barb_brandon_behind_us_05.mp3",
+      "mp3_sha256": "9f26c765020a1c79beee7de70a39db67160508bf879cae0458d3c8d7bf1ae01f",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/behind_us/barb_brandon_behind_us_06.mp3",
+      "mp3_sha256": "d780df8130c4d091543aa349ce3e4bd78b1f1768512d4847074d744c70634ab4",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/behind_us/barb_brandon_behind_us_07.mp3",
+      "mp3_sha256": "5bb602361f7e34025320b2df698931367ed500343e940e96a122db264e01cd25",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/defend_me/barb_brandon_defend_me_01.mp3",
+      "mp3_sha256": "c679494991c02c7e4fb94f790d19435786de6a454a280b7fe963f917fa7a7acb",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/defend_me/barb_brandon_defend_me_02.mp3",
+      "mp3_sha256": "4ea5fcf80f53c92c59ea6a6357c0910643758ea9d253ee0a5c533aa3335a49ba",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/defend_me/barb_brandon_defend_me_03.mp3",
+      "mp3_sha256": "fdc9772528491dd9da1d16db9e96c3dcf09959c1be2bd592a1def24f258d7425",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/defend_me/barb_brandon_defend_me_04.mp3",
+      "mp3_sha256": "e48f42a7d5c715b17ca36345d4d176d732afd0ee0c649a461e67e5557cc2c2c3",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/defend_me/barb_brandon_defend_me_05.mp3",
+      "mp3_sha256": "8303ea1245498e440ae4e6c71ebddcf46f551feef3f97ffff0e4464c5ebcd789",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/defend_me/barb_brandon_defend_me_06.mp3",
+      "mp3_sha256": "0a5e5dee8760f90d66cdf617e067771622dbb9bee88c3a34c617781c490c92cb",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/follow_me/barb_brandon_follow_me_01.mp3",
+      "mp3_sha256": "498e4a91cf12eb34ce3ca1710c8a6b9708f046ab0898445eb3c730c7abb2becc",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/follow_me/barb_brandon_follow_me_02.mp3",
+      "mp3_sha256": "8d96946a99a78efc43bea9586aa7becbb52aef9babd70544ba307a1940e8fd92",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/follow_me/barb_brandon_follow_me_03.mp3",
+      "mp3_sha256": "16b8aacd3a7ad32748eb7a239812e022f0086554e8b9581d271e966f2a689882",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/follow_me/barb_brandon_follow_me_04.mp3",
+      "mp3_sha256": "09f432b31cedb0e59fd259a9be34b6dc135aa5cb6fbc6740c2805ade56ab944c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/follow_me/barb_brandon_follow_me_05.mp3",
+      "mp3_sha256": "608c9477561edec19e85b0e4ac650a9e22b013f32ee5e53091384e85e56e58a8",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/follow_me/barb_brandon_follow_me_06.mp3",
+      "mp3_sha256": "b60f69518cbd45a2345db7bab3f9aa29baa81392f61f82efeabd0a460092b185",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/follow_me/barb_brandon_follow_me_07.mp3",
+      "mp3_sha256": "9af082ad27d14d5c8f5d36e6f277ad56deddf17ca52133a2cb6c33222c24de9d",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/follow_me/barb_brandon_follow_me_08.mp3",
+      "mp3_sha256": "a5ef1cd858b6219555ef4ba0fb85ec911ddf5a125664ed061582e58e8fc91a7e",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/follow_me/barb_brandon_follow_me_09.mp3",
+      "mp3_sha256": "c0adef48d345758a0d1d5468f911bed4ff2845f11a1fa8ae7550a17c3419e642",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/follow_me/barb_brandon_follow_me_10.mp3",
+      "mp3_sha256": "ccff4ece76ed8a3e4909501b36660cbae180f0f77cd4474ea99b21e7cc24d7b0",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/follow_me/barb_brandon_follow_me_11.mp3",
+      "mp3_sha256": "d3565455c4b8a5811cec9f1bab7c62651ac946edef4f0f6e056b64b8e8bb5bcd",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/forward/barb_brandon_forward_01.mp3",
+      "mp3_sha256": "ce131f2fd33725eaf7d114fc88a437c7c6f4c2d49b29c231f2451bcc5238de7c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/forward/barb_brandon_forward_02.mp3",
+      "mp3_sha256": "ecb9d0748bfe9cad1d571775e37f0da9528a0a9fd6d776f9c2510f3621e36d02",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/forward/barb_brandon_forward_03.mp3",
+      "mp3_sha256": "923e30445d10d2067e6ffcc1f14bc98efb54e1dd51842c567be15ce552ed2668",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/forward/barb_brandon_forward_04.mp3",
+      "mp3_sha256": "1eb45bf2eb2c7dd89fef4583671741287a176912aac41b259a13f87b738950ee",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/forward/barb_brandon_forward_05.mp3",
+      "mp3_sha256": "73d5f8d295b513269ddb5a3355b19c3726f5703f0048f7647fc4b0d8821d3f04",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/forward/barb_brandon_forward_06.mp3",
+      "mp3_sha256": "2b4e006573f43d8d3ea7241bbdddfa7c37bd28185a61ab5636ab14c4413cc2f5",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/forward/barb_brandon_forward_07.mp3",
+      "mp3_sha256": "562ca16f4eeac96d27fde182fefb4e45f73a5ed9fed28bd90078868526dcacfc",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/forward/barb_brandon_forward_08.mp3",
+      "mp3_sha256": "72fad0bc52016ba860d9630a026f6bf2c2370eeaa2d5d27c5a8999a1f0105011",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/forward/barb_brandon_forward_09.mp3",
+      "mp3_sha256": "7e6934b04b5dbac43025c916aa73952846203d050526a515c2174d1bbafce869",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/go_for_the_objective/barb_brandon_objvo_01.mp3",
+      "mp3_sha256": "b2456019b78c201caaa001be88f3dbf0cc3de68ca2c3cb32a4065aef71273937",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/go_for_the_objective/barb_brandon_objvo_02.mp3",
+      "mp3_sha256": "c8bc943c929db0d0bf738412b1a2487502dae2ca8ed18c49f9ebf3ba12c8ce95",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/go_for_the_objective/barb_brandon_objvo_03.mp3",
+      "mp3_sha256": "d2d62d6a0d9b1b297caddc64bebbcb83f7c1f80a75dfb1f692cbb4b5864bf183",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/go_for_the_objective/barb_brandon_objvo_04.mp3",
+      "mp3_sha256": "2a5bd0eec9b214de269d060b529b8393bd9feb3bb1ec1c122781f7b09cfdb706",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/go_for_the_objective/barb_brandon_objvo_05.mp3",
+      "mp3_sha256": "86a1b5fc45cf048ce3df47b97e8ad2ef9220b9b50cb105040667cee30634711a",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/go_for_the_objective/barb_brandon_objvo_06.mp3",
+      "mp3_sha256": "7bb00419e7e0175efdab1106ee5cab4cd4f87d4c72f3064fd4fbbb53a53a280e",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/go_for_the_objective/barb_brandon_objvo_07.mp3",
+      "mp3_sha256": "d5eb7f19993830346e32ad038b1451bba2117e54d3f3cf6bc7e714e9b082cee1",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/go_for_the_objective/barb_brandon_objvo_08.mp3",
+      "mp3_sha256": "eea354d445944ed8fe6ead5189e4537c96be9c9377cc5e7a0511475f6a0ba9ee",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/go_for_the_objective/barb_brandon_objvo_09.mp3",
+      "mp3_sha256": "7c159067941a2879ab5aa53bca9c2ac9933b9558e38cd5b60908bf7f14835844",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/go_for_the_objective/barb_brandon_objvo_10.mp3",
+      "mp3_sha256": "ad4802a49fecfeeb856faf6f980a53bf88d3796267933365ead8a8ea5d58bf10",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/hold_your_ground/barb_brandon_hold_ground_01.mp3",
+      "mp3_sha256": "9c28ec8581d7a73dcf7676fb957e379954df1dafd7e939351e0e3ed2d9faf5de",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/hold_your_ground/barb_brandon_hold_ground_02.mp3",
+      "mp3_sha256": "0e29f914585a30d75c9fd63a97ef3d07038adf6e5c4fd2b45aa569e88bef05d1",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/hold_your_ground/barb_brandon_hold_ground_03.mp3",
+      "mp3_sha256": "3e8afe6da7e76e4db846fb2fb64b5dfbda254cb1ca0c5a7aa5e978d0e58eb6c9",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/hold_your_ground/barb_brandon_hold_ground_04.mp3",
+      "mp3_sha256": "63f3beb8993e82576779f30871512606b902a026315d9fda9d9980fd933b7ac9",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/hold_your_ground/barb_brandon_hold_ground_05.mp3",
+      "mp3_sha256": "2e40d2502f32592c5c101c603d36f966cdc71043a31f9f7bb197bf4b85b8287b",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/hold_your_ground/barb_brandon_hold_ground_06.mp3",
+      "mp3_sha256": "510dd447c2cfdd6b7d6864d0e9ba5b80a48b8b0ab9b431abd395bd95896c310e",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/hold_your_ground/barb_brandon_hold_ground_07.mp3",
+      "mp3_sha256": "a1dc9c9bbc9546efe921b8dde7f8e60e472ad2fb4cdbcd61acefe8d6b66472a0",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/incoming/barb_brandon_incoming_01.mp3",
+      "mp3_sha256": "99830abe110c129707a9ab9edec4c9970ecdd38706fff0cf71f39a0c6f3c4ebf",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/incoming/barb_brandon_incoming_02.mp3",
+      "mp3_sha256": "2ddad62884654a905fdbd7a981bcf1263ef4bedbf71cb4cc5c0f038f8d396634",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/incoming/barb_brandon_incoming_03.mp3",
+      "mp3_sha256": "05470a1c18f227791072b1e19cc4536992e1e47d96cea990c572bf5346c4e705",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/incoming/barb_brandon_incoming_04.mp3",
+      "mp3_sha256": "73913a7e3ceaef9e1d5d558e0a4ab7c83f78b62f8cff0f1c4a9e1120a0b6256e",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/incoming/barb_brandon_incoming_05.mp3",
+      "mp3_sha256": "e9c737281ea298e8d2de6ec64469d69cca8b4c3adb80c4e1e7b1bd49d14556d1",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/incoming/barb_brandon_incoming_06.mp3",
+      "mp3_sha256": "281fa708f0f13be271baa64b5b63277809ba5bbea297a77931a4352aa3c4a6de",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/incoming/barb_brandon_incoming_07.mp3",
+      "mp3_sha256": "1e7fd4d13e9e90d01302849cdfe7301624e943d74325e9563cbada3b80e03cc0",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/kill_archers/barb_brandon_kill_Archers_01.mp3",
+      "mp3_sha256": "a2e5de728359c491c7d952007ef234b802bf754757953b15dc7fff7626113b90",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/kill_archers/barb_brandon_kill_Archers_02.mp3",
+      "mp3_sha256": "c37ee8a44fdb7e57d686341563f08c012cc2007e672c2ca89a336245466979d5",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/kill_archers/barb_brandon_kill_Archers_03.mp3",
+      "mp3_sha256": "260bff25b9e00a0b52f943bc92a93359c731a842ad03c18b3ab81a43fd94ac53",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/kill_archers/barb_brandon_kill_Archers_04.mp3",
+      "mp3_sha256": "0da937830870a226e3d5bdae95f895bb10349e5341e88f748796470f4b33508b",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/kill_archers/barb_brandon_kill_Archers_05.mp3",
+      "mp3_sha256": "bbcf8c3a514d928f0d04c7f6a17d0e916db6d7f44d831d7635b9eb2920cd137a",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/kill_archers/barb_brandon_kill_Archers_06.mp3",
+      "mp3_sha256": "8d4c6bda9a728ad01ab9722f684669aceec3a50b8c88e2347d15a5d9751cc1c9",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/kill_archers/barb_brandon_kill_Archers_07.mp3",
+      "mp3_sha256": "38e742e8dfae829d192c1ca37662b188d3bdaeee187e0a3b09e681aca75f0010",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/kill_archers/barb_brandon_kill_Archers_08.mp3",
+      "mp3_sha256": "7546f97bf73a7bf78037ae78750dd80569829ef1015456acd06c1963a7d5e3fc",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/retreat/barb_brandon_retreat_01.mp3",
+      "mp3_sha256": "5b67482c76772440e1d490f1f37bc0a061f0a843b645f141920d3c6bf7524ea5",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/retreat/barb_brandon_retreat_02.mp3",
+      "mp3_sha256": "959893eefaaf4c2eea31f5576e86280ea9bcb6ec763b0bd6b7f346baeff180d8",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/retreat/barb_brandon_retreat_03.mp3",
+      "mp3_sha256": "e7b4658c96e6906bef7d0c7f2b67257616e058391f8f901ccbd62f0a6cc0386f",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/retreat/barb_brandon_retreat_04.mp3",
+      "mp3_sha256": "75109dae05499e2a13ca8fab4445984eb3976a65717fc660a8ef1480db301993",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/retreat/barb_brandon_retreat_05.mp3",
+      "mp3_sha256": "51e05aac99da38b858475cbaa320b66ee0c63e886478870c5a903a1f102dfa9e",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/retreat/barb_brandon_retreat_06.mp3",
+      "mp3_sha256": "e08460dc025cc3a2861d3c66835601d7376fdedd8a800b94a1127c3708c742dd",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/retreat/barb_brandon_retreat_07.mp3",
+      "mp3_sha256": "da1ba2c7ca154e641be8c250a7d7856e3c9365fcc059b4b15165d85630bb1c37",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/retreat/barb_brandon_retreat_08.mp3",
+      "mp3_sha256": "fe222dedc06272c7b57c4984d5631cc98c228ad660bfdb7255ef70b0ec8add2c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/archer/tactical_messages/retreat/barb_brandon_retreat_09.mp3",
+      "mp3_sha256": "e6be8210f14d0cae83208a669fad0cb8e72aa4e337508185dc70302c80ab2122",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/battlecry/running/snook_barb_battlecry_running_01.mp3",
+      "mp3_sha256": "0a88c3969663e07252733094a78452b7dc45b79a5c900a4a0ee6b27c2a32c50c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/battlecry/running/snook_barb_battlecry_running_02.mp3",
+      "mp3_sha256": "877aa20e58e074f001c2da6413a7cc4e20e7ce530a2a3d2371d1449ebc17edb7",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/battlecry/running/snook_barb_battlecry_running_03.mp3",
+      "mp3_sha256": "46664c3a36fdd05d37ea132fd04559819080a5519f1ed6bbceba1220a908b4d3",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/battlecry/running/snook_barb_battlecry_running_04.mp3",
+      "mp3_sha256": "57cfe89df6184f875c43ba45ef90234b422bdf48bc957e3d0270577bb6aff046",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/battlecry/running/snook_barb_battlecry_running_05.mp3",
+      "mp3_sha256": "e4d7f9e410582362f53ea29595b2575d7e56bf3eb46b6debf7ed87e0584a96ad",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/battlecry/running/snook_barb_battlecry_running_06.mp3",
+      "mp3_sha256": "ba74836b757ffcba7963d683d6bdc0fc9ec1a67e262fd27ac85f6cfc1796ec21",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/battlecry/running/snook_barb_battlecry_running_07.mp3",
+      "mp3_sha256": "b09bad70b6eea220ec156c145cfdc26c817e9116e13b9c9f5e8f692356a1028d",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/battlecry/running/snook_barb_battlecry_running_08.mp3",
+      "mp3_sha256": "e0b6aaffca0bab917de65ad46a7b465dbd1e1083f7450c179c5c8d5e1b1b9f95",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/battlecry/running/snook_barb_battlecry_running_09.mp3",
+      "mp3_sha256": "672cc9ab37605baddeacefdf13c98a72e5016f895aa048b3ac4e0f3b49132bb5",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/battlecry/running/snook_barb_battlecry_running_10.mp3",
+      "mp3_sha256": "74f98d0424752261a394a692c73765d3f643bebbf5374457b639c42c6c13166b",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/other/snook_barb_help_01.mp3",
+      "mp3_sha256": "3bafd76ce1b95efba7ce473ee5de9aebb25400cea1a7e5f41c59a688480e3d9c",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/masons/knight/other/snook_barb_help_02.mp3",
+      "mp3_sha256": "be143f265c55a555c79363b16d293bcd61737ea5f94c806d51f0a059cc497733",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/masons/knight/other/snook_barb_help_03.mp3",
+      "mp3_sha256": "99cdd05ec76396933370f83e31cf0dd3a25a73d48ae33dce88c0bf7e122f0862",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/masons/knight/other/snook_barb_help_04.mp3",
+      "mp3_sha256": "1bc47dbeecd2b9301eeac8dbfc326446e82dfe2e91f9ccc455941755e5774026",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/masons/knight/other/snook_barb_help_05.mp3",
+      "mp3_sha256": "4774124156212ab2c21d1df7d4616e23868fd58cf08dc9185369011a31f211f0",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/masons/knight/other/snook_barb_help_06.mp3",
+      "mp3_sha256": "027e0eef9f3aaf4d314b350777733be3ba1cd7112c4472d5268c338f70cf3ba5",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/masons/knight/other/snook_barb_help_07.mp3",
+      "mp3_sha256": "6e479dd90e0de0e6e212b1b51e1b46d9e8670826b16f333083780b3f2561ac46",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/masons/knight/other/snook_barb_help_08.mp3",
+      "mp3_sha256": "ed1f973ef8bb675f1ff64f63aaef39b0fa7e8cc2a123029b250d8a6c3de0ca61",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/masons/knight/other/snook_barb_help_09.mp3",
+      "mp3_sha256": "21c1de8a1a733861dbf745bdaf4c100e9bb1e556f4018ebb15c8a8ae1ad36887",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/masons/knight/other/snook_barb_help_10.mp3",
+      "mp3_sha256": "746787f9f716faa6f0efb3aebb563d801f73c9c85cf110c386cff38159f8fcbb",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/masons/knight/other/snook_barb_help_11.mp3",
+      "mp3_sha256": "deeb736dec6994f04b11141c36fbe410206495923f0a08933e53508922254ce4",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/masons/knight/other/snook_barb_help_12.mp3",
+      "mp3_sha256": "3f1b7eb0867ffc640ad424d04747e4af1e3649ce298c54cee8d20dfa2ae54f89",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/masons/knight/other/snook_barb_help_13.mp3",
+      "mp3_sha256": "9399988a1e2c883cab8f832b0e5d19018f74d171484f0853bde8a39472c003a2",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/masons/knight/other/snook_barb_help_14.mp3",
+      "mp3_sha256": "b7c58a6a9a562f9bb21def0962986852487d19e5cc405081bc2075de8786e307",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/masons/knight/other/snook_barb_help_15.mp3",
+      "mp3_sha256": "3c89b75a11b6d1c1f59928533abd9a5da0ff1c9d6dc388eb38382330c25060a8",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/masons/knight/other/snook_barb_help_16.mp3",
+      "mp3_sha256": "2807f06f5f4787618015de4a942f72983aaa02f67770682f42dda36b0c7e13ba",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/got_your_back/snook_barb_got_ur_back_01.mp3",
+      "mp3_sha256": "88be84f4142297367d13cb7ef7ef2191adb80c3f699dcd7421945aa96b459e39",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/got_your_back/snook_barb_got_ur_back_02.mp3",
+      "mp3_sha256": "e99f962b423f121790373ee6f6df5a38d1f69b8aedb83fa2fd3f6eef971bdacd",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/got_your_back/snook_barb_got_ur_back_03.mp3",
+      "mp3_sha256": "e81235c5f249d53d51389d9ee957b66ada259d18116a71dc293fd544e6e8dbd0",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/got_your_back/snook_barb_got_ur_back_04.mp3",
+      "mp3_sha256": "9ba94518e41f8680269352d212a3998c6fef6130ae0a358c4db13bdbf741f24e",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/got_your_back/snook_barb_got_ur_back_05.mp3",
+      "mp3_sha256": "639e8ee0561d511653cf3f9092a743cacb59b9dad79078f1f0ed2ad26e5e88cd",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/got_your_back/snook_barb_got_ur_back_06.mp3",
+      "mp3_sha256": "e87f4fa548c4333ef3e8bcc09047bf9a796370b6328610df2d42cce43f0ac756",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/got_your_back/snook_barb_got_ur_back_07.mp3",
+      "mp3_sha256": "f0a106ec322fe180c68dc0d321ec4da194b217276a95f5a543ff4769e2a38c27",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/got_your_back/snook_barb_got_ur_back_08.mp3",
+      "mp3_sha256": "4666bc8e0f3ff0932127641d84c248aa7eb756508625ba61ecd60708bc563ac5",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/got_your_back/snook_barb_got_ur_back_09.mp3",
+      "mp3_sha256": "abb4608dc7f718876d19998093eb9b87e9f5bc2f1fb32f79a5026a8153278465",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/got_your_back/snook_barb_got_ur_back_10.mp3",
+      "mp3_sha256": "2a4850bccb79fa4918c1c9663833c5f996b173e9c6679838fff8102f077f83fb",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/got_your_back/snook_barb_got_ur_back_11.mp3",
+      "mp3_sha256": "d8b3cde483af6e67d09bd76a059f88b9f50c9c2936854fecaa231b72989677d7",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/got_your_back/snook_barb_got_ur_back_12.mp3",
+      "mp3_sha256": "0075a2ffd84978d68f9e9ddecbb2258b59d554095a907ad6aec3582a62847ab2",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/help/snook_barb_battlecry_01.mp3",
+      "mp3_sha256": "6708b4202ceef898cdd39c822c930f607c48269837ead5b1b526c00bd0b23737",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/help/snook_barb_battlecry_02.mp3",
+      "mp3_sha256": "6db96a4dedd1b9545643781e8ba473b5d57dbf9bfe62d84a173602e47974940c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/help/snook_barb_battlecry_03.mp3",
+      "mp3_sha256": "0c1fec14b8820c155c64df7d5f65bf3a0b7aba8cb8cb449e8a2e196edddc66f6",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/help/snook_barb_battlecry_04.mp3",
+      "mp3_sha256": "d30874772391abf1c88a1a41f5c179e6c1fe2c002aa0c4cb47bcce90a24c1114",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/help/snook_barb_battlecry_05.mp3",
+      "mp3_sha256": "6d7cc917102c24e94091c74adeae7d2344e5cd3008d835ba658387d7adcbe5b3",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/help/snook_barb_battlecry_06.mp3",
+      "mp3_sha256": "0a84d2453799347f00609d5085c72f689fce184e3fe2cbad133cfee97434384c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/help/snook_barb_battlecry_07.mp3",
+      "mp3_sha256": "397d4c02c926fb52d6351a0870b72d44e46fea38f6302f1899a0f6cef2be6bb1",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/help/snook_barb_battlecry_08.mp3",
+      "mp3_sha256": "7582a33e0da1cdaaa3d802de6e6fc368620a5d3e199a5662191872cbc4de10d9",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/laugh/snook_barb_laugh_01.mp3",
+      "mp3_sha256": "90474d24480b938f8483b2c1ee7c2f3b55da3c81f9f9cc042058a698dcb7e588",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/laugh/snook_barb_laugh_02.mp3",
+      "mp3_sha256": "da92287e1bd9f65b2f437ef8f5b6343b6c46e19383d2d6f76189c4c417ebef7f",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/laugh/snook_barb_laugh_03.mp3",
+      "mp3_sha256": "d5127bcdf92a73a944b4dbc4b0cc2753fa99a30ee43e5c609dedeabcc743602c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/laugh/snook_barb_laugh_04.mp3",
+      "mp3_sha256": "5b5abb1360af7bbc49f6749121451eac591ccff7560790ecceb67c1c5be81651",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/laugh/snook_barb_laugh_05.mp3",
+      "mp3_sha256": "ef9ee1c0a4850c7812916ef8f78ee8e581f500466ad0bf4165f6dbdefc94ce5a",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/laugh/snook_barb_laugh_06.mp3",
+      "mp3_sha256": "f175c5941581809b9671bc2dc9fcdc98f435bea179b93da6bafe3c48b8886a5e",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/laugh/snook_barb_laugh_07.mp3",
+      "mp3_sha256": "77ed0e3f8072b95a774a0a45cafce00c9cd1b35099d14a8fbfbf58b6f75df51f",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/laugh/snook_barb_laugh_08.mp3",
+      "mp3_sha256": "62123893cf00890f7758e21ae93a8889942d457db48422eca411a154af553c25",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/laugh/snook_barb_laugh_09.mp3",
+      "mp3_sha256": "462b3232b2f5c6dfef822605fa78130070fe1e6902f0d624bf3abc28eba53391",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/laugh/snook_barb_laugh_10.mp3",
+      "mp3_sha256": "16624ed785e432b1c336a8f8297f95584b61ec56939e2f0cfd716cdd8fa14f0d",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/no/snook_barb_no_01.mp3",
+      "mp3_sha256": "aaf589fd85b2105f734cd5db3cbfbcbcc90315f13c9c86f3ffe851976ba801f0",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/no/snook_barb_no_02.mp3",
+      "mp3_sha256": "d094878b3e2ece45db925c8fa9dad0affb5d581b0e41e5c20027e9fe2f22e15d",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/no/snook_barb_no_03.mp3",
+      "mp3_sha256": "04d84b952a35638c0ab229661ca7be30d524d1d474357049ac450907be31894a",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/no/snook_barb_no_04.mp3",
+      "mp3_sha256": "dcacb01bfeada32f78a3fc657cc6ff40cd40445eab3f30eaba2622755616dfd6",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/no/snook_barb_no_05.mp3",
+      "mp3_sha256": "b379a9a816fda04839aca3dd33cf2a0aa4d9da78652bacafb941a50c3a2160dc",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/no/snook_barb_no_06.mp3",
+      "mp3_sha256": "59b7142af7aa8e7e593bea1cfefcd3091232cb913255fa0f1da61379944e7a11",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/no/snook_barb_no_07.mp3",
+      "mp3_sha256": "0549e86f6dc8a52b004f6f9f886310426e39c753e0c2da4fb756efbf446028f3",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/no/snook_barb_no_08.mp3",
+      "mp3_sha256": "419e218568d83567ef3968409e6674c285c5f65a7a428b1fec83a4c7bfddde9a",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/no/snook_barb_no_09.mp3",
+      "mp3_sha256": "abd803379930f7c9d3daafc21fd8954da59a5929eef06857bb735ab2d92f1e5c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/respect/snook_barb_respect_01.mp3",
+      "mp3_sha256": "bcd1e9558666fe79e985b75b4fc8d38016bbe50f3edc31795e69fb41c28772d5",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/respect/snook_barb_respect_02.mp3",
+      "mp3_sha256": "822851a7e04a75a5ab11a71ce92e2536ba364f92f207f836b7dd48007f221620",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/respect/snook_barb_respect_03.mp3",
+      "mp3_sha256": "9c5975817b2a95e34456372cbc0f1221eda23de8f2949bb57d3fa7e158f5cc45",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/respect/snook_barb_respect_04.mp3",
+      "mp3_sha256": "f5ddb8989f92942d7baef5559921f4138449d124d5a1aabdb36b9fd9e59b0977",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/respect/snook_barb_respect_05.mp3",
+      "mp3_sha256": "315d00acad8f683af34b9e46e203ed7a948e54e9fbd93195dd259795807406d2",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/respect/snook_barb_respect_06.mp3",
+      "mp3_sha256": "d1bb8b07b787fccb4fed1ec9f9159efff20965aea66e52cbc29cc29f3ff89bac",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/respect/snook_barb_respect_07.mp3",
+      "mp3_sha256": "79eb2572242e66419edd2b51aafe682ced4fa85ff48581c205bb1ae1aa61dfbc",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/respect/snook_barb_respect_08.mp3",
+      "mp3_sha256": "bc5549c26a9c0c859e5a2469f7b492add9f313b15881f4d7c31777d7b5cf408f",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/sorry/snook_barb_sorry_01.mp3",
+      "mp3_sha256": "bd039e1da65cd11f31f632fd64afd5b263f4139b1784078fe3342d9b1839d6cd",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/sorry/snook_barb_sorry_02.mp3",
+      "mp3_sha256": "cfc0da0430fe317de0a2c79ea5c6e6d2a8f37168df08e9ced65b9297950d961a",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/sorry/snook_barb_sorry_03.mp3",
+      "mp3_sha256": "df3270cd695e642b40a59db3b4c94e6c54524284bbbb641f5ba8bf3afab496b6",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/sorry/snook_barb_sorry_04.mp3",
+      "mp3_sha256": "08afa6fb1067a07b18df213143ba87ce9a24c345a297a968a16ce9bcc0934dd7",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/sorry/snook_barb_sorry_05.mp3",
+      "mp3_sha256": "2eea8252d2821e626b3ff4f32e6f4ee3368c0ea63ea39700d7016f2b333c940c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/sorry/snook_barb_sorry_06.mp3",
+      "mp3_sha256": "8481697c8fc844876ddfde66c2d29b9d9edbd657f51a43213e572bed706408c8",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/sorry/snook_barb_sorry_07.mp3",
+      "mp3_sha256": "8095aa02de12705427b0bc0b525b655fcbeb96bb415abacb82c1f0f610becf42",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/sorry/snook_barb_sorry_08.mp3",
+      "mp3_sha256": "b788fb3d63d4326914c9fdec353c7bc0353e4101ad05cef50d9f6eb343787b9b",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/sorry/snook_barb_sorry_09.mp3",
+      "mp3_sha256": "014537a362a481d638d3af1588a1e76bbfdd647ef56370521fd5da39927dc508",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/sorry/snook_barb_sorry_10.mp3",
+      "mp3_sha256": "ecb360890cfb9ff53ad9e06161bc382c5dbff2cd5872c2bd896bce9f01dcd632",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/sorry/snook_barb_sorry_11.mp3",
+      "mp3_sha256": "c99003f50c4095c2d6e34129db06d55da1117fa95f6b3822492b77c579c88cbf",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/sorry/snook_barb_sorry_12.mp3",
+      "mp3_sha256": "1f57a8048e51baebefd99c3e5040f0dbb79fa9db6843e040c1fe85dd98e7aa20",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/sorry/snook_barb_sorry_14.mp3",
+      "mp3_sha256": "a35ab18ce5decf54566f7e08846dd9b74bb18118b0f77f4f2db8c62d94e15ab7",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/sorry/snook_barb_sorry_15.mp3",
+      "mp3_sha256": "c2b6cbbb0cc8dcba53de011bc04dbff3155daf5850b8e635de0e71b57e676efa",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/taunt/beta_comedy_02.mp3",
+      "mp3_sha256": "819abda802101e60fb939c4b55f35bb63bd897bfffc07e34b446ec74dd7c5843",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/taunt/beta_comedy_03.mp3",
+      "mp3_sha256": "470e623e0ad54a3a2c1c849284c2336d4a0a967cff04197780e5bb8f2fcb8f44",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/taunt/beta_eunich_02.mp3",
+      "mp3_sha256": "6ff1875abb87473b2d76bb031f402253912734de31261a8b0a2dc94874abebd3",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/taunt/beta_eunich_03.mp3",
+      "mp3_sha256": "7e688ee662d01b07a4a6202369f3b9fc1fcfd563d78fe99f9d243e334609877d",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/taunt/beta_piss_pot_01.mp3",
+      "mp3_sha256": "df574b6aeee56739d6117720df1cc543d3c47bccb1948896ce5f70b2786f9d6c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/taunt/beta_your_wife_01.mp3",
+      "mp3_sha256": "16a217cb979fb6759f31012f55f5e072176a63e3fd9061bdfb7c53e6a4037669",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/taunt/snook_barb_taunt_01.mp3",
+      "mp3_sha256": "1ccfbe01c4e83099f12b7f66031d11e8a8823457a8d83f7fefdaac729d614c76",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/taunt/taunt_very_strange_beasts.mp3",
+      "mp3_sha256": "01fd237a2a381c360808f2666016b9820648bf849ce95a1dbbccb5802d1703cf",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/taunt/whiners_01.mp3",
+      "mp3_sha256": "57e9a68eca5facc351bd17e1e9c2d61606ad38cb7039d64f44a20d5bb9286705",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/thanks/snook_barb_thanks_01.mp3",
+      "mp3_sha256": "33ea86bd7a0faad7dbebc51a27f2d02186be2c6d18c280ea089da56cf4a2784b",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/thanks/snook_barb_thanks_02.mp3",
+      "mp3_sha256": "ea51df7c5c9969d05df78075d2998f57f6e8865ff7f7ab15fb93a291447c7b76",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/thanks/snook_barb_thanks_03.mp3",
+      "mp3_sha256": "1a1ca8c2743445892ecaba10f919e925eddaf512882562db2dcaec32a84aea96",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/thanks/snook_barb_thanks_04.mp3",
+      "mp3_sha256": "efcc9e74cebed4b23c6c027382065b6de698aeae1d0423967ad2c54fc847e5b9",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/thanks/snook_barb_thanks_05.mp3",
+      "mp3_sha256": "88c2b8ff693e59b10c1f91e4ac107d1d6dddcdee74f17ba24022b84eabbace79",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/thanks/snook_barb_thanks_06.mp3",
+      "mp3_sha256": "c2997f6d50bd0273484836b340be391a5837057bdcdd1984ce8a0fcf3356fd30",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/thanks/snook_barb_thanks_07.mp3",
+      "mp3_sha256": "7c196ccffb61f91c38a0c0ce2dfad95d815056346d282e1ef54549f7ca580ccf",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/thanks/snook_barb_thanks_08.mp3",
+      "mp3_sha256": "0a7d82b0eabf9a18008ae08c97b2b8797072bd3848279d0309d48ceb3efc611d",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/thanks/snook_barb_thanks_09.mp3",
+      "mp3_sha256": "b2793bdbcee87100ecd2d2c9d97f79255cf63da203339f135768d09ad13970f0",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/thanks/snook_barb_thanks_10.mp3",
+      "mp3_sha256": "1fa3954d0301ad4a87779d11ef7613e4c82b7799b3c2bd249acd7b4531e38d05",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/yes/snook_barb_yes_01.mp3",
+      "mp3_sha256": "bee37e296672a87c197e87430ae37d2e41c7fe5fa068f6ed9892dddcf1547e70",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/yes/snook_barb_yes_02.mp3",
+      "mp3_sha256": "bf57ba747255193913b8263566c0e00d24a1de0f93a3a3649aaea34b34d41078",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/yes/snook_barb_yes_03.mp3",
+      "mp3_sha256": "68f3d4e791f62ec876bbb466aa3d2f23cc70f0eb5dec899567d13c5e22124e55",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/yes/snook_barb_yes_04.mp3",
+      "mp3_sha256": "6a9dbc8543a0a4823be4accbebb6f98826d20e238f304ea26de37bc7fd3368d6",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/yes/snook_barb_yes_05.mp3",
+      "mp3_sha256": "463e9b4cbc7c3332aa075300e807925a80b35286d434adc6173ce9ef92ee0e05",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/yes/snook_barb_yes_06.mp3",
+      "mp3_sha256": "a0ca2a5329f93004857fb0cd807bec47d77cd1be170455d31bf007d6a0364819",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/yes/snook_barb_yes_07.mp3",
+      "mp3_sha256": "674e6bee3b774197874225035ef0b687d7f818269b03962e89fbc173714041bc",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/yes/snook_barb_yes_08.mp3",
+      "mp3_sha256": "4a78702e0d96b2d293da48ef90f11f6bd42b02d481abbf19169cd88e200362aa",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/yes/snook_barb_yes_09.mp3",
+      "mp3_sha256": "c7d3334406680b97d2a0c4bef5b5aaa1a4d24e204f057e22388637be222c5b99",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/yes/snook_barb_yes_10.mp3",
+      "mp3_sha256": "919f0d6112fa934a9506811c3f9550fea8c939705f9af6452c1999d6f736a691",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/yes/snook_barb_yes_11.mp3",
+      "mp3_sha256": "3326980c4ac6c61cf9cd279853e827260235606251dc3c209fa658e90c1927fe",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/youre_welcome/snook_barb_ur_welcome_01.mp3",
+      "mp3_sha256": "056e9bc5a23fbea0a809440f9ffc5fee640385f164147e0595b7fbad69b33bb5",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/youre_welcome/snook_barb_ur_welcome_02.mp3",
+      "mp3_sha256": "1dcd332726224e96717d64363d6cd83dfd3925da3febe63102d8f289901d0cf6",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/youre_welcome/snook_barb_ur_welcome_03.mp3",
+      "mp3_sha256": "0f244243ad2fa43d0d485e119382f35ca768ab9bb3a0a457b340cd01543a6ead",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/youre_welcome/snook_barb_ur_welcome_04.mp3",
+      "mp3_sha256": "acacf92a683d27e1dcff95c864d16eb1caf572526006cbe894a2180529d4ffa0",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/youre_welcome/snook_barb_ur_welcome_05.mp3",
+      "mp3_sha256": "c6bc2866b2c02859f0826ca377875d03c83c5cdafbc20b7cf44b104e17651db9",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/youre_welcome/snook_barb_ur_welcome_06.mp3",
+      "mp3_sha256": "73f4ed6bff148042dac2a2a3d2366b2b17624807fe4cbd52132572deeba64ba0",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/youre_welcome/snook_barb_ur_welcome_07.mp3",
+      "mp3_sha256": "f56f740e007c6cf9047aa11a8d6efca639c66eaf8112f06fcc6151521013778d",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/youre_welcome/snook_barb_ur_welcome_08.mp3",
+      "mp3_sha256": "fcd690de083cbdd667deefd9c7c4817195db4c534d994a57444be2bb593b125e",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/personal_messages/youre_welcome/snook_barb_ur_welcome_09.mp3",
+      "mp3_sha256": "a814fd46a964d1fc1e72502946df9c2ead46a22cc33ce9a46338742f20252910",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/all_clear/snook_barb_all_clear_01.mp3",
+      "mp3_sha256": "0850f5546f258a46c10a6e0475f60ea3c215f33930223e42efc5b0d666320ddb",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/all_clear/snook_barb_all_clear_02.mp3",
+      "mp3_sha256": "dc0179eb90de02fceebae8c1ea9f4e2ded58b590b9cd29a3e97f4f663cd56a8d",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/all_clear/snook_barb_all_clear_03.mp3",
+      "mp3_sha256": "e5540c2f45ab12fdac70e9f9001c34583b4be80fdeaef340cfb4dff007086a61",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/all_clear/snook_barb_all_clear_04.mp3",
+      "mp3_sha256": "d9f2f1288225653e13bdc90eb67ce915595282f89710cd5f7ec65a4a392aaf14",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/all_clear/snook_barb_all_clear_05.mp3",
+      "mp3_sha256": "5234b45836c31a43223e14a9c3ede5a3382d3ea771b0ccbb37a0aad834ee06ca",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/all_clear/snook_barb_all_clear_06.mp3",
+      "mp3_sha256": "937a82ffec3848b4c8f9aa2cd5fc42cf54c8360873812c6fd9e87e891b0f9ca1",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/all_clear/snook_barb_all_clear_07.mp3",
+      "mp3_sha256": "59760c5348232dc93d15d34a72c32ed6472e30bef33d301a007b6b36eb86bff5",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/all_clear/snook_barb_all_clear_08.mp3",
+      "mp3_sha256": "e837c477860cdc6a33f70f9a0936148a6fe967eafc1b8e935aeac4bfc44aed47",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/all_clear/snook_barb_all_clear_09.mp3",
+      "mp3_sha256": "d56566505659b377bb52c8739c06bb0ac329e8822e858e7b8f591d8d9b479fa4",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/all_clear/snook_barb_all_clear_10.mp3",
+      "mp3_sha256": "8d004b8478872b166829ed61dd41254bcaa0ed96a9062813ce0d0216f0ce93dc",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/behind_us/behind_us_01.mp3",
+      "mp3_sha256": "3df444d246d887af504d9716201e1651b8fa415bf123f12c24376f60f7ac71ea",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/behind_us/behind_us_02.mp3",
+      "mp3_sha256": "b12c262c50c643ec77474f469ab54d4f4e5e04a07dcd19f9f8171ee5b9b874fe",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/behind_us/behind_us_03.mp3",
+      "mp3_sha256": "4f81a2014b721788ee7907490f2bfbad4675d1aaeff5ba94ebb38aa15aae58b6",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/behind_us/behind_us_04.mp3",
+      "mp3_sha256": "d958b8e10430e8d11f1c105b2cb48d5d349b64cee8fb76cb73dc7cf033e075b0",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/behind_us/snook_barb_behind_us_01.mp3",
+      "mp3_sha256": "5211882060153ecd7e2b5b559af77e4697d9014a704669915a68919c987327e8",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/behind_us/snook_barb_behind_us_02.mp3",
+      "mp3_sha256": "3de530c5c0134aef6067045005fd0ee8c0bb08c75d8ba3fad38705a8661dfbe0",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/behind_us/snook_barb_behind_us_03.mp3",
+      "mp3_sha256": "cbd402ec140371e1bc3e02e6e4d0982191a5fc0fb578d1ce9aabc0a48db1fc6a",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/behind_us/snook_barb_behind_us_04.mp3",
+      "mp3_sha256": "eee4cffdc14b57544b446610f1c400ce5611799e7e0f5a57df2ad12cc4141c90",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/behind_us/snook_barb_behind_us_05.mp3",
+      "mp3_sha256": "d5583792364db054d114dee40b4a91d541820a566ddc15bd4c09b9401bb2f410",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/behind_us/snook_barb_behind_us_06.mp3",
+      "mp3_sha256": "f96f647998a7e40ee97fddaaa0a3f0b3c4b4f793b8cd78d930b6a239eaba6d7a",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/behind_us/snook_barb_behind_us_07.mp3",
+      "mp3_sha256": "593c86ca30ec51ecfeca270b91bc8b5765a4b83a0a9f6c51c5f8ab9ea12a39f4",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/behind_us/snook_barb_behind_us_08.mp3",
+      "mp3_sha256": "a93c2e7736139c67b8a4bac28eb8e0a0ec8b93d3bc04eff14f04bde653fc9763",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/behind_us/snook_barb_behind_us_09.mp3",
+      "mp3_sha256": "c38304fcbb9abbb308fd22a423d1fb828dc273e8f32de74f15bc6a1bc3581aa3",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/defend_me/new_defend_me_01.mp3",
+      "mp3_sha256": "c658af38b8a8988fd35f886f022ebc43122b7b6cfbaa7cee40b3c59e96a77e0b",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/defend_me/new_defend_me_02.mp3",
+      "mp3_sha256": "dc78c49e3581b18e72d42a23467b667c17f6f4e9c1c5c808d6e217841df08ee9",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/defend_me/new_defend_me_03.mp3",
+      "mp3_sha256": "e7f66fc7fb9c534116a2b33d542bcac79a19c2a1c6365495dd6c508a7aa2c0ec",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/defend_me/snook_barb_defend_me_01.mp3",
+      "mp3_sha256": "2f5c2b6e6c04c3876940d5f68c3c60ad8dbfa10778c29260f335f926dcd5dfd7",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/defend_me/snook_barb_defend_me_02.mp3",
+      "mp3_sha256": "771b322dcf9f0577dc2f08f9a355e15d26208f05ae3440daefcbcbb69a7a159b",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/defend_me/snook_barb_defend_me_03.mp3",
+      "mp3_sha256": "ccc72d24a3efd68db57d5b96efa2811b2a23cb36f46adb353f79f5222e1a3c8c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/defend_me/snook_barb_defend_me_04.mp3",
+      "mp3_sha256": "2f8f2c157d23828099bb3cc2221e814eaa846afd5e111387d32b073a30644376",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/defend_me/snook_barb_defend_me_05.mp3",
+      "mp3_sha256": "2f9c9edce3b78278fc9f4dfa8f0ef9bb80db75d7eea9c7388908ee56204ca536",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/defend_me/snook_barb_defend_me_06.mp3",
+      "mp3_sha256": "5a1c52079815abe2c377c0e0db22a6ce44e22a81f1ccb4296c7115b6bc58bf6c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/defend_me/snook_barb_defend_me_07.mp3",
+      "mp3_sha256": "de633e7e8e9fb85e59ce1b96e76a1e84682e68b1c2da5a425f775bf4bcefd7b1",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/defend_me/snook_barb_defend_me_08.mp3",
+      "mp3_sha256": "56560bc0c37903c112022706d8fd154cd9bffb63e5d04f28828e4f8e04dbde84",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/defend_me/watch_my_back_02.mp3",
+      "mp3_sha256": "eb1a096b4239c44c7edfd79b86e39353969b11edfc8358bf1f0f9647801af284",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/defend_me/watch_my_back_03.mp3",
+      "mp3_sha256": "970a90b3b237bbd43b0a4d717992ee8c596068d2392f49a40f317e41948a6408",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/follow_me/snook_barb_follow_me_01.mp3",
+      "mp3_sha256": "c96ad1e84f6a5dc2179ecc1c628ee89e3e9d39653b67d1fdb70e6201fdcd5def",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/follow_me/snook_barb_follow_me_02.mp3",
+      "mp3_sha256": "2fd3fdfa79320e9a9b6c0bb6929489a80bb8330c22a10b6adf1ee80bcc0d07df",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/follow_me/snook_barb_follow_me_03.mp3",
+      "mp3_sha256": "9625153377faf41a03c8d82d609f56fc4a6e1616ae0932f7a1fa7a416a6e98eb",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/follow_me/snook_barb_follow_me_04.mp3",
+      "mp3_sha256": "5d4dd905ef4710015345512f725731d360104feef0377e9591b1fc6f60b43299",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/follow_me/snook_barb_follow_me_05.mp3",
+      "mp3_sha256": "6d02161091ded444669d68ca63e264462cafba2024d1f8678edf7854c9d4308a",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/follow_me/snook_barb_follow_me_06.mp3",
+      "mp3_sha256": "306b5d580b62b99556ee09b24bc9bdea718de5f913c4cbd9722654007a05aa74",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/follow_me/snook_barb_follow_me_07.mp3",
+      "mp3_sha256": "b599c7f45087df43a2310c576aa90ebb96efcd3729b65113e268130293778de9",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/follow_me/snook_barb_follow_me_08.mp3",
+      "mp3_sha256": "aed855af37ddaa6eba2688e73eab8e33ee02767caf3187bb88f3e5903779079e",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/forward/snook_barb_forward_01.mp3",
+      "mp3_sha256": "e3348c0da979afe95717862c148881278c342faeed6f3c971359da4d60910ec0",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/forward/snook_barb_forward_02.mp3",
+      "mp3_sha256": "daa4f6fab8d6c955e137a65b7daa3e5a528b617ab3ec8fbb9a7be5ee1010a0ca",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/forward/snook_barb_forward_03.mp3",
+      "mp3_sha256": "237befb2f80f15da8bf888691bed0bfbc03eb7e56f2d59ede85ee6a650b126bf",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/forward/snook_barb_forward_04.mp3",
+      "mp3_sha256": "80dc6403047d39c9a7320003c1554347546dfce8cf0e2fcefb6df3a1593d437a",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/forward/snook_barb_forward_05.mp3",
+      "mp3_sha256": "c9e0e55966c899bcd71b1c1145828707e5b045864cc7b32585f613b0293ce77e",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/forward/snook_barb_forward_06.mp3",
+      "mp3_sha256": "5c514ab6b88f6a2e9b60ad6a574467878f5b0b92e1a62d790a45f788c6d1a95a",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/forward/snook_barb_forward_07.mp3",
+      "mp3_sha256": "20400428fe27a5592a02161cbc39183d7bf3e18d8660ba0e0405f3ad29007f61",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/forward/snook_barb_forward_08.mp3",
+      "mp3_sha256": "8c5d786ee3e3232c5ac89d1a8d5e126d49da858b0556683cbe91894bc329618b",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/forward/snook_barb_forward_09.mp3",
+      "mp3_sha256": "6be104718065c36fbd85c47d5977999955a8ee544428572faa09eca8d9a5861f",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/go_for_the_objective/snook_barb_objvo_01.mp3",
+      "mp3_sha256": "5d3d365f96b30bf57ae91c006690fff2a97a5f93a7c6171dafd5ebb7c63cea08",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/go_for_the_objective/snook_barb_objvo_02.mp3",
+      "mp3_sha256": "5482acacda97e55a7aeabb65a7f6d78e2976377a82dce14c0d589d511ed7077c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/go_for_the_objective/snook_barb_objvo_03.mp3",
+      "mp3_sha256": "c8526be379e7b54938b6df2cd171fd5f067a5cd72484950f484504c7cc6ec333",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/go_for_the_objective/snook_barb_objvo_04.mp3",
+      "mp3_sha256": "0b4c98518b5dbb1fbec172c554986cee7b89f2cb4bc36b8db3a5ca88f8c6f651",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/go_for_the_objective/snook_barb_objvo_05.mp3",
+      "mp3_sha256": "4ddd1a8ca220bf0af4a9129ef00dca0e5cef051682ae836bc3f03d40d07169b0",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/go_for_the_objective/snook_barb_objvo_06.mp3",
+      "mp3_sha256": "5c45ab64e3194d0574ce628a40b85e964d48c4806c89bd09018ed7f83f9480a3",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/go_for_the_objective/snook_barb_objvo_07.mp3",
+      "mp3_sha256": "ac63380cfac027f4038eeaa96618208ed31bb60ca25ddedf68bbe4356cf924d4",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/go_for_the_objective/snook_barb_objvo_08.mp3",
+      "mp3_sha256": "3d11970313ed0e6da90bea6decea124a5bd7bf2cf6f0cea1e2f99f46ecec1406",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/hold_your_ground/snook_barb_hold_ground_01.mp3",
+      "mp3_sha256": "d6b6b594ff7142e61d5f04a4d501842ac5f1ed0cc6d1d5b71473b5470ccbd87d",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/hold_your_ground/snook_barb_hold_ground_02.mp3",
+      "mp3_sha256": "e6ec36ca71824bc04382eeb6ea1c03bd117203d433b92f07f4135a7b6f2a91e0",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/hold_your_ground/snook_barb_hold_ground_03.mp3",
+      "mp3_sha256": "79df2125c82b749165a140559d98971e2d2234ab4a0731a33c86e100757c412c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/hold_your_ground/snook_barb_hold_ground_04.mp3",
+      "mp3_sha256": "41cd49f7840fd6429d424c1783d2545d43d9f84720260757bf361c80b5888c87",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/hold_your_ground/snook_barb_hold_ground_05.mp3",
+      "mp3_sha256": "376df861f588574338bec23f241cf3de5be46dd2d39fa158201a6d32f2e125ef",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/hold_your_ground/snook_barb_hold_ground_06.mp3",
+      "mp3_sha256": "9e51ba652700169b0d8b1701c4a92e66119a448e53c5f25d04c4d5ef47fc21f2",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/hold_your_ground/snook_barb_hold_ground_07.mp3",
+      "mp3_sha256": "3fcd9889fd5cbd21efaa62666f881ef3febfe2274ccd3d88b2ec65086826c037",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/hold_your_ground/snook_barb_hold_ground_08.mp3",
+      "mp3_sha256": "366036c9c62c95ad36c8084d2a03156a650d1a1c93120876c64bd108c83af0ad",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/hold_your_ground/snook_barb_hold_ground_09.mp3",
+      "mp3_sha256": "a2b4178bc5586bb341792fe96f24e0339268e2fff14c344e91fd1ae6038f192c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/incoming/snook_barb_incoming_01.mp3",
+      "mp3_sha256": "902fc7adef87afb5b5d3d51d2b651326341d360d6edc3b3fb29754dc67ba77a9",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/incoming/snook_barb_incoming_02.mp3",
+      "mp3_sha256": "33ff61fc854d1781c4a80b78f85da05784568fcc15832711bbbb600f7b187d15",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/incoming/snook_barb_incoming_03.mp3",
+      "mp3_sha256": "7f9c5d054ab5254599b8321318840ef614989d26415c9cb97344462c3368a2af",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/incoming/snook_barb_incoming_04.mp3",
+      "mp3_sha256": "12f5d8112c3668e1016f07c15296e8f8c128d7b518d70186489a09aa45ac327d",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/incoming/snook_barb_incoming_05.mp3",
+      "mp3_sha256": "660ff40a526be79ac6bc7684fce0042839228c581c0fd899417bcfd106e4db50",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/incoming/snook_barb_incoming_06.mp3",
+      "mp3_sha256": "64392a63ccb962311ff7b6ea7c2292f56692c36eddbe6478bcd1ed6f4cedde67",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/incoming/snook_barb_incoming_07.mp3",
+      "mp3_sha256": "cc1326712eff4bffb7d3cab3c5ddd383ddd497614d73af338b2b15ddb68c386c",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/incoming/snook_barb_incoming_08.mp3",
+      "mp3_sha256": "0fd29093900d8a6460bbd114d166dd71020b4f7acd79c3ebde6efcd4410e49cc",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/kill_archers/snook_barb_kill_archers_01.mp3",
+      "mp3_sha256": "8aac0c810604c8fc92eebbc62386aa46051231aa25dae7e281a093fa0598dac2",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/kill_archers/snook_barb_kill_archers_02.mp3",
+      "mp3_sha256": "39e729fd4744f3a83bc1ab3c49c2d4f04362b363942409e3c2876ea5655bc6b7",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/kill_archers/snook_barb_kill_archers_03.mp3",
+      "mp3_sha256": "328fd725f99c1e352ba13d3a0292364ebb1adb9349c4a2ca488169a2c29f123e",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/kill_archers/snook_barb_kill_archers_04.mp3",
+      "mp3_sha256": "1d84eccbfe198428d990f689902c2354d523b9413dace4b4d914f5bd5942d942",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/kill_archers/snook_barb_kill_archers_05.mp3",
+      "mp3_sha256": "7d3a15ff7d584880747885690cc70cb297944f52ebe2a146bb1de965dedc1c64",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/kill_archers/snook_barb_kill_archers_06.mp3",
+      "mp3_sha256": "2f65f7440bc489022f6ddfa29d791f48e3bb2c8156a5882cbc33b5b3348a1a25",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/kill_archers/snook_barb_kill_archers_07.mp3",
+      "mp3_sha256": "b7ac2beb0aafd7a1f4ffefa62029fa39b9292e2cb908d24580c66af4f33c7d9a",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/kill_archers/snook_barb_kill_archers_08.mp3",
+      "mp3_sha256": "6b10f725d360ca7b51f4aef4edebd869321fc95627ca2882e54d6ce5ee6f4ae9",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/kill_archers/snook_barb_kill_archers_09.mp3",
+      "mp3_sha256": "0676f57059ec3b2a39f1f4e24d888beba7a771be07d37a9a184038caf3d75253",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/retreat/snook_barb_retreat_01.mp3",
+      "mp3_sha256": "d2124dc3ee1ae6745448160a496d6b1e180415e5708999cdee4483d0f6abd2cd",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/retreat/snook_barb_retreat_02.mp3",
+      "mp3_sha256": "c5697408a7f6ca408fe0b4e40334ab85d8c405eb79761d83fab257a85344e24d",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/retreat/snook_barb_retreat_03.mp3",
+      "mp3_sha256": "5df36c5586d5470236a2b613ac0d8e7c1e06d8d9a5e7323368043e5c92104ed7",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/retreat/snook_barb_retreat_04.mp3",
+      "mp3_sha256": "58076e6f6d47268b64572525f29b1576e62747fe3241a6de8f4bb584bc2bea33",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/retreat/snook_barb_retreat_05.mp3",
+      "mp3_sha256": "e89a5c82ee89725f7ee879da7f2dff6628e2d4b30a9628ded1e91177e50fcc88",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/retreat/snook_barb_retreat_06.mp3",
+      "mp3_sha256": "d344447d76065f5dbdb638f340bb2c671fa02d919138da2c6bb07752e2a9ee91",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/retreat/snook_barb_retreat_07.mp3",
+      "mp3_sha256": "4ab74f7de9eaa574379afec18f797fcc8b409afd83272d7ae772ae04e45a7dde",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/retreat/snook_barb_retreat_08.mp3",
+      "mp3_sha256": "3085428b932be50d03bbf0821fdad70e31fab4154212ef42870296a609a9efb0",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/knight/tactical_messages/retreat/snook_barb_retreat_09.mp3",
+      "mp3_sha256": "c05e90aa4c6eab52caa8d199c80ca7add6a95167b11bfc74f687f4a6ad90c62f",
+      "audit_status": "possibly_unused_unreferenced_cue"
+    },
+    {
+      "file": "audio/masons/man_at_arms/other/ryan_follow_me_01.mp3",
+      "mp3_sha256": "3935aaefdccb4e8efcbbe2c9bd7bd4e2e27b86324b27035474a28bf1990cc663",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/masons/man_at_arms/other/ryan_follow_me_03.mp3",
+      "mp3_sha256": "2e5f0f7ca9eec93e3abb968405fbf52023c9871df0f6f42c64f00d03d453779d",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/masons/man_at_arms/other/ryan_follow_me_05.mp3",
+      "mp3_sha256": "eb8e58350e1df73a721903e296ed1b7a79ca684a5d1aad112319cedc7ddd3872",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/masons/vanguard/other/bob_charge_atk_01.mp3",
+      "mp3_sha256": "9ddb907663d1a3f410a59594ee53edd609f6ff152e88a32b619c3c407206c203",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/masons/vanguard/other/bob_charge_atk_02.mp3",
+      "mp3_sha256": "e87d8c7b6981c69122441a2dadd82ce4a789e53f47364216efde4cc7404ca9ed",
+      "audit_status": "likely_unused_no_cue"
+    },
+    {
+      "file": "audio/masons/vanguard/other/bob_thanks_09.mp3",
+      "mp3_sha256": "f4fe41266f9cc9301e4f89f9a4e1c59f7ed0756194760a21ce49fba86e07b2cc",
+      "audit_status": "likely_unused_no_cue"
+    }
+  ]
+}
