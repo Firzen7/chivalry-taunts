@@ -2,7 +2,7 @@
 
 Open **[index.html](website/index.html)** for the Chivalry-style faction → class → voice-command interface, or **[full-list.html](website/full-list.html)** for the full collection table.
 
-Open either page directly in a browser. The collection works offline, directly from disk, without a server. All deployable files are inside `website/`; keep its structure intact.
+Open either page directly in a browser. The collection works offline, directly from disk, without a server. The soundboard checks that recordings are available before offering variants, including when opened directly from disk. Availability results are cached until the page is reloaded. All deployable files are inside `website/`; keep its structure intact.
 
 Browse by faction, playable class, original asset name, **message group**, or **voice command**. Select **Personal Messages**, **Tactical Messages**, or **Other**. The command dropdown narrows to the selected group and follows the in-game menu order, including “Go for the Objective.” Switching groups clears an incompatible command selection. Each row has a Play button and MP3 download link. A shared player provides pause, seeking, and volume controls. Results are shown 50 at a time.
 

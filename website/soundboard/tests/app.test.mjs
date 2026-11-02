@@ -11,8 +11,12 @@ const read = path => readFileSync(resolve(root, path), 'utf8');
 function app(hash = '', storage = new Map(), features = {}) {
   const { window } = parseHTML(read('index.html'));
   const { document, Event } = window;
-  const location = { hash, pathname: '/index.html', search: '' };
-  const metrics = {measurements: 0, barHeight: 60, observedResize: null};
+  const location = { hash, pathname: '/index.html', search: '', protocol: features.request ? 'https:' : 'file:' };
+  const metrics = {measurements: 0, barHeight: 60, observedResize: null, requests: [], localProbes: []};
+  const fetch = (file, options) => {
+    metrics.requests.push({file, options});
+    return features.request(file, options);
+  };
   document.querySelector('.sound-controls').getBoundingClientRect = () => {
     metrics.measurements++;
     return {height: metrics.barHeight};
@@ -38,10 +42,22 @@ function app(hash = '', storage = new Map(), features = {}) {
     Object.assign(audio, { paused: true, currentTime: 0, duration: NaN, volume: 0.8, muted: false });
     Object.defineProperty(audio, 'src', {get: () => audio.getAttribute('src') || '', set: value => audio.setAttribute('src', value)});
     audio.pause = () => { audio.paused = true; audio.dispatchEvent(new Event('pause')); };
-    audio.load = () => { audio.released = true; audio.currentTime = 0; audio.duration = NaN; };
+    audio.load = () => {
+      if (audio.src && audio.preload === 'metadata') {
+        const file = audio.src;
+        metrics.localProbes.push(audio);
+        Promise.resolve().then(() => {
+          const exists = features.localFiles ? features.localFiles(file) : true;
+          audio.dispatchEvent(new Event(exists ? 'loadedmetadata' : 'error'));
+        });
+      } else {
+        audio.released = true; audio.currentTime = 0; audio.duration = NaN;
+      }
+    };
     audio.finish = () => { audio.paused = true; audio.dispatchEvent(new Event('ended')); };
     const playing = () => { audio.paused = false; audio.dispatchEvent(new Event('playing')); };
     audio.play = () => {
+      if (!recordings.includes(audio)) recordings.push(audio);
       if (mediaOptions.rejectNext) { mediaOptions.rejectNext = false; return Promise.reject(new Error('Media unavailable')); }
       if (mediaOptions.deferNext) {
         mediaOptions.deferNext = false;
@@ -53,12 +69,12 @@ function app(hash = '', storage = new Map(), features = {}) {
       playing();
       return Promise.resolve();
     };
-    recordings.push(audio);
     return audio;
   }
-  const context = vm.createContext({ window, document, location, Audio: MockAudio, ResizeObserver, history: { replaceState(_, __, url) { location.hash = url.includes('#') ? '#' + url.split('#')[1] : ''; } }, localStorage: {getItem: key => storage.get(key) ?? null, setItem: (key, value) => storage.set(key, value)}, console });
+  const context = vm.createContext({ window, document, location, fetch, AbortController, setTimeout, clearTimeout, Audio: MockAudio, ResizeObserver, history: { replaceState(_, __, url) { location.hash = url.includes('#') ? '#' + url.split('#')[1] : ''; } }, localStorage: {getItem: key => storage.get(key) ?? null, setItem: (key, value) => storage.set(key, value)}, console });
   vm.runInContext(read('soundboard/catalog.js'), context);
   vm.runInContext(read('soundboard/playback.js'), context);
+  vm.runInContext(read('soundboard/availability.js'), context);
   vm.runInContext(read('soundboard/app.js'), context);
   return {
     window, document, dialog, recordings, mediaOptions, metrics,
@@ -100,7 +116,10 @@ test('both factions and all four classes have 20 commands plus a battle cry; sha
   for (const voices of Object.values(a.window.CHIVALRY_CATALOG)) for (const groups of Object.values(voices)) {
     for (const commands of Object.values(groups)) for (const command of commands) {
       assert.ok(command.clips.length);
-      for (const clip of command.clips) assert.ok(existsSync(resolve(root, clip.file)), clip.file);
+      for (const clip of command.clips) {
+        assert.ok(clip.file.startsWith('audio/'), clip.file);
+        assert.ok(!clip.file.split('/').includes('..'), clip.file);
+      }
     }
   }
 });
@@ -161,7 +180,7 @@ test('repeated and different commands overlap; volume and mute affect every acti
 test('three-dot picker plays exact versions, restores focus, and also supports battle cry', async () => {
   const a = app('#masons/knight');
   const trigger = '[data-action="versions"][data-id="personal-8"]';
-  a.click(trigger); assert.equal(a.dialog.open, true);
+  a.click(trigger); await tick(); assert.equal(a.dialog.open, true);
   assert.equal(a.document.querySelector('#versions-title').textContent, 'Laugh');
   const command = a.window.CHIVALRY_CATALOG.masons.knight.personal[8];
   assert.equal(a.document.querySelectorAll('.version-option').length, command.clips.length + 1);
@@ -171,7 +190,7 @@ test('three-dot picker plays exact versions, restores focus, and also supports b
   a.click('[data-action="close-versions"]');
   assert.equal(a.dialog.open, false);
   assert.equal(a.focused, a.document.querySelector(trigger));
-  a.click('[data-action="versions"][data-id="battlecry-0"]');
+  a.click('[data-action="versions"][data-id="battlecry-0"]'); await tick();
   assert.equal(a.document.querySelector('#versions-title').textContent, 'Battle cry');
   a.click('[data-version="0"]'); await tick();
   assert.equal(a.audio.src, a.window.CHIVALRY_CATALOG.masons.knight.battlecry[0].clips[0].file);
@@ -180,7 +199,7 @@ test('three-dot picker plays exact versions, restores focus, and also supports b
 test('navigation and stop clean up audio; invalid routes recover safely; menu keyboard dismissal works', async () => {
   const a = app('#agatha/archer');
   a.click('[data-action="random"]'); await tick();
-  a.click('[data-action="versions"]'); assert.equal(a.dialog.open, true);
+  a.click('[data-action="versions"]'); await tick(); assert.equal(a.dialog.open, true);
   a.dialog.dispatchEvent(new a.window.Event('cancel', { cancelable: true })); assert.equal(a.dialog.open, false);
   a.route('#masons'); assert.equal(a.audio.paused, true); assert.equal(a.document.querySelector('.sound-controls').hidden, true);
   assert.equal(a.document.querySelectorAll('.class-card').length, 4);
@@ -205,7 +224,7 @@ test('failed playback clears only its own state and allows playing again', async
 test('custom versions survive reload, label their command, and stay scoped to the character', async () => {
   const storage = new Map();
   const a = app('#agatha/vanguard', storage);
-  a.click('[data-action="versions"][data-id="personal-4"]');
+  a.click('[data-action="versions"][data-id="personal-4"]'); await tick();
   a.click('[data-action="pick"][data-version="2"]'); await tick();
   const row = a.document.querySelector('[data-command="personal-4"]');
   assert.equal(row.querySelector('.version-label').hidden, false);
@@ -219,7 +238,7 @@ test('custom versions survive reload, label their command, and stay scoped to th
   assert.match(savedRow.querySelector('.command-play').getAttribute('aria-label'), /Thanks, Version 3/);
   reloaded.click(savedRow.querySelector('.command-play')); await tick();
   assert.equal(reloaded.audio.src, file);
-  reloaded.click('[data-action="versions"][data-id="personal-4"]');
+  reloaded.click('[data-action="versions"][data-id="personal-4"]'); await tick();
   assert.equal(reloaded.document.querySelector('[data-version="2"]').getAttribute('aria-current'), 'true');
   reloaded.route('#masons/vanguard');
   assert.equal(reloaded.document.querySelector('[data-command="personal-4"] .version-label').hidden, true);
@@ -232,16 +251,16 @@ test('custom versions survive reload, label their command, and stay scoped to th
 test('Random version clears the saved preference, badge, and pinned playback after reload', async () => {
   const storage = new Map();
   const a = app('#masons/knight', storage);
-  a.click('[data-action="versions"][data-id="battlecry-0"]');
+  a.click('[data-action="versions"][data-id="battlecry-0"]'); await tick();
   a.click('[data-action="pick"][data-version="1"]'); await tick();
   assert.equal(a.document.querySelector('.battlecry .version-label').textContent, 'Version 2');
-  a.click('[data-action="versions"][data-id="battlecry-0"]');
+  a.click('[data-action="versions"][data-id="battlecry-0"]'); await tick();
   a.click('[data-version="random"]'); await tick();
   assert.equal(a.document.querySelector('.battlecry .version-label').hidden, true);
   assert.deepEqual(JSON.parse(storage.get('chivalry-command-versions')), {});
   const reloaded = app('#masons/knight', storage);
   assert.equal(reloaded.document.querySelector('.battlecry .version-label').hidden, true);
-  reloaded.click('[data-action="versions"][data-id="battlecry-0"]');
+  reloaded.click('[data-action="versions"][data-id="battlecry-0"]'); await tick();
   assert.equal(reloaded.document.querySelector('[data-version="random"]').getAttribute('aria-current'), 'true');
 });
 
@@ -254,7 +273,7 @@ test('malformed, obsolete or blocked storage falls back safely; session choices 
   }
   const denied = {get() { throw new Error('Storage disabled'); }, set() { throw new Error('Storage disabled'); }};
   const a = app('#agatha/vanguard', denied);
-  a.click('[data-action="versions"][data-id="personal-4"]');
+  a.click('[data-action="versions"][data-id="personal-4"]'); await tick();
   a.click('[data-version="2"]'); await tick();
   assert.equal(a.document.querySelector('[data-command="personal-4"] .version-label').textContent, 'Version 3');
   const file = a.audio.src;
@@ -289,7 +308,7 @@ test('temporary random feedback tracks remaining voices and disappears when the 
 test('saved badges survive completion and selecting Random replaces the earlier preview', async () => {
   const a = app('#agatha/vanguard');
   const row = a.document.querySelector('[data-command="personal-4"]');
-  a.click('[data-action="versions"][data-id="personal-4"]');
+  a.click('[data-action="versions"][data-id="personal-4"]'); await tick();
   a.click('[data-version="2"]'); await tick();
   const chosen = a.audio;
   chosen.finish();
@@ -298,7 +317,7 @@ test('saved badges survive completion and selecting Random replaces the earlier 
   assert.equal(row.querySelector('.playback-feedback').hidden, true);
   a.click('[data-action="random"][data-id="personal-4"]'); await tick();
   const pinned = a.audio;
-  a.click('[data-action="versions"][data-id="personal-4"]');
+  a.click('[data-action="versions"][data-id="personal-4"]'); await tick();
   a.click('[data-version="random"]'); await tick();
   assert.equal(row.querySelector('.version-label').hidden, true);
   assert.equal(pinned.paused, true);
@@ -308,7 +327,7 @@ test('saved badges survive completion and selecting Random replaces the earlier 
 
 test('variant auditions keep the dialog structure stable with only an inline equalizer', async () => {
   const a = app('#agatha/vanguard');
-  a.click('[data-action="versions"][data-id="personal-8"]');
+  a.click('[data-action="versions"][data-id="personal-8"]'); await tick();
   const option = a.document.querySelector('[data-version="0"]');
   const rowCount = a.document.querySelectorAll('.version-option').length;
   const childCount = a.dialog.querySelectorAll('*').length;
@@ -333,7 +352,7 @@ test('variant auditions keep the dialog structure stable with only an inline equ
 test('pending playback, errors and late events cannot revive stopped voices or disturb other commands', async () => {
   const a = app('#agatha/vanguard');
   a.mediaOptions.deferNext = true;
-  a.click('[data-action="random"][data-id="personal-8"]');
+  a.click('[data-action="random"][data-id="personal-8"]'); await tick();
   const pending = a.audio;
   const row = a.document.querySelector('[data-command="personal-8"]');
   assert.match(row.querySelector('.playback-status').textContent, /Loading Version/);
@@ -355,7 +374,7 @@ test('pending playback, errors and late events cannot revive stopped voices or d
 
 test('picker stays open while variant previews replace each other, including repeated selections', async () => {
   const a = app('#agatha/vanguard');
-  a.click('[data-action="versions"][data-id="personal-8"]');
+  a.click('[data-action="versions"][data-id="personal-8"]'); await tick();
   const first = a.document.querySelector('[data-version="0"]');
   const second = a.document.querySelector('[data-version="1"]');
   assert.equal(first.querySelector('.equalizer').hidden, true);
@@ -391,7 +410,7 @@ test('picker stays open while variant previews replace each other, including rep
 test('dashboard stays usable with picker open, background is inert, and outside click restores focus', async () => {
   const a = app('#masons/knight');
   const trigger = '[data-action="versions"][data-id="battlecry-0"]';
-  a.click(trigger);
+  a.click(trigger); await tick();
   assert.equal(a.dialog.getAttribute('aria-modal'), 'false');
   assert.equal(a.document.querySelector('#picker-shade').hidden, false);
   assert.equal(a.document.querySelector('main').hasAttribute('inert'), true);
@@ -411,7 +430,7 @@ test('dashboard stays usable with picker open, background is inert, and outside 
 
 test('keyboard focus cycles through both the picker and dashboard; Escape closes without stopping voices', async () => {
   const a = app('#agatha/vanguard');
-  a.click('[data-action="versions"][data-id="personal-8"]');
+  a.click('[data-action="versions"][data-id="personal-8"]'); await tick();
   a.click('[data-version="0"]'); await tick();
   const tab = shift => {
     const event = new a.window.Event('keydown', {bubbles: true, cancelable: true});
@@ -433,7 +452,7 @@ test('keyboard focus cycles through both the picker and dashboard; Escape closes
 
 test('loading and failed variant auditions update feedback without dismissing the picker', async () => {
   const a = app('#agatha/vanguard');
-  a.click('[data-action="versions"][data-id="personal-8"]');
+  a.click('[data-action="versions"][data-id="personal-8"]'); await tick();
   a.mediaOptions.deferNext = true;
   a.click('[data-version="0"]');
   const option = a.document.querySelector('[data-version="0"]');
@@ -449,11 +468,11 @@ test('loading and failed variant auditions update feedback without dismissing th
 });
 
 
-test('viewport-height changes avoid layout measurements; only changed toolbar height updates clearance', () => {
+test('viewport-height changes avoid layout measurements; only changed toolbar height updates clearance', async () => {
   const a = app('#agatha/vanguard', new Map(), {resizeObserver: true});
   for (let i = 0; i < 10; i++) a.window.dispatchEvent(new a.window.Event('resize'));
   assert.equal(a.metrics.measurements, 0);
-  a.click('[data-action="versions"][data-id="personal-8"]');
+  a.click('[data-action="versions"][data-id="personal-8"]'); await tick();
   assert.equal(a.metrics.measurements, 1);
   const clearance = a.document.documentElement.style.getPropertyValue('--controls-clearance');
   a.metrics.observedResize();
@@ -470,7 +489,7 @@ test('picker previews stop existing mixed voices and pending previews; main butt
   a.click('[data-action="random"][data-id="personal-0"]');
   a.click('[data-action="random"][data-id="personal-8"]'); await tick();
   const mixed = [...a.recordings];
-  a.click('[data-action="versions"][data-id="personal-4"]');
+  a.click('[data-action="versions"][data-id="personal-4"]'); await tick();
   a.mediaOptions.deferNext = true;
   a.click('[data-version="0"]');
   const pending = a.audio;
@@ -530,10 +549,137 @@ test('Agatha Knight objective picker exposes and plays all 91 objective recordin
   const a = app('#agatha/knight');
   const command = a.window.CHIVALRY_CATALOG.agatha.knight.tactical[4];
   assert.equal(command.clips.length, 91);
-  a.click('[data-action="versions"][data-id="tactical-4"]');
+  a.click('[data-action="versions"][data-id="tactical-4"]'); await tick();
   assert.equal(a.document.querySelectorAll('.version-option').length, 92);
   a.click('[data-version="90"]'); await tick();
   assert.equal(a.audio.src, command.clips[90].file);
   assert.equal(a.dialog.open, true);
   assert.equal(a.document.querySelector('[data-command="tactical-4"] .version-label').textContent, 'Version 91');
+});
+
+const audioResponse = (status = 200, type = 'audio/mpeg') => new Response(null, {status, headers: {'Content-Type': type}});
+
+test('HTTP picker intersects existing audio with the catalog, preserves version numbers, and caches checks', async () => {
+  const missing = new Set();
+  const a = app('#agatha/vanguard', new Map(), {request: async file => audioResponse(missing.has(file) ? 404 : 200)});
+  const command = a.window.CHIVALRY_CATALOG.agatha.vanguard.personal[8];
+  missing.add(command.clips[0].file);
+  missing.add(command.clips[2].file);
+  a.click('[data-action="versions"][data-id="personal-8"]');
+  assert.equal(a.dialog.open, true);
+  assert.equal(a.document.querySelectorAll('.version-option').length, 0, 'No unverified variants shown while loading');
+  await tick();
+  assert.equal(a.document.querySelectorAll('.version-option').length, command.clips.length - 2 + 1);
+  assert.equal(a.document.querySelector('[data-version="0"]'), null);
+  assert.equal(a.document.querySelector('[data-version="2"]'), null);
+  assert.match(a.document.querySelector('[data-version="1"]').textContent, /Version 2/);
+  a.click('[data-version="1"]'); await tick();
+  assert.equal(a.audio.src, command.clips[1].file);
+  for (let i = 0; i < 12; i++) {
+    a.click('[data-version="random"]'); await tick();
+    assert.ok(!missing.has(a.audio.src));
+  }
+  a.click('[data-action="close-versions"]');
+  a.click('[data-action="versions"][data-id="personal-8"]');
+  assert.equal(a.metrics.requests.length, command.clips.length);
+  assert.ok(a.metrics.requests.every(({file, options}) => command.clips.some(clip => clip.file === file) && options.method === 'HEAD' && options.cache === 'no-store'));
+});
+
+test('main playback checks availability and falls back from a missing saved take without deleting the preference', async () => {
+  const command = app().window.CHIVALRY_CATALOG.agatha.vanguard.personal[8];
+  const preferred = command.clips[0].file;
+  const storage = new Map([['chivalry-command-versions', JSON.stringify({'agatha/vanguard/personal-8': preferred})]]);
+  const a = app('#agatha/vanguard', storage, {request: async file => audioResponse(file === preferred ? 404 : 200)});
+  a.click('[data-action="random"][data-id="personal-8"]'); await tick();
+  assert.ok(command.clips.some(clip => clip.file === a.audio.src));
+  assert.notEqual(a.audio.src, preferred);
+  assert.equal(a.document.querySelector('[data-command="personal-8"] .version-label').hidden, true);
+  assert.equal(JSON.parse(storage.get('chivalry-command-versions'))['agatha/vanguard/personal-8'], preferred);
+});
+
+test('missing files and HTML fallback pages produce an empty picker with no playback option', async () => {
+  let count = 0;
+  const a = app('#agatha/vanguard', new Map(), {request: async () => ++count % 2 ? audioResponse(404) : audioResponse(200, 'text/html')});
+  a.click('[data-action="versions"][data-id="personal-8"]'); await tick();
+  assert.equal(a.document.querySelectorAll('.version-option').length, 0);
+  assert.match(a.document.querySelector('#version-list').textContent, /No recordings are available/);
+  assert.equal(a.document.querySelector('[data-action="random"][data-id="personal-8"]').disabled, true);
+  assert.equal(a.recordings.length, 0);
+});
+
+test('availability errors are retryable and hosts without HEAD support use a cancelled ranged GET', async () => {
+  let fail = true;
+  let cancelled = 0;
+  const a = app('#agatha/vanguard', new Map(), {request: async (_, options) => {
+    if (fail) return audioResponse(503);
+    if (options.method === 'HEAD') return audioResponse(405);
+    assert.equal(options.headers.Range, 'bytes=0-0');
+    return {ok: true, status: 206, headers: new Headers({'Content-Type': 'audio/mpeg'}), body: {cancel: async () => cancelled++}};
+  }});
+  a.click('[data-action="versions"][data-id="personal-8"]'); await tick();
+  assert.match(a.document.querySelector('#version-list').textContent, /Unable to check/);
+  assert.equal(a.recordings.length, 0);
+  fail = false;
+  a.click('[data-action="retry-versions"]'); await tick();
+  const command = a.window.CHIVALRY_CATALOG.agatha.vanguard.personal[8];
+  assert.equal(cancelled, command.clips.length);
+  assert.equal(a.document.querySelectorAll('.version-option').length, command.clips.length + 1);
+});
+
+test('availability requests are bounded and late results cannot reopen a picker or play after Stop all/navigation', async () => {
+  const waiting = [];
+  let active = 0, maximum = 0;
+  const a = app('#agatha/knight', new Map(), {request: () => new Promise(resolve => {
+    active++;
+    maximum = Math.max(maximum, active);
+    waiting.push(() => { active--; resolve(audioResponse()); });
+  })});
+  a.click('[data-action="versions"][data-id="tactical-4"]');
+  a.click('[data-action="close-versions"]');
+  a.click('[data-action="random"][data-id="tactical-4"]');
+  assert.equal(a.document.querySelector('[data-action="stop-all"]').disabled, false);
+  assert.match(a.document.querySelector('#active-count').textContent, /checking/);
+  a.click('[data-action="stop-all"]');
+  a.route('#masons');
+  while (waiting.length) {
+    waiting.splice(0).forEach(resolve => resolve());
+    await tick();
+  }
+  assert.equal(maximum, 6);
+  assert.equal(a.metrics.requests.length, 91);
+  assert.equal(a.dialog.open, false);
+  assert.equal(a.document.querySelector('#version-list').textContent, '');
+  assert.equal(a.recordings.length, 0);
+});
+
+test('file:// Yes picker excludes moved recordings and silently releases metadata probes', async () => {
+  const a = app('#agatha/vanguard', new Map(), {localFiles: file => file.endsWith('/snook_yes_01.mp3')});
+  const command = a.window.CHIVALRY_CATALOG.agatha.vanguard.personal[0];
+  assert.equal(command.clips.length, 15);
+  a.click('[data-action="versions"][data-id="personal-0"]');
+  assert.equal(a.document.querySelectorAll('[data-action="pick"]').length, 0);
+  await tick();
+  assert.equal(a.document.querySelectorAll('[data-action="pick"]').length, 2, 'One numbered variant plus Random');
+  assert.equal(a.document.querySelector('[data-version="1"]'), null);
+  assert.match(a.document.querySelector('[data-version="0"]').textContent, /Version 1/);
+  assert.equal(a.metrics.localProbes.length, 15);
+  assert.equal(a.metrics.requests.length, 0, 'Local files must not use fetch');
+  assert.equal(a.recordings.length, 0, 'Existence checks must never play audio');
+  assert.ok(a.metrics.localProbes.every(audio => audio.released && !audio.src));
+  a.click('[data-version="random"]'); await tick();
+  assert.equal(a.audio.src, command.clips[0].file);
+  a.click('[data-action="close-versions"]');
+  a.click('[data-action="versions"][data-id="personal-0"]');
+  assert.equal(a.metrics.localProbes.length, 15, 'Reuse availability results within the page session');
+});
+
+test('file:// picker matches catalogued files present in the actual project directory', async () => {
+  const a = app('#agatha/vanguard', new Map(), {localFiles: file => existsSync(resolve(root, file))});
+  const command = a.window.CHIVALRY_CATALOG.agatha.vanguard.personal[0];
+  const expected = command.clips.flatMap((clip, i) => existsSync(resolve(root, clip.file)) ? [String(i)] : []);
+  a.click('[data-action="versions"][data-id="personal-0"]'); await tick();
+  const shown = [...a.document.querySelectorAll('[data-action="pick"]')]
+    .map(option => option.dataset.version).filter(version => version !== 'random');
+  assert.deepEqual(shown, Array.from(expected));
+  assert.equal(a.recordings.length, 0);
 });

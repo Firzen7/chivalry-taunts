@@ -26,6 +26,10 @@
   const error = document.querySelector('.audio-error');
   const volume = document.querySelector('#volume');
   const lastVersions = new Map();
+  const availability = new window.ChivalryAvailability({remote: /^https?:$/.test(location.protocol)});
+  const pendingPlayback = new Set();
+  let playbackEpoch = 0;
+  let pickerRequest = 0;
   const preferenceKey = 'chivalry-command-versions';
   const versionPreferences = new Map();
   try {
@@ -91,7 +95,8 @@
     if (!command) return null;
     const file = versionPreferences.get(commandKey(command));
     const index = command.clips.findIndex(clip => clip.file === file);
-    return index === -1 ? null : index;
+    const available = availability.ready(command);
+    return index === -1 || available !== null && !available.includes(index) ? null : index;
   }
   function saveVersion(command, version) {
     // Store the file identity so catalog reordering cannot select a different take.
@@ -106,6 +111,7 @@
     document.querySelectorAll('[data-command]').forEach(row => {
       const command = commandById(row.dataset.command);
       const version = preferredVersion(command);
+      row.querySelector('.command-play').disabled = availability.ready(command)?.length === 0;
       const badge = row.querySelector('.version-label');
       badge.hidden = version === null;
       badge.textContent = version === null ? '' : `Version ${version + 1}`;
@@ -141,8 +147,10 @@
   }
   function closePicker() {
     if (!dialog.open) return;
+    pickerRequest++;
     dialog.close();
     document.querySelector('#version-list').replaceChildren();
+    document.querySelector('#version-list').removeAttribute('aria-busy');
     shade.hidden = true;
     document.body.classList.remove('picker-open');
     setBackgroundInert(false);
@@ -163,6 +171,8 @@
     document.documentElement.style.setProperty('--controls-clearance', `calc(${Math.ceil(height) + 32}px + env(safe-area-inset-bottom, 0px))`);
   }
   function stopAll() {
+    playbackEpoch++;
+    pendingPlayback.clear();
     playback.stopAll();
     error.hidden = true;
   }
@@ -203,10 +213,11 @@
     const active = playback.active;
     const playingCount = active.filter(entry => entry.state === 'playing').length;
     const loadingCount = active.length - playingCount;
-    document.querySelector('#active-count').textContent = active.length
-      ? [playingCount ? `${playingCount} playing` : '', loadingCount ? `${loadingCount} loading` : ''].filter(Boolean).join(' · ')
+    const checkingCount = pendingPlayback.size;
+    document.querySelector('#active-count').textContent = active.length || checkingCount
+      ? [playingCount ? `${playingCount} playing` : '', loadingCount ? `${loadingCount} loading` : '', checkingCount ? `${checkingCount} checking` : ''].filter(Boolean).join(' · ')
       : 'No voices playing';
-    document.querySelector('[data-action="stop-all"]').disabled = !active.length;
+    document.querySelector('[data-action="stop-all"]').disabled = !active.length && !checkingCount;
     document.querySelectorAll('[data-command]').forEach(row => {
       const entries = active.filter(entry => entry.command.id === row.dataset.command);
       const playing = entries.filter(entry => entry.state === 'playing');
@@ -233,7 +244,7 @@
     if (!dialog.open || !pickerCommand) return;
     const entries = playback.active.filter(entry => entry.command.id === pickerCommand.id);
     const selected = preferredVersion(pickerCommand);
-    dialog.querySelectorAll('.version-option').forEach(option => {
+    dialog.querySelectorAll('[data-action="pick"]').forEach(option => {
       const version = option.dataset.version === 'random' ? null : Number(option.dataset.version);
       if (version === selected) option.setAttribute('aria-current', 'true');
       else option.removeAttribute('aria-current');
@@ -251,10 +262,34 @@
 
   function play(command, version = null) {
     if (!command?.clips.length) return;
+    const available = availability.ready(command);
+    if (available === null) {
+      const epoch = playbackEpoch;
+      const pending = {};
+      pendingPlayback.add(pending);
+      updatePlayback();
+      announcement.textContent = `Checking available ${command.name} recordings`;
+      availability.load(command).then(() => {
+        if (epoch !== playbackEpoch) return;
+        updatePreferenceLabels();
+        play(command, version);
+      }).catch(() => {
+        if (epoch !== playbackEpoch) return;
+        error.textContent = `Unable to check available ${command.name} recordings. Tap the command to try again.`;
+        error.hidden = false;
+        updatePickerClearance();
+      }).finally(() => {
+        pendingPlayback.delete(pending);
+        updatePlayback();
+      });
+      return;
+    }
+    if (!available.length) return;
+    if (version !== null && !available.includes(version)) version = null;
     const key = commandKey(command);
     if (version === null) {
       const last = lastVersions.get(key);
-      const choices = command.clips.map((_, i) => i).filter(i => command.clips.length === 1 || i !== last);
+      const choices = available.filter(i => available.length === 1 || i !== last);
       version = choices[Math.floor(Math.random() * choices.length)];
     }
     if (!Number.isInteger(version) || !command.clips[version]) return;
@@ -267,9 +302,24 @@
     if (!command) return;
     pickerCommand = command;
     pickerTrigger = trigger;
-    const selected = preferredVersion(command);
+    const request = ++pickerRequest;
     document.querySelector('#versions-title').textContent = command.name;
-    document.querySelector('#version-list').innerHTML = `<button type="button" class="version-option" data-action="pick" data-version="random"${selected === null ? ' aria-current="true"' : ''}>Random version ${icon('play')}</button>` + command.clips.map((clip, i) => `<button type="button" class="version-option" data-action="pick" data-version="${i}"${selected === i ? ' aria-current="true"' : ''}><span class="variant-name"><span class="variant-indicator" aria-hidden="true"><span class="equalizer" hidden><i></i><i></i><i></i></span></span><span>Version ${i + 1}</span><span class="variant-state sr-only"></span></span><small class="variant-duration">${clock(clip.duration)}</small>${icon('play')}</button>`).join('');
+    const list = document.querySelector('#version-list');
+    if (availability.ready(command) !== null) renderVariants(command);
+    else {
+      list.innerHTML = '<p role="status">Checking available recordings…</p>';
+      list.setAttribute('aria-busy', 'true');
+      availability.load(command).then(() => {
+        if (request !== pickerRequest || pickerCommand !== command) return;
+        renderVariants(command);
+        updatePreferenceLabels();
+        updateVariantFeedback();
+      }).catch(() => {
+        if (request !== pickerRequest || pickerCommand !== command) return;
+        list.removeAttribute('aria-busy');
+        list.innerHTML = '<p role="alert">Unable to check available recordings.</p><button type="button" class="version-option" data-action="retry-versions">Try again</button>';
+      });
+    }
     updatePickerClearance();
     shade.hidden = false;
     document.body.classList.add('picker-open');
@@ -278,6 +328,17 @@
     if (!dialog.open) dialog.show();
     dialog.querySelector('[data-action="close-versions"]').focus();
     updateVariantFeedback();
+  }
+  function renderVariants(command) {
+    const selected = preferredVersion(command);
+    const available = availability.ready(command);
+    const list = document.querySelector('#version-list');
+    list.removeAttribute('aria-busy');
+    if (!available.length) {
+      list.innerHTML = '<p role="status">No recordings are available for this command.</p>';
+      return;
+    }
+    list.innerHTML = `<button type="button" class="version-option" data-action="pick" data-version="random"${selected === null ? ' aria-current="true"' : ''}>Random version ${icon('play')}</button>` + available.map(i => `<button type="button" class="version-option" data-action="pick" data-version="${i}"${selected === i ? ' aria-current="true"' : ''}><span class="variant-name"><span class="variant-indicator" aria-hidden="true"><span class="equalizer" hidden><i></i><i></i><i></i></span></span><span>Version ${i + 1}</span><span class="variant-state sr-only"></span></span><small class="variant-duration">${clock(command.clips[i].duration)}</small>${icon('play')}</button>`).join('');
   }
   document.addEventListener('click', event => {
     const disabled = event.target.closest('a[aria-disabled="true"]');
@@ -291,11 +352,12 @@
         break;
       }
       case 'versions': openPicker(commandById(button.dataset.id), button); break;
+      case 'retry-versions': openPicker(pickerCommand, pickerTrigger); break;
       case 'close-versions': closePicker(); break;
       case 'pick': {
         const command = pickerCommand;
         const version = button.dataset.version === 'random' ? null : Number(button.dataset.version);
-        if (!command || version !== null && (!Number.isInteger(version) || !command.clips[version])) break;
+        if (!command || !availability.ready(command)?.length || version !== null && !availability.ready(command).includes(version)) break;
         // Audition a take on its own; the main command buttons still allow layering.
         stopAll();
         saveVersion(command, version);
