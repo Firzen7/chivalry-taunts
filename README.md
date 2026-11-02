@@ -4,7 +4,7 @@ Open **[index.html](website/index.html)** for the Chivalry-style faction → cla
 
 Open either page directly in a browser. The collection works offline, directly from disk, without a server. The soundboard checks that recordings are available before offering variants, including when opened directly from disk. Availability results are cached until the page is reloaded. All deployable files are inside `website/`; keep its structure intact.
 
-Browse by faction, playable class, original asset name, **message group**, or **voice command**. Select **Personal Messages**, **Tactical Messages**, or **Other**. The command dropdown narrows to the selected group and follows the in-game menu order, including “Go for the Objective.” Switching groups clears an incompatible command selection. Each row has a Play button and MP3 download link. A shared player provides pause, seeking, and volume controls. Results are shown 50 at a time.
+Browse by faction, playable class, original asset name, **message group**, or **voice command**. Select **Personal Messages**, **Tactical Messages**, or **Other**. The command dropdown narrows to the selected group and follows the in-game menu order, including “Go for the Objective.” Switching groups clears an incompatible command selection. Each row has a Play button and MP3 download link. A shared player provides pause, seeking, and volume controls. Results are shown 50 at a time. The full collection page also checks file availability before showing rows; counts, filters, and pagination include only confirmed recordings. Checks work both from disk and over HTTP(S), and are cached until reload. A progress message appears during checks, and temporary failures can be retried.
 
 ## Deployment
 

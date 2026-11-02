@@ -56,7 +56,7 @@ footer a { color: #365d76; }
 <header>
 <div class="eyebrow">Chivalry: Medieval Warfare</div>
 <h1>Taunts &amp; voice commands</h1>
-<p class="intro">2938 voice clips across two factions and four classes. Taunts, laughs, replies, battle cries and tactical calls.</p>
+<p class="intro">Voice clips across two factions and four classes. Taunts, laughs, replies, battle cries and tactical calls.</p>
 </header>
 <div class="filters">
 <label class="search">Search voice lines<input id="search" type="search" placeholder="Search by name, command, faction or class…"></label>
@@ -66,12 +66,13 @@ footer a { color: #365d76; }
 <label>Voice command<select id="type"><option value="">All commands</option><option value="Yes" data-group="personal_messages">Yes</option><option value="No" data-group="personal_messages">No</option><option value="Help" data-group="personal_messages">Help</option><option value="Got your back" data-group="personal_messages">Got your back</option><option value="Thanks" data-group="personal_messages">Thanks</option><option value="You&#x27;re welcome" data-group="personal_messages">You&#x27;re welcome</option><option value="Sorry" data-group="personal_messages">Sorry</option><option value="Taunt" data-group="personal_messages">Taunt</option><option value="Laugh" data-group="personal_messages">Laugh</option><option value="Respect" data-group="personal_messages">Respect</option><option value="Follow me" data-group="tactical_messages">Follow me</option><option value="Forward" data-group="tactical_messages">Forward</option><option value="Retreat" data-group="tactical_messages">Retreat</option><option value="Kill archers" data-group="tactical_messages">Kill archers</option><option value="Objective" data-group="tactical_messages">Go for the Objective</option><option value="Hold your ground" data-group="tactical_messages">Hold your ground</option><option value="Defend me" data-group="tactical_messages">Defend me</option><option value="Incoming" data-group="tactical_messages">Incoming</option><option value="Behind us" data-group="tactical_messages">Behind us</option><option value="All clear" data-group="tactical_messages">All clear</option><option value="Other" data-group="other">Other</option></select></label>
 <button id="reset" type="button">Reset filters</button>
 </div>
-<p id="count" role="status" aria-live="polite">2938 voice clips</p>
+<p id="count" role="status" aria-live="polite">Checking available recordings…</p>
+<p id="availability-error" role="alert" hidden>Some recordings could not be checked. <button id="retry-availability" type="button">Try again</button></p>
 <div class="table-wrap" role="region" aria-label="Voice collection" tabindex="0">
 <table>
 <caption>Voice lines by faction and class</caption>
 <thead><tr><th scope="col">Faction</th><th scope="col">Class</th><th scope="col">Taunt / voice name</th><th scope="col">Listen</th></tr></thead>
-<tbody>
+<tbody hidden>
 <tr data-faction="agatha" data-class="archer" data-groups="tactical_messages" data-types="Kill archers">
 <td><span class="faction agatha">Agatha</span></td>
 <td>Archer</td><td class="taunt-name">archers_01<small>Tactical Messages · Kill archers</small></td>
@@ -14777,90 +14778,7 @@ footer a { color: #365d76; }
 <footer>Includes personal and tactical messages, objective calls, barbarian variants and legacy clips. Names are the original audio asset names.<br>
 Open this page directly in your browser; no server is needed. <a href="taunts.json">Collection metadata (JSON)</a> · <a href="README.md">Extraction notes</a></footer>
 </main>
-<script>
-const rows = [...document.querySelectorAll('tbody tr')];
-const search = document.querySelector('#search');
-const faction = document.querySelector('#faction');
-const classFilter = document.querySelector('#class');
-const groupFilter = document.querySelector('#group');
-const typeFilter = document.querySelector('#type');
-const commandOptions = [...typeFilter.options].map(option => option.cloneNode(true));
-const player = document.querySelector('#player');
-const error = document.querySelector('#play-error');
-let matches = rows;
-let page = 0;
-let activeButton = null;
-const pageSize = 50;
-for (const row of rows) row.searchText = row.textContent.toLowerCase();
-function renderPage() {
-  for (const row of rows) row.hidden = true;
-  for (const row of matches.slice(page * pageSize, (page + 1) * pageSize)) row.hidden = false;
-  const pages = Math.max(1, Math.ceil(matches.length / pageSize));
-  document.querySelector('#count').textContent = `${matches.length} of ${rows.length} voice clips`;
-  document.querySelector('#page-count').textContent = `Page ${page + 1} of ${pages}`;
-  document.querySelector('#previous').disabled = page === 0;
-  document.querySelector('#next').disabled = page >= pages - 1;
-  document.querySelector('#empty').hidden = matches.length !== 0;
-}
-function filter() {
-  const query = search.value.trim().toLowerCase();
-  matches = rows.filter(row => (!faction.value || row.dataset.faction === faction.value)
-    && (!classFilter.value || row.dataset.class === classFilter.value)
-    && (!groupFilter.value || row.dataset.groups.split('|').includes(groupFilter.value))
-    && (!typeFilter.value || row.dataset.types.split('|').includes(typeFilter.value))
-    && row.searchText.includes(query));
-  page = 0;
-  renderPage();
-}
-search.addEventListener('input', filter);
-faction.addEventListener('change', filter);
-classFilter.addEventListener('change', filter);
-typeFilter.addEventListener('change', filter);
-function syncCommands() {
-  const selected = typeFilter.value;
-  const options = commandOptions.filter(option => !option.value || !groupFilter.value || option.dataset.group === groupFilter.value);
-  typeFilter.replaceChildren(...options.map(option => option.cloneNode(true)));
-  typeFilter.value = options.some(option => option.value === selected) ? selected : '';
-}
-groupFilter.addEventListener('change', () => { syncCommands(); filter(); });
-document.querySelector('#reset').addEventListener('click', () => {
-  search.value = faction.value = classFilter.value = groupFilter.value = typeFilter.value = '';
-  syncCommands();
-  filter();
-});
-document.querySelector('#previous').addEventListener('click', () => {
-  if (page > 0) { page--; renderPage(); }
-});
-document.querySelector('#next').addEventListener('click', () => {
-  if ((page + 1) * pageSize < matches.length) { page++; renderPage(); }
-});
-function updatePlayButton() {
-  if (!activeButton) return;
-  activeButton.textContent = player.paused ? '▶ Play' : 'Ⅱ Pause';
-  activeButton.classList.toggle('active', !player.paused);
-  activeButton.setAttribute('aria-label', `${player.paused ? 'Play' : 'Pause'} ${activeButton.dataset.label}`);
-}
-document.querySelector('tbody').addEventListener('click', async event => {
-  const button = event.target.closest('button.play');
-  if (!button) return;
-  if (button === activeButton && !player.paused) { player.pause(); return; }
-  error.hidden = true;
-  if (button !== activeButton) {
-    player.pause();
-    updatePlayButton();
-    activeButton = button;
-    player.src = button.dataset.src;
-    document.querySelector('#now-playing').textContent = button.dataset.label;
-    player.setAttribute('aria-label', button.dataset.label);
-  }
-  try { await player.play(); }
-  catch (failure) { if (failure.name !== 'AbortError') error.hidden = false; }
-});
-player.addEventListener('play', updatePlayButton);
-player.addEventListener('pause', updatePlayButton);
-player.addEventListener('ended', updatePlayButton);
-player.addEventListener('error', () => { error.hidden = false; });
-filter();
-</script>
+<script src="soundboard/availability.js?v=local-voices-1"></script>
+<script src="collection.js?v=available-files-1"></script>
 </body>
 </html>
