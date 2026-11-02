@@ -500,3 +500,40 @@ test('saved favorites from the old faction paths migrate to the new audio folder
   assert.equal(a.audio.src, file);
   assert.equal(JSON.parse(storage.get('chivalry-command-versions'))['agatha/vanguard/personal-4'], file);
 });
+
+test('every categorized recording and battle cry is available in the soundboard', () => {
+  const a = app();
+  const catalog = a.window.CHIVALRY_CATALOG;
+  const manifest = JSON.parse(read('taunts.json'));
+  for (const record of manifest.files) {
+    const groups = catalog[record.faction][record.class];
+    const commands = Object.values(groups).flat();
+    for (const [category, file] of Object.entries(record.category_files)) {
+      if (category === 'Other') continue;
+      const label = category === 'Objective' ? 'Go for the Objective' : category;
+      const command = commands.find(c => c.name === label);
+      assert.ok(command, `${record.faction}/${record.class}/${label}`);
+      assert.ok(command.clips.some(clip => clip.file === file), `Missing ${file}`);
+    }
+    if (record.voice_types.includes('Battle cry')) {
+      assert.ok(groups.battlecry[0].clips.some(clip => clip.file === record.file), `Missing battle cry ${record.file}`);
+    }
+  }
+  for (const classes of Object.values(catalog)) for (const groups of Object.values(classes)) {
+    for (const commands of Object.values(groups)) for (const command of commands) {
+      assert.equal(new Set(command.clips.map(clip => clip.file)).size, command.clips.length);
+    }
+  }
+});
+
+test('Agatha Knight objective picker exposes and plays all 91 objective recordings', async () => {
+  const a = app('#agatha/knight');
+  const command = a.window.CHIVALRY_CATALOG.agatha.knight.tactical[4];
+  assert.equal(command.clips.length, 91);
+  a.click('[data-action="versions"][data-id="tactical-4"]');
+  assert.equal(a.document.querySelectorAll('.version-option').length, 92);
+  a.click('[data-version="90"]'); await tick();
+  assert.equal(a.audio.src, command.clips[90].file);
+  assert.equal(a.dialog.open, true);
+  assert.equal(a.document.querySelector('[data-command="tactical-4"] .version-label').textContent, 'Version 91');
+});

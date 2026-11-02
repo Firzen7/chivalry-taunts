@@ -16,7 +16,7 @@ Choosing a specific recording in the three-dot menu saves it in local storage fo
 
 The version picker stays open while auditioning recordings. Picker previews play one at a time: selecting any numbered option or Random version stops all current and pending recordings before starting the chosen take. This keeps previews isolated, while the main command buttons continue to allow overlapping playback. Each numbered option has a reserved indicator slot before its name. Only the equalizer animation appears there during playback, including recordings started through Random version. There is no visible Playing text or separate active-recordings section, so auditioning does not change the dialog height. Playback counts and loading states remain available to screen readers. The saved favorite remains marked separately from playback activity. Close the picker with its close button, by clicking the shaded area outside it, or with Escape; closing it does not stop recordings. The floating dashboard remains undimmed and usable, and dashboard clicks do not dismiss the picker. On desktop the picker is centered above the dashboard area; on mobile it floats above the dashboard with its height and safe area reserved. The page behind is inert, while keyboard focus can cycle between the picker and sound controls. Keyboard users can start voices, select recordings, use Stop all through the regular buttons.
 
-The playable recordings follow the 168 verified assignments in the game's class definitions. Extra, unused, and barbarian takes remain available through **Full collection**, rather than being mixed into the original voice command sets.
+The 168 command slots follow the game's class definitions, but their recording lists include every extracted take assigned to that faction/class category: normal, map-specific objective, alternate, barbarian, and legacy recordings. Battle cry includes all clips labeled as battle cries. The original menu recordings remain first so existing version numbers and saved favorites stay stable. Additional category recordings are appended, with identical source audio deduplicated. Unclassified recordings remain available through **Full collection**.
 
 ## Files and shared artwork
 
@@ -38,7 +38,7 @@ Refresh the catalog after extracting or reorganizing audio:
 python3 scripts/build_soundboard.py
 ```
 
-The builder defaults to the project’s `website/` directory (`--root` can select another site root). It verifies every recording path, all eight voices, and all 21 commands per voice. It reads `taunts.json` without changing the original collection or its HTML.
+The builder defaults to the project’s `website/` directory (`--root` can select another site root). It verifies every recording path, all eight voices, and all 21 commands per voice. Interaction tests independently compare the resulting catalog against every categorized recording in `taunts.json`, including all 91 Agatha Knight objective versions. It reads `taunts.json` without changing the original collection or its HTML.
 
 Run the interaction tests from the project root with Node 20 or newer:
 

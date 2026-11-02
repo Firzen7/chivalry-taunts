@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the offline soundboard catalog from the verified game-menu assignments."""
+"""Build the offline catalog from all categorized recordings and game-menu assignments."""
 import argparse
 import json
 from pathlib import Path
@@ -11,7 +11,14 @@ TACTICAL = ['Follow me', 'Forward', 'Retreat', 'Kill archers', 'Objective', 'Hol
 def build(root):
     manifest = json.loads((root / 'taunts.json').read_text())
     lookup = {}
+    categorized = {}
     for record in manifest['files']:
+        voice = (record['faction'], record['class'])
+        for name in record['category_files']:
+            if name != 'Other':
+                categorized.setdefault((*voice, name), []).append(record)
+        if 'Battle cry' in record['voice_types']:
+            categorized.setdefault((*voice, 'Battle cry'), []).append(record)
         for source in record['sources']:
             key = (record['faction'], record['class'], Path(source['package']).stem.lower(), source['export_index'])
             lookup[key] = record
@@ -21,9 +28,14 @@ def build(root):
         group = {'XMenuVOSounds': 'personal', 'ZMenuVOSounds': 'tactical', 'BattleCrySound': 'battlecry'}[assignment['menu']]
         slot = int(assignment['slot']) if assignment['slot'] else 0
         name = (PERSONAL if group == 'personal' else TACTICAL)[slot] if group != 'battlecry' else 'Battle cry'
-        clips, seen = [], set()
+        # Keep the original menu takes first, preserving existing version numbers.
+        # Then add map-specific, alternate, barbarian and legacy category recordings.
+        records = []
         for wave in assignment['waves']:
-            record = lookup[(faction, cls, wave['package'], wave['export_index'])]
+            records.append(lookup[(faction, cls, wave['package'], wave['export_index'])])
+        records.extend(categorized.get((faction, cls, name), []))
+        clips, seen = [], set()
+        for record in records:
             if record['source_ogg_sha256'] in seen:
                 continue
             seen.add(record['source_ogg_sha256'])
