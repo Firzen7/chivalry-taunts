@@ -1,4 +1,4 @@
-/* Shared messages use UTF-8 Base64 JSON, with a catalogued file as voice_variant. */
+/* Shared messages use compact UTF-8 Base64 JSON; old verbose links also work. */
 (() => {
   'use strict';
   const find = id => document.getElementById(id);
@@ -12,7 +12,7 @@
     if (encoded.length > 24000) throw new Error('This message link is too long.');
     const base64 = encoded.replace(/ /g, '+').replace(/-/g, '+').replace(/_/g, '/');
     const bytes = Uint8Array.from(atob(base64), char => char.charCodeAt(0));
-    message = JSON.parse(new TextDecoder('utf-8', {fatal: true}).decode(bytes));
+    message = window.ChivalryMessageCodec.expand(JSON.parse(new TextDecoder('utf-8', {fatal: true}).decode(bytes)));
     if (!message || typeof message !== 'object' || Array.isArray(message)) throw new Error();
     if (!['agatha', 'masons'].includes(message.faction) || !['archer', 'man_at_arms', 'vanguard', 'knight'].includes(message.class)) throw new Error();
     if (typeof message.nickname !== 'string' || !message.nickname.trim() || message.nickname.length > 80 || typeof message.message !== 'string' || !message.message.trim() || message.message.length > 4000) throw new Error();

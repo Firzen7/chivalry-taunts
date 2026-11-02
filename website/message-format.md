@@ -1,38 +1,48 @@
 # Personalized voice messages
 
-Open `message.html?data=BASE64_JSON` (or `message.html#data=BASE64_JSON`). Both standard Base64 and URL-safe Base64 are supported. Encode JSON as UTF-8 before Base64 encoding, and URL-encode standard Base64 when putting it in a query parameter.
-
-The JSON contains these required fields:
+Open `message.html?data=BASE64_JSON` or `message.html#data=BASE64_JSON`. Encode compact JSON as UTF-8 and then URL-safe Base64 without padding. Standard Base64 remains supported too; URL-encode it when using a query parameter.
 
 ```json
-{
-  "faction": "agatha",
-  "class": "knight",
-  "nickname": "Firzen",
-  "message": "See you on the battlefield!",
-  "voice_variant": "audio/agatha/knight/personal_messages/thanks/thank_you_brother_01.mp3"
-}
+{"f":"a","c":"k","n":"Firzen","m":"See you on the battlefield!","v":"p/thanks/thank_you_brother_01.mp3"}
 ```
 
-Use an exact `clips[].file` value from that faction and class in `soundboard/catalog.js` for `voice_variant`. There is no random voice selection. Factions are `agatha` and `masons`. Classes are `archer`, `man_at_arms`, `vanguard`, and `knight`. Nicknames may contain up to 80 characters and messages up to 4,000 characters, including newlines and Unicode.
+| Field | Meaning | Values |
+| --- | --- | --- |
+| `f` | Faction | `a` = agatha, `m` = masons |
+| `c` | Class | `k` = knight, `a` = archer, `v` = vanguard, `m` = man_at_arms |
+| `n` | Nickname | Up to 80 characters |
+| `m` | Custom message | Up to 4,000 characters, including Unicode and newlines |
+| `v` | Voice recording | Folder shortcut followed by the remaining path |
 
-To create a link in JavaScript:
+| Voice prefix | Expanded folder beneath `audio/<faction>/<class>/` |
+| --- | --- |
+| `p/` | `personal_messages/` |
+| `t/` | `tactical_messages/` |
+| `br/` | `battlecry/running/` |
+| `ba/` | `battlecry/animated/` |
+| `o/` | `other/` |
+
+For example, `f=a`, `c=k`, and `v=p/thanks/thank_you_brother_01.mp3` resolve to `audio/agatha/knight/personal_messages/thanks/thank_you_brother_01.mp3`. Keep the category folder and exact filename, including `.mp3`. The expanded path must match a catalogued recording for that warrior. No random selection occurs.
+
+The page continues to accept the previous `faction`, `class`, `nickname`, `message`, and full-path `voice_variant` format.
+
+## Creating links
+
+Load `soundboard/message-codec.js` to use its helper. It accepts either the compact payload above or a verbose payload, converts it to compact JSON, and returns unpadded URL-safe Base64:
 
 ```js
-const payload = {
-  faction: 'agatha',
-  class: 'knight',
-  nickname: 'Firzen',
-  message: 'See you on the battlefield!',
-  voice_variant: CHIVALRY_CATALOG.agatha.knight.personal[4].clips[0].file
-};
-const bytes = new TextEncoder().encode(JSON.stringify(payload));
-const encoded = btoa(Array.from(bytes, byte => String.fromCharCode(byte)).join(''));
+const encoded = ChivalryMessageCodec.encode({
+  f: 'a', c: 'k', n: 'Firzen',
+  m: 'See you on the battlefield!',
+  v: 'p/thanks/thank_you_brother_01.mp3'
+});
 const url = new URL('message.html', location.href);
 url.searchParams.set('data', encoded);
 console.log(url.href);
 ```
 
-The portrait follows the chosen faction/class. Reveal removes the blur and starts the exact recording within the same click. Sound starts enabled; the toggle mutes/unmutes playback. Replay restarts that same recording. Invalid payloads or recordings outside the chosen voice catalog show an explanatory error. Message text is inserted as plain text. The payload is encoded, not encrypted; the blur is a presentation effect.
+`ChivalryMessageCodec.compact(payload)` returns the compact JSON object, while `expand(payload)` returns the verbose object with the full audio path. The codec handles formatting; `message.html` validates field lengths and checks the expanded recording against the catalog before playback.
 
-Open `message-examples.html` for four clickable test links covering both factions, four classes, and Unicode text. These also work from disk. The existing soundboard artwork, font, and backdrop are reused; the message page has its own small stylesheet and script.
+Reveal removes the blur and starts the exact recording immediately, alongside the one-second fade. Sound starts enabled; the toggle mutes/unmutes playback. Replay restarts that same recording. Invalid payloads show an explanatory error. Message content is inserted as plain text. Base64 is encoding, not encryption; the blur is a presentation effect.
+
+Open `message-examples.html` for four compact testing links covering both factions, four classes, and Unicode text. These also work directly from disk.
