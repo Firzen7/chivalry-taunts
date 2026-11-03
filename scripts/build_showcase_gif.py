@@ -237,7 +237,7 @@ def ending_still():
     im = backdrop().copy()
     # Reuse the existing share artwork without regenerating a competing logo.
     paste(im, asset("link-preview.jpg", 850, 445), 55, 19)
-    rect(im, (55,385,905,465), "#091729")
+    rect(im, (55,385,905,482), "#091729")
     text(im, "Your next taunt is one click away.",480,412,25,WHITE,"title")
     text(im, "chivalry.firzen.net",480,456,30,GOLD)
     text(im, "A fan-made Chivalry: Medieval Warfare soundboard",480,501,14,MUTED)
@@ -245,9 +245,7 @@ def ending_still():
 
 
 def ending(t):
-    im = ending_still().copy()
-    equalizer(im, 449, 368, t, 11)
-    return im
+    return ending_still().copy()
 
 
 SCENES = [factions, classes, commands, message, ending]
