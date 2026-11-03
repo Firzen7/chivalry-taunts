@@ -750,7 +750,7 @@ test('sharing an exact take requires a nickname and creates a compact link plus 
   assert.equal(a.document.querySelector('.share-result').hidden, false);
   const url = new URL(a.document.querySelector('.share-link').value);
   assert.equal(url.pathname, '/message.html');
-  assert.equal(url.hostname, 'tmp.firzen.net');
+  assert.equal(url.hostname, 'chivalry.firzen.net');
   const payload = JSON.parse(Buffer.from(url.searchParams.get('data'), 'base64url').toString());
   assert.equal(payload.f, 'a'); assert.equal(payload.c, 'k'); assert.equal(payload.n, 'Žižka ⚔'); assert.equal(payload.m, '');
   const expanded = a.window.ChivalryMessageCodec.expand(payload);

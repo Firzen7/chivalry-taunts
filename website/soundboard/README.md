@@ -74,9 +74,9 @@ Phone frame rates still need an on-device check. These changes target likely pai
 
 ## Shared-link preview
 
-The static `<head>` in `index.html` contains Open Graph metadata and a large-image sharing card, pointing to `https://tmp.firzen.net/soundboard/assets/link-preview.png`. Deploy `index.html` together with `soundboard/assets/link-preview.png`. The image dimensions, PNG media type, and descriptive alternative text are included so crawlers can read them without running JavaScript.
+The static `<head>` in `index.html` contains Open Graph metadata and a large-image sharing card, pointing to `https://chivalry.firzen.net/soundboard/assets/link-preview.jpg`. Deploy `index.html` together with `soundboard/assets/link-preview.jpg`. The image dimensions, JPEG media type, and descriptive alternative text are included so crawlers can read them without running JavaScript.
 
-The configured site address is `https://tmp.firzen.net/`. When moving to a different host, update the canonical URL, `og:url`, `og:image`, and `twitter:image` URLs in `index.html` to the new public HTTPS address. The Open Graph fields follow the [Open Graph protocol](https://ogp.me/).
+The configured site address is `https://chivalry.firzen.net/`. When moving to a different host, update the canonical URL, `og:url`, `og:image`, and `twitter:image` URLs in `index.html` to the new public HTTPS address. The Open Graph fields follow the [Open Graph protocol](https://ogp.me/).
 
 ## Folder layout
 
