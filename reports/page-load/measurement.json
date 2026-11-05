@@ -1,0 +1,364 @@
+{
+  "date": "2026-11-05",
+  "method": "DOM execution with existing test harness, local file sizes, manually resolved active CSS resources and responsive image candidates. NOT browser network telemetry.",
+  "cache": "Independent cold loads; no cached assets",
+  "compression": "gzip level 6 / Brotli quality 5 applied to HTML, CSS, JS and SVG only. Fonts and images counted as served bytes. Excludes HTTP/TLS headers, network overhead, favicon probes and speculative requests.",
+  "sampleLink": "https://chivalry.firzen.net/message.html?data=eyJmIjoiYSIsImMiOiJrIiwibiI6IkZpcnplbiIsIm0iOiJTZWUgeW91IG9uIHRoZSBiYXR0bGVmaWVsZCEiLCJ2IjoicC90aGFua3MvdGhhbmtfeW91X2Jyb3RoZXJfMDEubXAzIn0",
+  "payload": {
+    "faction": "agatha",
+    "class": "knight",
+    "nickname": "Firzen",
+    "message": "See you on the battlefield!",
+    "voice_variant": "audio/agatha/knight/personal_messages/thanks/thank_you_brother_01.mp3"
+  },
+  "audioAfterReveal": {
+    "path": "audio/agatha/knight/personal_messages/thanks/thank_you_brother_01.mp3",
+    "bytes": 8198
+  },
+  "scenarios": [
+    {
+      "page": "index.html",
+      "viewportWidth": 1440,
+      "devicePixelRatio": 1,
+      "requests": 14,
+      "totalBytes": 894611,
+      "gzipBytes": 583227,
+      "brotliBytes": 578190,
+      "files": [
+        {
+          "path": "index.html",
+          "bytes": 6830,
+          "gzipBytes": 2142,
+          "brotliBytes": 1897
+        },
+        {
+          "path": "soundboard/style.css",
+          "bytes": 22504,
+          "gzipBytes": 5609,
+          "brotliBytes": 5361
+        },
+        {
+          "path": "soundboard/catalog.js",
+          "bytes": 260111,
+          "gzipBytes": 19449,
+          "brotliBytes": 16027
+        },
+        {
+          "path": "soundboard/playback.js",
+          "bytes": 2306,
+          "gzipBytes": 825,
+          "brotliBytes": 741
+        },
+        {
+          "path": "soundboard/availability.js",
+          "bytes": 4127,
+          "gzipBytes": 1528,
+          "brotliBytes": 1401
+        },
+        {
+          "path": "soundboard/message-codec.js",
+          "bytes": 2405,
+          "gzipBytes": 970,
+          "brotliBytes": 885
+        },
+        {
+          "path": "soundboard/vendor/qrcode.js",
+          "bytes": 28825,
+          "gzipBytes": 6984,
+          "brotliBytes": 6662
+        },
+        {
+          "path": "soundboard/voice-share.js",
+          "bytes": 5333,
+          "gzipBytes": 1606,
+          "brotliBytes": 1460
+        },
+        {
+          "path": "soundboard/app.js",
+          "bytes": 25418,
+          "gzipBytes": 7589,
+          "brotliBytes": 7281
+        },
+        {
+          "path": "soundboard/assets/optimized/castle-1672.webp",
+          "bytes": 81992,
+          "gzipBytes": 81992,
+          "brotliBytes": 81992
+        },
+        {
+          "path": "soundboard/assets/frame.svg",
+          "bytes": 385,
+          "gzipBytes": 233,
+          "brotliBytes": 209
+        },
+        {
+          "path": "soundboard/assets/ringbearer.ttf",
+          "bytes": 110460,
+          "gzipBytes": 110460,
+          "brotliBytes": 110460
+        },
+        {
+          "path": "soundboard/assets/knot.svg",
+          "bytes": 287,
+          "gzipBytes": 212,
+          "brotliBytes": 186
+        },
+        {
+          "path": "soundboard/assets/optimized/faction-emblems.webp",
+          "bytes": 343628,
+          "gzipBytes": 343628,
+          "brotliBytes": 343628
+        }
+      ]
+    },
+    {
+      "page": "message.html",
+      "viewportWidth": 1440,
+      "devicePixelRatio": 1,
+      "requests": 11,
+      "totalBytes": 620462,
+      "gzipBytes": 353518,
+      "brotliBytes": 349285,
+      "files": [
+        {
+          "path": "message.html",
+          "bytes": 3616,
+          "gzipBytes": 1305,
+          "brotliBytes": 1134
+        },
+        {
+          "path": "soundboard/style.css",
+          "bytes": 22504,
+          "gzipBytes": 5609,
+          "brotliBytes": 5361
+        },
+        {
+          "path": "soundboard/message.css",
+          "bytes": 4267,
+          "gzipBytes": 1551,
+          "brotliBytes": 1405
+        },
+        {
+          "path": "soundboard/catalog.js",
+          "bytes": 260111,
+          "gzipBytes": 19449,
+          "brotliBytes": 16027
+        },
+        {
+          "path": "soundboard/message-codec.js",
+          "bytes": 2405,
+          "gzipBytes": 970,
+          "brotliBytes": 885
+        },
+        {
+          "path": "soundboard/message.js",
+          "bytes": 4598,
+          "gzipBytes": 1825,
+          "brotliBytes": 1688
+        },
+        {
+          "path": "soundboard/assets/optimized/castle-1672.webp",
+          "bytes": 81992,
+          "gzipBytes": 81992,
+          "brotliBytes": 81992
+        },
+        {
+          "path": "soundboard/assets/frame.svg",
+          "bytes": 385,
+          "gzipBytes": 233,
+          "brotliBytes": 209
+        },
+        {
+          "path": "soundboard/assets/ringbearer.ttf",
+          "bytes": 110460,
+          "gzipBytes": 110460,
+          "brotliBytes": 110460
+        },
+        {
+          "path": "soundboard/assets/eb-garamond-bold.woff",
+          "bytes": 29720,
+          "gzipBytes": 29720,
+          "brotliBytes": 29720
+        },
+        {
+          "path": "soundboard/assets/optimized/agatha-knight-640.webp",
+          "bytes": 100404,
+          "gzipBytes": 100404,
+          "brotliBytes": 100404
+        }
+      ]
+    },
+    {
+      "page": "index.html",
+      "viewportWidth": 412,
+      "devicePixelRatio": 2,
+      "requests": 14,
+      "totalBytes": 848513,
+      "gzipBytes": 537129,
+      "brotliBytes": 532092,
+      "files": [
+        {
+          "path": "index.html",
+          "bytes": 6830,
+          "gzipBytes": 2142,
+          "brotliBytes": 1897
+        },
+        {
+          "path": "soundboard/style.css",
+          "bytes": 22504,
+          "gzipBytes": 5609,
+          "brotliBytes": 5361
+        },
+        {
+          "path": "soundboard/catalog.js",
+          "bytes": 260111,
+          "gzipBytes": 19449,
+          "brotliBytes": 16027
+        },
+        {
+          "path": "soundboard/playback.js",
+          "bytes": 2306,
+          "gzipBytes": 825,
+          "brotliBytes": 741
+        },
+        {
+          "path": "soundboard/availability.js",
+          "bytes": 4127,
+          "gzipBytes": 1528,
+          "brotliBytes": 1401
+        },
+        {
+          "path": "soundboard/message-codec.js",
+          "bytes": 2405,
+          "gzipBytes": 970,
+          "brotliBytes": 885
+        },
+        {
+          "path": "soundboard/vendor/qrcode.js",
+          "bytes": 28825,
+          "gzipBytes": 6984,
+          "brotliBytes": 6662
+        },
+        {
+          "path": "soundboard/voice-share.js",
+          "bytes": 5333,
+          "gzipBytes": 1606,
+          "brotliBytes": 1460
+        },
+        {
+          "path": "soundboard/app.js",
+          "bytes": 25418,
+          "gzipBytes": 7589,
+          "brotliBytes": 7281
+        },
+        {
+          "path": "soundboard/assets/optimized/castle-960.webp",
+          "bytes": 35894,
+          "gzipBytes": 35894,
+          "brotliBytes": 35894
+        },
+        {
+          "path": "soundboard/assets/frame.svg",
+          "bytes": 385,
+          "gzipBytes": 233,
+          "brotliBytes": 209
+        },
+        {
+          "path": "soundboard/assets/ringbearer.ttf",
+          "bytes": 110460,
+          "gzipBytes": 110460,
+          "brotliBytes": 110460
+        },
+        {
+          "path": "soundboard/assets/knot.svg",
+          "bytes": 287,
+          "gzipBytes": 212,
+          "brotliBytes": 186
+        },
+        {
+          "path": "soundboard/assets/optimized/faction-emblems.webp",
+          "bytes": 343628,
+          "gzipBytes": 343628,
+          "brotliBytes": 343628
+        }
+      ]
+    },
+    {
+      "page": "message.html",
+      "viewportWidth": 412,
+      "devicePixelRatio": 2,
+      "requests": 11,
+      "totalBytes": 672934,
+      "gzipBytes": 405990,
+      "brotliBytes": 401757,
+      "files": [
+        {
+          "path": "message.html",
+          "bytes": 3616,
+          "gzipBytes": 1305,
+          "brotliBytes": 1134
+        },
+        {
+          "path": "soundboard/style.css",
+          "bytes": 22504,
+          "gzipBytes": 5609,
+          "brotliBytes": 5361
+        },
+        {
+          "path": "soundboard/message.css",
+          "bytes": 4267,
+          "gzipBytes": 1551,
+          "brotliBytes": 1405
+        },
+        {
+          "path": "soundboard/catalog.js",
+          "bytes": 260111,
+          "gzipBytes": 19449,
+          "brotliBytes": 16027
+        },
+        {
+          "path": "soundboard/message-codec.js",
+          "bytes": 2405,
+          "gzipBytes": 970,
+          "brotliBytes": 885
+        },
+        {
+          "path": "soundboard/message.js",
+          "bytes": 4598,
+          "gzipBytes": 1825,
+          "brotliBytes": 1688
+        },
+        {
+          "path": "soundboard/assets/optimized/castle-960.webp",
+          "bytes": 35894,
+          "gzipBytes": 35894,
+          "brotliBytes": 35894
+        },
+        {
+          "path": "soundboard/assets/frame.svg",
+          "bytes": 385,
+          "gzipBytes": 233,
+          "brotliBytes": 209
+        },
+        {
+          "path": "soundboard/assets/ringbearer.ttf",
+          "bytes": 110460,
+          "gzipBytes": 110460,
+          "brotliBytes": 110460
+        },
+        {
+          "path": "soundboard/assets/eb-garamond-bold.woff",
+          "bytes": 29720,
+          "gzipBytes": 29720,
+          "brotliBytes": 29720
+        },
+        {
+          "path": "soundboard/assets/optimized/agatha-knight-1024.webp",
+          "bytes": 198974,
+          "gzipBytes": 198974,
+          "brotliBytes": 198974
+        }
+      ]
+    }
+  ]
+}
